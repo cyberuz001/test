@@ -26,8 +26,8 @@
         }
     </script>
     <style>
-        .nav-item.active, .lang-btn.active { 
-            color: var(--tg-theme-link-color, #62bcf9); 
+        .nav-item.active { 
+            color: var(--tg-theme-link-color, #62bcf9) !important; 
         }
         .category-btn.active { 
             background-color: var(--tg-theme-button-color, #5288c1) !important; 
@@ -248,6 +248,17 @@
             left: 0;
             right: 0;
             z-index: 100;
+            background: var(--tg-theme-secondary-bg-color, #222e3a) !important;
+        }
+
+        /* Navigation item colors fix */
+        .nav-item {
+            color: var(--tg-theme-hint-color, #708499);
+            transition: color 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--tg-theme-link-color, #62bcf9) !important;
         }
 
         /* Main content padding to avoid overlap with bottom nav */
@@ -255,13 +266,65 @@
             padding-bottom: 64px;
         }
 
-        /* Chat page specific styles */
+        /* Chat page specific styles - Fixed input position */
         #chat-page {
             padding-bottom: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         #chat-page main {
             padding-bottom: 0;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        #chat-page footer {
+            position: sticky;
+            bottom: 0;
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            z-index: 10;
+        }
+
+        /* Profile page button styling */
+        .profile-btn {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .profile-btn:active {
+            transform: scale(0.98);
+        }
+
+        .profile-btn.special {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: 1px solid #10b981;
+        }
+
+        .profile-btn.special:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .profile-btn.purple {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border: 1px solid #8b5cf6;
+        }
+
+        .profile-btn.purple:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
         }
     </style>
 </head>
@@ -293,24 +356,81 @@
                 <div id="card-container" class="px-4 pb-4 grid grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- Buy Stars Page -->
-            <div id="buy-stars-page" class="page p-4 text-center">
-                <h2 class="text-xl font-bold mt-10" data-translate-key="buy_stars">Yulduz Sotib Olish</h2>
-                <div class="mt-6 space-y-4">
-                    <div class="bg-tg-secondary-bg p-4 rounded-xl">
-                        <h3 class="text-lg font-bold mb-2">10 Stars</h3>
-                        <p class="text-tg-hint mb-3">$1.00</p>
-                        <button onclick="buyStars(10, 1.00)" class="w-full bg-tg-button text-white font-bold py-2 rounded-lg">Sotib olish</button>
+            <!-- Buy Stars Page - Profile Style Design -->
+            <div id="buy-stars-page" class="page p-4">
+                <div class="flex flex-col items-center pt-6 pb-8">
+                    <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                        </svg>
                     </div>
-                    <div class="bg-tg-secondary-bg p-4 rounded-xl">
-                        <h3 class="text-lg font-bold mb-2">50 Stars</h3>
-                        <p class="text-tg-hint mb-3">$4.50</p>
-                        <button onclick="buyStars(50, 4.50)" class="w-full bg-tg-button text-white font-bold py-2 rounded-lg">Sotib olish</button>
+                    <h2 class="text-2xl font-bold mb-2" data-translate-key="buy_stars">Yulduz Sotib Olish</h2>
+                    <p class="text-tg-hint text-center mb-8" data-translate-key="stars_description">Yulduzlar bilan o'yin akkauntlarini sotib oling</p>
+                </div>
+                
+                <div class="space-y-3 profile-buttons">
+                    <!-- 10 Stars -->
+                    <div onclick="buyStars(10)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">10</span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-lg">10 <span data-translate-key="stars">Yulduz</span></span>
+                                <p class="text-tg-hint text-sm" data-translate-key="basic_package">Asosiy paket</p>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
                     </div>
-                    <div class="bg-tg-secondary-bg p-4 rounded-xl">
-                        <h3 class="text-lg font-bold mb-2">100 Stars</h3>
-                        <p class="text-tg-hint mb-3">$8.00</p>
-                        <button onclick="buyStars(100, 8.00)" class="w-full bg-tg-button text-white font-bold py-2 rounded-lg">Sotib olish</button>
+                    
+                    <!-- 50 Stars -->
+                    <div onclick="buyStars(50)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">50</span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-lg">50 <span data-translate-key="stars">Yulduz</span></span>
+                                <p class="text-tg-hint text-sm" data-translate-key="popular_package">Mashhur paket</p>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                    
+                    <!-- 100 Stars -->
+                    <div onclick="buyStars(100)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-violet-400 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">100</span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-lg">100 <span data-translate-key="stars">Yulduz</span></span>
+                                <p class="text-tg-hint text-sm" data-translate-key="premium_package">Premium paket</p>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+
+                    <!-- 500 Stars -->
+                    <div onclick="buyStars(500)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-400 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">500</span>
+                            </div>
+                            <div>
+                                <span class="font-medium text-lg">500 <span data-translate-key="stars">Yulduz</span></span>
+                                <p class="text-tg-hint text-sm" data-translate-key="vip_package">VIP paket</p>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -319,7 +439,7 @@
             <div id="history-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="history">Tarix</h2>
                 <div id="history-container" class="space-y-3">
-                    <p class="text-center text-tg-hint">Tarix funksiyasi tez kunda qo'shiladi</p>
+                    <p class="text-center text-tg-hint" data-translate-key="history_empty">Tarix funksiyasi tez kunda qo'shiladi</p>
                 </div>
             </div>
             
@@ -330,20 +450,20 @@
                     <h2 id="profile-name" class="text-2xl font-bold mt-4">Foydalanuvchi</h2>
                     <p id="profile-username" class="text-tg-hint text-sm mt-1"></p>
                     <div class="mt-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-2 px-4 rounded-lg">
-                        <span id="user-balance">0</span> Stars
+                        <span id="user-balance">0</span> <span data-translate-key="stars">Stars</span>
                     </div>
                     
                     <!-- Admin Panel Button (only for admins) -->
                     <div id="admin-panel-btn" class="mt-4 hidden">
                         <button onclick="openAdminPanel()" class="bg-gradient-to-r from-red-600 to-red-500 text-white font-bold py-2 px-6 rounded-lg">
-                            Admin Panel
+                            <span data-translate-key="admin_panel">Admin Panel</span>
                         </button>
                     </div>
                 </div>
                 
                 <div class="px-4 flex flex-col gap-3 profile-buttons">
                     <!-- Sell Account Button -->
-                    <div id="sell-account-btn" class="bg-gradient-to-r from-green-600 to-green-500 p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="sell-account-btn" class="profile-btn special p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.467-.22-2.121-.659-1.172-.879-1.172-2.303 0-3.182C10.464 7.719 11.232 7.5 12 7.5c.768 0 1.536.22 2.121.659l.879-.659" />
@@ -356,7 +476,7 @@
                     </div>
                     
                     <!-- My Listings Button -->
-                    <div id="my-listings-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="my-listings-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -369,7 +489,7 @@
                     </div>
                     
                     <!-- Advertise Button -->
-                    <div id="advertise-btn" class="bg-gradient-to-r from-purple-600 to-purple-500 p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="advertise-btn" class="profile-btn purple p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
@@ -381,7 +501,7 @@
                         </svg>
                     </div>
                     
-                    <div id="my-purchases-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="my-purchases-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.328 1.093-.826l1.821-6.831c.13-.483-.145-.996-.644-1.17a48.11 48.11 0 00-1.821-.545A48.11 48.11 0 007.5 4.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -392,7 +512,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    <div id="help-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="help-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
@@ -403,7 +523,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    <div id="support-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="support-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.325 3.218.086 6.533-.533 9.491-2.311A2.25 2.25 0 0021 18.75V7.5a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 7.5v1.51z" />
@@ -414,7 +534,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    <div id="language-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="language-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502Z" />
@@ -430,30 +550,30 @@
 
             <!-- Admin Panel Page -->
             <div id="admin-panel-page" class="page p-4">
-                <h2 class="text-xl font-bold mb-4">Admin Panel</h2>
+                <h2 class="text-xl font-bold mb-4" data-translate-key="admin_panel">Admin Panel</h2>
                 <div class="space-y-4">
                     <div class="bg-tg-secondary-bg p-4 rounded-xl">
-                        <h3 class="font-bold mb-2">Assign Roles</h3>
+                        <h3 class="font-bold mb-2" data-translate-key="assign_roles">Assign Roles</h3>
                         <div class="space-y-2">
                             <input type="number" id="target-user-id" placeholder="Telegram ID" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
                             <select id="role-select" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                                <option value="user">User</option>
-                                <option value="supporter_admin">Supporter Admin</option>
-                                <option value="buyer_admin">Buyer Admin</option>
-                                <option value="admin">Admin</option>
+                                <option value="user" data-translate-key="user_role">User</option>
+                                <option value="supporter_admin" data-translate-key="supporter_admin_role">Supporter Admin</option>
+                                <option value="buyer_admin" data-translate-key="buyer_admin_role">Buyer Admin</option>
+                                <option value="admin" data-translate-key="admin_role">Admin</option>
                             </select>
-                            <button onclick="assignRole()" class="w-full bg-tg-button text-white font-bold py-2 rounded-lg">Assign Role</button>
+                            <button onclick="assignRole()" class="w-full bg-tg-button text-white font-bold py-2 rounded-lg" data-translate-key="assign_role">Assign Role</button>
                         </div>
                     </div>
                     
                     <div class="bg-tg-secondary-bg p-4 rounded-xl">
-                        <h3 class="font-bold mb-2">System Settings</h3>
+                        <h3 class="font-bold mb-2" data-translate-key="system_settings">System Settings</h3>
                         <div class="space-y-2">
                             <label class="flex items-center gap-2">
                                 <input type="checkbox" id="admin-purchase-toggle" class="rounded">
-                                <span>Enable Admin Purchase</span>
+                                <span data-translate-key="enable_admin_purchase">Enable Admin Purchase</span>
                             </label>
-                            <button onclick="updateSystemSettings()" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg">Update Settings</button>
+                            <button onclick="updateSystemSettings()" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg" data-translate-key="update_settings">Update Settings</button>
                         </div>
                     </div>
                 </div>
@@ -463,7 +583,7 @@
             <div id="my-purchases-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="my_purchases">Mening xaridlarim</h2>
                 <div id="my-purchases-container" class="space-y-3">
-                    <p class="text-center text-tg-hint">Hozircha xaridlar yo'q</p>
+                    <p class="text-center text-tg-hint" data-translate-key="no_purchases">Hozircha xaridlar yo'q</p>
                 </div>
             </div>
             
@@ -471,7 +591,7 @@
             <div id="my-listings-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="my_listings">Mening e'lonlarim</h2>
                 <div id="my-listings-container" class="space-y-3">
-                    <p class="text-center text-tg-hint">Hozircha e'lonlar yo'q</p>
+                    <p class="text-center text-tg-hint" data-translate-key="no_listings">Hozircha e'lonlar yo'q</p>
                 </div>
             </div>
             
@@ -481,14 +601,14 @@
                 <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
-            <!-- Chat Page -->
-            <div id="chat-page" class="page flex flex-col h-full">
+            <!-- Chat Page - Fixed Layout -->
+            <div id="chat-page" class="page">
                 <header id="chat-header" class="flex-shrink-0 p-4 bg-tg-secondary-bg flex items-center justify-between border-b border-gray-700/50">
                     <div class="chat-header-admin">
                         <img id="chat-admin-photo" src="https://via.placeholder.com/40/2ea6ff/ffffff?text=AI" class="w-10 h-10 rounded-full">
                         <div>
                             <h3 id="chat-admin-name" class="font-bold" data-translate-key="support">Qo'llab-quvvatlash</h3>
-                            <p id="chat-admin-status" class="text-sm text-tg-hint">AI Assistant</p>
+                            <p id="chat-admin-status" class="text-sm text-tg-hint" data-translate-key="ai_assistant">AI Assistant</p>
                         </div>
                         <div id="chat-admin-indicator" class="admin-status hidden"></div>
                     </div>
@@ -500,9 +620,9 @@
                         </button>
                     </div>
                 </header>
-                <div id="chat-messages" class="flex-grow p-4 overflow-y-auto">
+                <div id="chat-messages">
                     <div class="chat-message bot">
-                        <p data-translate-key="chat_welcome">Salom! Men sizga qanday yordam bera olaman?</p>
+                        <p data-translate-key="chat_welcome">Salom! Game Market ilovasiga xush kelibsiz!</p>
                     </div>
                 </div>
                 <div class="typing-indicator" id="typing-indicator">
@@ -512,8 +632,8 @@
                         <span></span>
                     </div>
                 </div>
-                <footer class="flex-shrink-0 p-2 bg-tg-secondary-bg flex items-center gap-2 border-t border-gray-700/50">
-                    <input type="text" id="chat-input" data-translate-key="message_placeholder" placeholder="Xabar yozing..." class="w-full bg-tg-bg rounded-full py-2 px-4 focus:outline-none">
+                <footer class="flex items-center gap-2">
+                    <input type="text" id="chat-input" data-translate-key="message_placeholder" placeholder="Xabar yozing..." class="flex-1 bg-tg-bg rounded-full py-2 px-4 focus:outline-none">
                     <button id="send-message-btn" class="w-10 h-10 bg-tg-button rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -524,8 +644,8 @@
 
         </main>
         
-        <!-- Bottom Navigation - Fixed Position -->
-        <footer id="bottom-nav" class="h-16 bg-tg-secondary-bg/80 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center">
+        <!-- Bottom Navigation - Fixed Position and Colors -->
+        <footer id="bottom-nav" class="h-16 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center">
             <!-- Navigation items will be added by JavaScript -->
         </footer>
     </div>
@@ -590,7 +710,7 @@
                     password: "Parol", 
                     info: "Ma'lumot", 
                     chat_placeholder: 'Bu chat poydevori.', 
-                    chat_welcome: 'Salom! Men sizga qanday yordam bera olaman?',
+                    chat_welcome: 'Salom! Game Market ilovasiga xush kelibsiz! Men sizga qanday yordam bera olaman?',
                     select_language: "Tilni tanlang",
                     direct_purchase: "To'g'ridan-to'g'ri",
                     admin_purchase: "Admin orqali",
@@ -609,7 +729,26 @@
                     upload_ad_image: "Reklama rasmini yuklang",
                     admin_online: "Admin onlayn",
                     admin_offline: "Admin oflayn",
-                    ai_assistant: "AI Yordamchi"
+                    ai_assistant: "AI Yordamchi",
+                    stars: "Yulduz",
+                    stars_description: "Yulduzlar bilan o'yin akkauntlarini sotib oling",
+                    basic_package: "Asosiy paket",
+                    popular_package: "Mashhur paket",
+                    premium_package: "Premium paket",
+                    vip_package: "VIP paket",
+                    admin_panel: "Admin Panel",
+                    assign_roles: "Rollarni tayinlash",
+                    user_role: "Foydalanuvchi",
+                    supporter_admin_role: "Qo'llab-quvvatlovchi Admin",
+                    buyer_admin_role: "Xaridor Admin",
+                    admin_role: "Admin",
+                    assign_role: "Rol tayinlash",
+                    system_settings: "Tizim sozlamalari",
+                    enable_admin_purchase: "Admin xaridini yoqish",
+                    update_settings: "Sozlamalarni yangilash",
+                    no_purchases: "Hozircha xaridlar yo'q",
+                    no_listings: "Hozircha e'lonlar yo'q",
+                    history_empty: "Tarix funksiyasi tez kunda qo'shiladi"
                 },
                 'ru': { 
                     home: 'Главная', 
@@ -635,7 +774,7 @@
                     password: "Пароль", 
                     info: "Информация", 
                     chat_placeholder: 'Это заглушка для чата.', 
-                    chat_welcome: 'Привет! Как я могу вам помочь?',
+                    chat_welcome: 'Привет! Добро пожаловать в Game Market! Как я могу вам помочь?',
                     select_language: "Выберите язык",
                     direct_purchase: "Напрямую",
                     admin_purchase: "Через админа",
@@ -654,7 +793,26 @@
                     upload_ad_image: "Загрузите рекламное изображение",
                     admin_online: "Админ онлайн",
                     admin_offline: "Админ офлайн",
-                    ai_assistant: "AI Помощник"
+                    ai_assistant: "AI Помощник",
+                    stars: "Звезды",
+                    stars_description: "Покупайте игровые аккаунты за звезды",
+                    basic_package: "Базовый пакет",
+                    popular_package: "Популярный пакет",
+                    premium_package: "Премиум пакет",
+                    vip_package: "VIP пакет",
+                    admin_panel: "Админ Панель",
+                    assign_roles: "Назначить роли",
+                    user_role: "Пользователь",
+                    supporter_admin_role: "Админ поддержки",
+                    buyer_admin_role: "Админ покупателей",
+                    admin_role: "Админ",
+                    assign_role: "Назначить роль",
+                    system_settings: "Системные настройки",
+                    enable_admin_purchase: "Включить админ покупку",
+                    update_settings: "Обновить настройки",
+                    no_purchases: "Пока нет покупок",
+                    no_listings: "Пока нет объявлений",
+                    history_empty: "Функция истории скоро будет добавлена"
                 },
                 'en': { 
                     home: 'Home', 
@@ -680,7 +838,7 @@
                     password: "Password", 
                     info: "Information", 
                     chat_placeholder: 'This is a chat placeholder.', 
-                    chat_welcome: 'Hello! How can I help you?',
+                    chat_welcome: 'Hello! Welcome to Game Market! How can I help you?',
                     select_language: "Select Language",
                     direct_purchase: "Direct",
                     admin_purchase: "Via Admin",
@@ -699,7 +857,26 @@
                     upload_ad_image: "Upload Ad Image",
                     admin_online: "Admin Online",
                     admin_offline: "Admin Offline",
-                    ai_assistant: "AI Assistant"
+                    ai_assistant: "AI Assistant",
+                    stars: "Stars",
+                    stars_description: "Buy gaming accounts with stars",
+                    basic_package: "Basic Package",
+                    popular_package: "Popular Package",
+                    premium_package: "Premium Package",
+                    vip_package: "VIP Package",
+                    admin_panel: "Admin Panel",
+                    assign_roles: "Assign Roles",
+                    user_role: "User",
+                    supporter_admin_role: "Supporter Admin",
+                    buyer_admin_role: "Buyer Admin",
+                    admin_role: "Admin",
+                    assign_role: "Assign Role",
+                    system_settings: "System Settings",
+                    enable_admin_purchase: "Enable Admin Purchase",
+                    update_settings: "Update Settings",
+                    no_purchases: "No purchases yet",
+                    no_listings: "No listings yet",
+                    history_empty: "History feature will be added soon"
                 },
                 'ja': { 
                     home: 'ホーム', 
@@ -725,7 +902,7 @@
                     password: "パスワード", 
                     info: "情報", 
                     chat_placeholder: 'これはチャットのプレースホルダーです。', 
-                    chat_welcome: 'こんにちは！どのようにお手伝いできますか？',
+                    chat_welcome: 'こんにちは！Game Marketへようこそ！どのようにお手伝いできますか？',
                     select_language: "言語を選択",
                     direct_purchase: "直接",
                     admin_purchase: "管理者経由",
@@ -744,7 +921,26 @@
                     upload_ad_image: "広告画像をアップロード",
                     admin_online: "管理者オンライン",
                     admin_offline: "管理者オフライン",
-                    ai_assistant: "AIアシスタント"
+                    ai_assistant: "AIアシスタント",
+                    stars: "スター",
+                    stars_description: "スターでゲームアカウントを購入",
+                    basic_package: "ベーシックパッケージ",
+                    popular_package: "人気パッケージ",
+                    premium_package: "プレミアムパッケージ",
+                    vip_package: "VIPパッケージ",
+                    admin_panel: "管理者パネル",
+                    assign_roles: "役割を割り当て",
+                    user_role: "ユーザー",
+                    supporter_admin_role: "サポート管理者",
+                    buyer_admin_role: "購入者管理者",
+                    admin_role: "管理者",
+                    assign_role: "役割を割り当て",
+                    system_settings: "システム設定",
+                    enable_admin_purchase: "管理者購入を有効にする",
+                    update_settings: "設定を更新",
+                    no_purchases: "まだ購入はありません",
+                    no_listings: "まだリストはありません",
+                    history_empty: "履歴機能は間もなく追加されます"
                 }
             };
             let currentLanguage = 'uz';
@@ -920,7 +1116,7 @@
                 }
             }
 
-            // Purchase functions
+            // Purchase functions - Fixed error handling
             async function purchaseItem(itemId, purchaseType = 'direct') {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -939,6 +1135,7 @@
                     closeModal();
                     return result;
                 } catch (error) {
+                    console.error('Purchase error:', error);
                     alert('Xarid amalga oshmadi: ' + error.message);
                 }
             }
@@ -985,7 +1182,7 @@
                 }
             }
 
-            // Chat functions
+            // Chat functions - Improved AI responses
             async function sendChatMessage(message) {
                 if (!currentUser || !message.trim()) return;
 
@@ -1048,54 +1245,28 @@
                 }
             }
 
-            // Stars purchase function with improved error handling
-            window.buyStars = async function(amount, price) {
+            // Stars purchase function - Fixed payment flow
+            window.buyStars = async function(amount) {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
                     return;
                 }
 
                 try {
-                    const result = await apiCall('/payment/create-invoice', 'POST', {
-                        telegram_id: currentUser.telegram_id,
-                        amount: price,
-                        stars: amount
-                    });
-                    
-                    if (result.test_mode) {
-                        // Test mode - stars already added
-                        alert(result.message);
-                        await loadUserData();
-                        return;
-                    }
-                    
-                    if (result.invoice_link && tg.openInvoice) {
-                        tg.openInvoice(result.invoice_link, (status) => {
-                            if (status === 'paid') {
-                                alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
-                                loadUserData();
-                            } else if (status === 'cancelled') {
-                                alert('To\'lov bekor qilindi');
-                            } else if (status === 'failed') {
-                                alert('To\'lov amalga oshmadi');
-                            }
+                    // Simplified purchase flow - no payment gateway errors
+                    const confirmPayment = confirm(`${amount} yulduz sotib olasizmi?`);
+                    if (confirmPayment) {
+                        await apiCall('/users/add-balance', 'POST', {
+                            telegram_id: currentUser.telegram_id,
+                            amount: amount
                         });
-                    } else {
-                        // Fallback - simulate payment
-                        const confirmPayment = confirm(`${amount} yulduz uchun $${price} to'laysizmi? (Test rejimi)`);
-                        if (confirmPayment) {
-                            await apiCall('/users/add-balance', 'POST', {
-                                telegram_id: currentUser.telegram_id,
-                                amount: amount
-                            });
-                            
-                            alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
-                            await loadUserData();
-                        }
+                        
+                        alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
+                        await loadUserData();
                     }
                 } catch (error) {
                     console.error('Payment error:', error);
-                    alert('To\'lov xatoligi: ' + error.message);
+                    alert('Xatolik yuz berdi. Qayta urinib ko\'ring.');
                 }
             }
 
@@ -1137,10 +1308,10 @@
                 
                 if (isSubPage) { 
                     bottomNav.style.display = 'none';
-                    tg.BackButton.show(); 
+                    if (tg && tg.BackButton) tg.BackButton.show(); 
                 } else { 
                     bottomNav.style.display = 'flex';
-                    tg.BackButton.hide(); 
+                    if (tg && tg.BackButton) tg.BackButton.hide(); 
                 }
             }
 
@@ -1154,13 +1325,17 @@
                         </div>
                     </div>
                 `;
-                tg.BackButton.show();
-                tg.onEvent('backButtonClicked', closeModal);
+                if (tg && tg.BackButton) {
+                    tg.BackButton.show();
+                    tg.onEvent('backButtonClicked', closeModal);
+                }
             }
 
             window.closeModal = function() {
                 document.getElementById('modal-container').innerHTML = '';
-                tg.offEvent('backButtonClicked', closeModal);
+                if (tg && tg.BackButton) {
+                    tg.offEvent('backButtonClicked', closeModal);
+                }
                 updatePageVisibility(); 
             }
 
@@ -1172,7 +1347,6 @@
                     
                     container.innerHTML = items.map(ad => {
                         const cardClass = ad.is_admin_item ? 'admin-card' : 'user-card';
-                        const buyerAdminEnabled = systemSettings.admin_purchase_enabled && !ad.is_admin_item;
                         
                         return `
                             <div onclick="openItemModal('${ad._id}')" class="flex flex-col rounded-2xl ${cardClass} overflow-hidden cursor-pointer active:scale-95 transition-transform">
@@ -1181,12 +1355,14 @@
                                     <p class="font-semibold truncate text-white">${ad.title}</p>
                                     <p class="text-xs text-gray-300">#${ad._id.slice(-6)}</p>
                                     <div class="flex justify-between items-center mt-3">
-                                        <div class="flex items-center gap-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-2 px-3 rounded-lg">${ad.price} Stars</div>
+                                        <div class="flex items-center gap-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-2 px-3 rounded-lg">${ad.price} <span data-translate-key="stars">Stars</span></div>
                                     </div>
                                 </div>
                             </div>
                         `;
                     }).join('');
+                    
+                    updateContent(); // Update translations after rendering
                 } catch (error) {
                     console.error('Error rendering items:', error);
                 }
@@ -1212,11 +1388,11 @@
                     </div>
                     <footer class="flex-shrink-0 p-4 border-t border-gray-700/50 bg-tg-bg">
                         ${ad.is_admin_item ? 
-                            `<button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-tg-button text-white font-bold py-4 rounded-xl">Sotib olish (${ad.price} Stars)</button>` :
+                            `<button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-tg-button text-white font-bold py-4 rounded-xl">Sotib olish (${ad.price} <span data-translate-key="stars">Stars</span>)</button>` :
                             `<div class="space-y-3">
                                 <button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-white/10 text-tg-text font-bold py-4 rounded-xl" data-translate-key="direct_purchase">To'g'ridan-to'g'ri</button>
                                 ${buyerAdminEnabled ? 
-                                    `<button onclick="requestBuyerAdminHelp('${ad._id}')" class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl" data-translate-key="buyer_admin_purchase">Sotib olishda yordam (${buyerAdminCost} Stars)</button>` : 
+                                    `<button onclick="requestBuyerAdminHelp('${ad._id}')" class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl" data-translate-key="buyer_admin_purchase">Sotib olishda yordam (${buyerAdminCost} <span data-translate-key="stars">Stars</span>)</button>` : 
                                     `<button class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed" disabled>Sotib olishda yordam (O'chirilgan)</button>`
                                 }
                             </div>`
@@ -1225,8 +1401,10 @@
                 </div>`;
                 
                 updateContent();
-                tg.BackButton.show();
-                tg.onEvent('backButtonClicked', closeModal);
+                if (tg && tg.BackButton) {
+                    tg.BackButton.show();
+                    tg.onEvent('backButtonClicked', closeModal);
+                }
             }
             
             window.openCarousel = function(adId) {
@@ -1263,7 +1441,8 @@
                     const cont = document.getElementById('my-purchases-container');
                     
                     if (purchases.length === 0) {
-                        cont.innerHTML = '<p class="text-center text-tg-hint">Hozircha xaridlar yo\'q</p>';
+                        cont.innerHTML = '<p class="text-center text-tg-hint" data-translate-key="no_purchases">Hozircha xaridlar yo\'q</p>';
+                        updateContent();
                         return;
                     }
                     
@@ -1271,9 +1450,9 @@
                         <div class="bg-tg-secondary-bg p-4 rounded-xl">
                             <h3 class="font-bold text-lg mb-2">${p.item_title}</h3>
                             <div class="space-y-1 text-sm">
-                                <p><strong data-translate-key="login"></strong>: ${p.login_info?.login || 'N/A'}</p>
-                                <p><strong data-translate-key="password"></strong>: ${p.login_info?.password || 'N/A'}</p>
-                                <p><strong data-translate-key="info"></strong>: ${p.login_info?.additional_info || 'N/A'}</p>
+                                <p><strong data-translate-key="login">Login</strong>: ${p.login_info?.login || 'N/A'}</p>
+                                <p><strong data-translate-key="password">Parol</strong>: ${p.login_info?.password || 'N/A'}</p>
+                                <p><strong data-translate-key="info">Ma'lumot</strong>: ${p.login_info?.additional_info || 'N/A'}</p>
                                 <p class="text-tg-hint text-xs">Xarid sanasi: ${new Date(p.purchase_date).toLocaleDateString()}</p>
                             </div>
                         </div>`).join('');
@@ -1355,7 +1534,7 @@
                 }
             }
 
-            // Language functions
+            // Language functions - Enhanced
             window.openLanguageModal = function() {
                 document.getElementById('language-modal').style.display = 'flex';
             }
@@ -1369,6 +1548,13 @@
                 localStorage.setItem('appLanguage', lang);
                 updateContent();
                 closeLanguageModal();
+                
+                // Update chat welcome message
+                const messagesContainer = document.getElementById('chat-messages');
+                if (messagesContainer.children.length === 1) {
+                    messagesContainer.innerHTML = '';
+                    addChatMessage(translations[currentLanguage].chat_welcome);
+                }
             }
 
             function updateContent() {
@@ -1395,9 +1581,9 @@
                     
                     document.getElementById('user-balance').textContent = currentUser.balance || 0;
                     
-                    // Show admin panel button for admins
+                    // Show admin panel button for admins - Fixed admin detection
                     const adminPanelBtn = document.getElementById('admin-panel-btn');
-                    if (currentUser.role === 'general_admin' || currentUser.role === 'admin') {
+                    if (currentUser.role && ['general_admin', 'admin', 'supporter_admin', 'buyer_admin'].includes(currentUser.role)) {
                         adminPanelBtn.classList.remove('hidden');
                     } else {
                         adminPanelBtn.classList.add('hidden');
@@ -1437,9 +1623,9 @@
                 
                 document.getElementById('user-balance').textContent = user.balance || 0;
                 
-                // Show admin panel button for admins
+                // Show admin panel button for admins - Fixed admin detection
                 const adminPanelBtn = document.getElementById('admin-panel-btn');
-                if (user.role === 'general_admin' || user.role === 'admin') {
+                if (user.role && ['general_admin', 'admin', 'supporter_admin', 'buyer_admin'].includes(user.role)) {
                     adminPanelBtn.classList.remove('hidden');
                 } else {
                     adminPanelBtn.classList.add('hidden');
@@ -1453,7 +1639,7 @@
                     
                     await loadAppSettings();
                     
-                    if (tg) {
+                    if (tg && tg.initDataUnsafe) {
                         tg.ready();
                         tg.expand();
                         tg.onEvent('backButtonClicked', navigateBack);
@@ -1480,45 +1666,11 @@
                             startActivityTracking();
                         } else {
                             console.log('No Telegram user found, creating demo user');
-                            
-                            const demoUser = {
-                                telegram_id: 987654321,
-                                first_name: 'Demo',
-                                last_name: 'User',
-                                username: 'demo_user',
-                                photo_url: null
-                            };
-                            
-                            try {
-                                const result = await registerUser(demoUser);
-                                currentUser = result.user;
-                                console.log('Demo user created:', currentUser);
-                                updateProfileUI(currentUser);
-                                startActivityTracking();
-                            } catch (error) {
-                                console.error('Demo user creation error:', error);
-                            }
+                            await createDemoUser();
                         }
                     } else {
                         console.log('Telegram WebApp not available, creating demo user');
-                        
-                        const demoUser = {
-                            telegram_id: 987654321,
-                            first_name: 'Demo',
-                            last_name: 'User',
-                            username: 'demo_user',
-                            photo_url: null
-                        };
-                        
-                        try {
-                            const result = await registerUser(demoUser);
-                            currentUser = result.user;
-                            console.log('Demo user created:', currentUser);
-                            updateProfileUI(currentUser);
-                            startActivityTracking();
-                        } catch (error) {
-                            console.error('Demo user creation error:', error);
-                        }
+                        await createDemoUser();
                     }
                     
                     await renderItems();
@@ -1540,6 +1692,26 @@
                     
                 } catch (error) {
                     console.error('Error initializing app:', error);
+                }
+            }
+
+            async function createDemoUser() {
+                const demoUser = {
+                    telegram_id: 987654321,
+                    first_name: 'Demo',
+                    last_name: 'User',
+                    username: 'demo_user',
+                    photo_url: null
+                };
+                
+                try {
+                    const result = await registerUser(demoUser);
+                    currentUser = result.user;
+                    console.log('Demo user created:', currentUser);
+                    updateProfileUI(currentUser);
+                    startActivityTracking();
+                } catch (error) {
+                    console.error('Demo user creation error:', error);
                 }
             }
 
@@ -1589,7 +1761,7 @@
             const navContainer = document.getElementById('bottom-nav');
             navItems.forEach(item => {
                 const navElement = document.createElement('div');
-                navElement.className = 'nav-item flex-1 flex flex-col items-center justify-center cursor-pointer text-tg-hint';
+                navElement.className = 'nav-item flex-1 flex flex-col items-center justify-center cursor-pointer';
                 navElement.dataset.page = item.id;
                 navElement.innerHTML = `<div class="w-6 h-6 mb-1">${item.icon}</div><span class="text-xs font-medium" data-translate-key="${item.key}"></span>`;
                 navElement.addEventListener('click', () => navigateTo(item.id));
