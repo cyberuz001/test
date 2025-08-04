@@ -26,8 +26,13 @@
         }
     </script>
     <style>
-        .nav-item.active, .lang-btn.active { color: var(--tg-theme-link-color, #62bcf9); }
-        .category-btn.active { background-color: var(--tg-theme-button-color, #5288c1) !important; color: var(--tg-theme-button-text-color, #ffffff) !important; }
+        .nav-item.active, .lang-btn.active { 
+            color: var(--tg-theme-link-color, #62bcf9); 
+        }
+        .category-btn.active { 
+            background-color: var(--tg-theme-button-color, #5288c1) !important; 
+            color: var(--tg-theme-button-text-color, #ffffff) !important; 
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -51,8 +56,13 @@
             display: flex !important;
         }
 
-        .carousel-container .swiper-button-next, .carousel-container .swiper-button-prev { color: #fff; }
-        .carousel-container .swiper-pagination-bullet-active { background: #fff; }
+        .carousel-container .swiper-button-next, 
+        .carousel-container .swiper-button-prev { 
+            color: #fff; 
+        }
+        .carousel-container .swiper-pagination-bullet-active { 
+            background: #fff; 
+        }
 
         .chat-message {
             margin-bottom: 16px;
@@ -188,7 +198,7 @@
         }
 
         .profile-buttons {
-            padding-bottom: 100px; /* Extra space at bottom */
+            padding-bottom: 100px;
         }
 
         .chat-header-admin {
@@ -230,6 +240,29 @@
             background: #6b7280;
             opacity: 0.7;
         }
+
+        /* Bottom navigation fix */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        /* Main content padding to avoid overlap with bottom nav */
+        main {
+            padding-bottom: 64px;
+        }
+
+        /* Chat page specific styles */
+        #chat-page {
+            padding-bottom: 0;
+        }
+
+        #chat-page main {
+            padding-bottom: 0;
+        }
     </style>
 </head>
 <body class="bg-tg-bg text-tg-text font-sans antialiased">
@@ -255,14 +288,14 @@
                 
                 <!-- Items -->
                 <div class="flex justify-between items-center px-4 pt-1 pb-3">
-                    <h2 class="text-2xl font-bold tracking-tight" data-translate-key="all_items"></h2>
+                    <h2 class="text-2xl font-bold tracking-tight" data-translate-key="all_items">Barcha mahsulotlar</h2>
                 </div>
                 <div id="card-container" class="px-4 pb-4 grid grid-cols-2 gap-4"></div>
             </div>
 
             <!-- Buy Stars Page -->
             <div id="buy-stars-page" class="page p-4 text-center">
-                <h2 class="text-xl font-bold mt-10" data-translate-key="buy_stars"></h2>
+                <h2 class="text-xl font-bold mt-10" data-translate-key="buy_stars">Yulduz Sotib Olish</h2>
                 <div class="mt-6 space-y-4">
                     <div class="bg-tg-secondary-bg p-4 rounded-xl">
                         <h3 class="text-lg font-bold mb-2">10 Stars</h3>
@@ -284,8 +317,10 @@
             
             <!-- History Page -->
             <div id="history-page" class="page p-4">
-                <h2 class="text-xl font-bold mb-4" data-translate-key="history"></h2>
-                <div id="history-container" class="space-y-3"></div>
+                <h2 class="text-xl font-bold mb-4" data-translate-key="history">Tarix</h2>
+                <div id="history-container" class="space-y-3">
+                    <p class="text-center text-tg-hint">Tarix funksiyasi tez kunda qo'shiladi</p>
+                </div>
             </div>
             
             <!-- Profile Page -->
@@ -351,7 +386,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.328 1.093-.826l1.821-6.831c.13-.483-.145-.996-.644-1.17a48.11 48.11 0 00-1.821-.545A48.11 48.11 0 007.5 4.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
-                            <span class="font-medium" data-translate-key="my_purchases"></span>
+                            <span class="font-medium" data-translate-key="my_purchases">Mening xaridlarim</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -362,7 +397,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
-                            <span class="font-medium" data-translate-key="help"></span>
+                            <span class="font-medium" data-translate-key="help">Yordam</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -373,7 +408,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.325 3.218.086 6.533-.533 9.491-2.311A2.25 2.25 0 0021 18.75V7.5a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 7.5v1.51z" />
                             </svg>
-                            <span class="font-medium" data-translate-key="support"></span>
+                            <span class="font-medium" data-translate-key="support">Qo'llab-quvvatlash</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -384,7 +419,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502Z" />
                             </svg>
-                            <span class="font-medium" data-translate-key="language"></span>
+                            <span class="font-medium" data-translate-key="language">Tilni o'zgartirish</span>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -426,20 +461,24 @@
 
             <!-- My Purchases Page -->
             <div id="my-purchases-page" class="page p-4">
-                <h2 class="text-xl font-bold mb-4" data-translate-key="my_purchases"></h2>
-                <div id="my-purchases-container" class="space-y-3"></div>
+                <h2 class="text-xl font-bold mb-4" data-translate-key="my_purchases">Mening xaridlarim</h2>
+                <div id="my-purchases-container" class="space-y-3">
+                    <p class="text-center text-tg-hint">Hozircha xaridlar yo'q</p>
+                </div>
             </div>
             
             <!-- My Listings Page -->
             <div id="my-listings-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="my_listings">Mening e'lonlarim</h2>
-                <div id="my-listings-container" class="space-y-3"></div>
+                <div id="my-listings-container" class="space-y-3">
+                    <p class="text-center text-tg-hint">Hozircha e'lonlar yo'q</p>
+                </div>
             </div>
             
             <!-- Help Page -->
             <div id="help-page" class="page p-4">
-                <h2 class="text-xl font-bold text-center mb-4" data-translate-key="help_title"></h2>
-                <p class="text-tg-hint text-center" data-translate-key="help_content"></p>
+                <h2 class="text-xl font-bold text-center mb-4" data-translate-key="help_title">Yordam Markazi</h2>
+                <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
             <!-- Chat Page -->
@@ -457,9 +496,6 @@
                         <button id="close-chat-btn" class="hidden p-2 rounded-full hover:bg-white/10" onclick="closeSupportSession()">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                            </svg>
-                        </button>
-                    </div>
                             </svg>
                         </button>
                     </div>
@@ -488,7 +524,10 @@
 
         </main>
         
-        <footer id="bottom-nav" class="flex-shrink-0 h-16 bg-tg-secondary-bg/80 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center"></footer>
+        <!-- Bottom Navigation - Fixed Position -->
+        <footer id="bottom-nav" class="h-16 bg-tg-secondary-bg/80 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center">
+            <!-- Navigation items will be added by JavaScript -->
+        </footer>
     </div>
     
     <!-- Modal Container -->
@@ -497,7 +536,7 @@
     <!-- Language Modal -->
     <div id="language-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
         <div class="bg-tg-secondary-bg rounded-2xl w-full max-w-sm p-4">
-            <h3 class="text-lg font-bold text-center mb-4" data-translate-key="select_language"></h3>
+            <h3 class="text-lg font-bold text-center mb-4" data-translate-key="select_language">Tilni tanlang</h3>
             <div class="flex flex-col gap-2">
                 <button onclick="selectLanguage('uz')" class="w-full text-left p-3 rounded-lg hover:bg-white/10">O'zbekcha</button>
                 <button onclick="selectLanguage('ru')" class="w-full text-left p-3 rounded-lg hover:bg-white/10">Русский</button>
@@ -1094,10 +1133,15 @@
                 });
                 
                 const isSubPage = navigationHistory.length > 1;
-                document.getElementById('bottom-nav').style.display = isSubPage ? 'none' : 'flex';
-
-                if (isSubPage) { tg.BackButton.show(); } 
-                else { tg.BackButton.hide(); }
+                const bottomNav = document.getElementById('bottom-nav');
+                
+                if (isSubPage) { 
+                    bottomNav.style.display = 'none';
+                    tg.BackButton.show(); 
+                } else { 
+                    bottomNav.style.display = 'flex';
+                    tg.BackButton.hide(); 
+                }
             }
 
             // Modal functions
