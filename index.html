@@ -113,6 +113,56 @@
             object-fit: cover;
             border: 3px solid var(--tg-theme-link-color, #62bcf9);
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .image-upload-area {
+            border: 2px dashed var(--tg-theme-hint-color, #708499);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 2px solid var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .countdown-timer {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--tg-theme-link-color, #62bcf9);
+        }
     </style>
 </head>
 <body class="bg-tg-bg text-tg-text font-sans antialiased">
@@ -120,18 +170,29 @@
     <div id="app" class="h-screen w-screen flex flex-col">
         <main class="flex-grow overflow-y-auto">
             
+            <!-- Home Page -->
             <div id="home-page" class="page active">
-                <div class="swiper h-48">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="https://via.placeholder.com/600x360/2ea6ff/ffffff?text=Top+O'yinlar" class="w-full h-full object-cover"></div>
-                        <div class="swiper-slide"><img src="https://via.placeholder.com/600x360/333333/ffffff?text=Aksiya" class="w-full h-full object-cover"></div>
+                <!-- Advertisement Carousel -->
+                <div id="ads-carousel" class="swiper h-48 mb-4">
+                    <div class="swiper-wrapper" id="ads-wrapper">
+                        <!-- Ads will be loaded here -->
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="px-4 py-3"><div id="category-container" class="flex gap-2 overflow-x-auto no-scrollbar pb-2"></div></div>
-                <div class="flex justify-between items-center px-4 pt-1 pb-3"><h2 class="text-2xl font-bold tracking-tight" data-translate-key="all_items"></h2></div>
+                
+                <!-- Categories -->
+                <div class="px-4 py-3">
+                    <div id="category-container" class="flex gap-2 overflow-x-auto no-scrollbar pb-2"></div>
+                </div>
+                
+                <!-- Items -->
+                <div class="flex justify-between items-center px-4 pt-1 pb-3">
+                    <h2 class="text-2xl font-bold tracking-tight" data-translate-key="all_items"></h2>
+                </div>
                 <div id="card-container" class="px-4 pb-4 grid grid-cols-2 gap-4"></div>
             </div>
 
+            <!-- Buy Stars Page -->
             <div id="buy-stars-page" class="page p-4 text-center">
                 <h2 class="text-xl font-bold mt-10" data-translate-key="buy_stars"></h2>
                 <div class="mt-6 space-y-4">
@@ -153,11 +214,13 @@
                 </div>
             </div>
             
+            <!-- History Page -->
             <div id="history-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="history"></h2>
                 <div id="history-container" class="space-y-3"></div>
             </div>
             
+            <!-- Profile Page -->
             <div id="profile-page" class="page">
                 <div class="flex flex-col items-center p-6">
                     <img id="profile-photo" class="profile-photo" src="https://via.placeholder.com/96/2ea6ff/ffffff?text=User" alt="Profile Photo">
@@ -168,6 +231,45 @@
                     </div>
                 </div>
                 <div class="px-4 flex flex-col gap-3">
+                    <!-- Sell Account Button -->
+                    <div id="sell-account-btn" class="bg-gradient-to-r from-green-600 to-green-500 p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.467-.22-2.121-.659-1.172-.879-1.172-2.303 0-3.182C10.464 7.719 11.232 7.5 12 7.5c.768 0 1.536.22 2.121.659l.879-.659" />
+                            </svg>
+                            <span class="font-medium text-white" data-translate-key="sell_account">Account sotish</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                    
+                    <!-- My Listings Button -->
+                    <div id="my-listings-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                            <span class="font-medium" data-translate-key="my_listings">Mening e'lonlarim</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Advertise Button -->
+                    <div id="advertise-btn" class="bg-gradient-to-r from-purple-600 to-purple-500 p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                            </svg>
+                            <span class="font-medium text-white" data-translate-key="advertise">Reklama berish</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                    
                     <div id="my-purchases-btn" class="bg-tg-secondary-bg p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
@@ -215,16 +317,25 @@
                 </div>
             </div>
 
+            <!-- My Purchases Page -->
             <div id="my-purchases-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="my_purchases"></h2>
                 <div id="my-purchases-container" class="space-y-3"></div>
             </div>
             
+            <!-- My Listings Page -->
+            <div id="my-listings-page" class="page p-4">
+                <h2 class="text-xl font-bold mb-4" data-translate-key="my_listings">Mening e'lonlarim</h2>
+                <div id="my-listings-container" class="space-y-3"></div>
+            </div>
+            
+            <!-- Help Page -->
             <div id="help-page" class="page p-4">
                 <h2 class="text-xl font-bold text-center mb-4" data-translate-key="help_title"></h2>
                 <p class="text-tg-hint text-center" data-translate-key="help_content"></p>
             </div>
             
+            <!-- Chat Page -->
             <div id="chat-page" class="page flex flex-col h-full">
                 <header class="flex-shrink-0 p-4 bg-tg-secondary-bg flex items-center gap-4 border-b border-gray-700/50">
                     <img src="https://via.placeholder.com/40/2ea6ff/ffffff?text=AI" class="w-10 h-10 rounded-full">
@@ -260,8 +371,10 @@
         <footer id="bottom-nav" class="flex-shrink-0 h-16 bg-tg-secondary-bg/80 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center"></footer>
     </div>
     
+    <!-- Modal Container -->
     <div id="modal-container"></div>
 
+    <!-- Language Modal -->
     <div id="language-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
         <div class="bg-tg-secondary-bg rounded-2xl w-full max-w-sm p-4">
             <h3 class="text-lg font-bold text-center mb-4" data-translate-key="select_language"></h3>
@@ -279,13 +392,15 @@
             const tg = window.Telegram.WebApp;
             
             // Backend API URL
-            const API_BASE = 'https://cyberuz81.alwaysdata.net/';
+            const API_BASE = 'https://cyberuz81.alwaysdata.net/api';
             
             // Global variables
             let currentUser = null;
             let currentItems = [];
+            let currentUserListings = [];
             let appSettings = {};
             let currentChatId = null;
+            let adPackages = {};
             
             const categories = ['All', 'PUBG', 'Free Fire', 'Mobile Legends', 'CSGO', 'Valorant'];
             
@@ -298,6 +413,9 @@
                     history: 'Tarix', 
                     profile: 'Profil', 
                     my_purchases: "Mening xaridlarim", 
+                    my_listings: "Mening e'lonlarim",
+                    sell_account: "Account sotish",
+                    advertise: "Reklama berish",
                     help: "Yordam", 
                     support: "Qo'llab-quvvatlash", 
                     language: "Tilni o'zgartirish", 
@@ -314,7 +432,19 @@
                     chat_welcome: 'Salom! Men sizga qanday yordam bera olaman?',
                     select_language: "Tilni tanlang",
                     direct_purchase: "To'g'ridan-to'g'ri",
-                    admin_purchase: "Admin orqali"
+                    admin_purchase: "Admin orqali",
+                    game_category: "O'yin kategoriyasi",
+                    account_title: "Account nomi",
+                    account_description: "Account haqida ma'lumot",
+                    account_price: "Narx (USD)",
+                    upload_images: "Rasmlar yuklang (1-3 ta)",
+                    listing_duration: "E'lon muddati",
+                    create_listing: "E'lon yaratish",
+                    expires_in: "Tugash vaqti",
+                    days_left: "kun qoldi",
+                    select_listing: "E'lonni tanlang",
+                    select_ad_package: "Reklama paketini tanlang",
+                    upload_ad_image: "Reklama rasmini yuklang"
                 },
                 'ru': { 
                     home: 'Главная', 
@@ -324,6 +454,9 @@
                     history: 'История', 
                     profile: 'Профиль', 
                     my_purchases: "Мои покупки", 
+                    my_listings: "Мои объявления",
+                    sell_account: "Продать аккаунт",
+                    advertise: "Реклама",
                     help: "Помощь", 
                     support: "Поддержка", 
                     language: "Сменить язык", 
@@ -340,7 +473,19 @@
                     chat_welcome: 'Привет! Как я могу вам помочь?',
                     select_language: "Выберите язык",
                     direct_purchase: "Напрямую",
-                    admin_purchase: "Через админа"
+                    admin_purchase: "Через админа",
+                    game_category: "Категория игры",
+                    account_title: "Название аккаунта",
+                    account_description: "Описание аккаунта",
+                    account_price: "Цена (USD)",
+                    upload_images: "Загрузите изображения (1-3 шт)",
+                    listing_duration: "Срок размещения",
+                    create_listing: "Создать объявление",
+                    expires_in: "Истекает через",
+                    days_left: "дней осталось",
+                    select_listing: "Выберите объявление",
+                    select_ad_package: "Выберите рекламный пакет",
+                    upload_ad_image: "Загрузите рекламное изображение"
                 },
                 'en': { 
                     home: 'Home', 
@@ -350,6 +495,9 @@
                     history: 'History', 
                     profile: 'Profile', 
                     my_purchases: "My Purchases", 
+                    my_listings: "My Listings",
+                    sell_account: "Sell Account",
+                    advertise: "Advertise",
                     help: "Help", 
                     support: "Support", 
                     language: "Change Language", 
@@ -366,7 +514,19 @@
                     chat_welcome: 'Hello! How can I help you?',
                     select_language: "Select Language",
                     direct_purchase: "Direct",
-                    admin_purchase: "Via Admin"
+                    admin_purchase: "Via Admin",
+                    game_category: "Game Category",
+                    account_title: "Account Title",
+                    account_description: "Account Description",
+                    account_price: "Price (USD)",
+                    upload_images: "Upload Images (1-3)",
+                    listing_duration: "Listing Duration",
+                    create_listing: "Create Listing",
+                    expires_in: "Expires in",
+                    days_left: "days left",
+                    select_listing: "Select Listing",
+                    select_ad_package: "Select Ad Package",
+                    upload_ad_image: "Upload Ad Image"
                 },
                 'ja': { 
                     home: 'ホーム', 
@@ -376,6 +536,9 @@
                     history: '履歴', 
                     profile: 'プロフィール', 
                     my_purchases: "私の購入", 
+                    my_listings: "私のリスト",
+                    sell_account: "アカウント販売",
+                    advertise: "広告",
                     help: "ヘルプ", 
                     support: "サポート", 
                     language: "言語を変更", 
@@ -392,7 +555,19 @@
                     chat_welcome: 'こんにちは！どのようにお手伝いできますか？',
                     select_language: "言語を選択",
                     direct_purchase: "直接",
-                    admin_purchase: "管理者経由"
+                    admin_purchase: "管理者経由",
+                    game_category: "ゲームカテゴリ",
+                    account_title: "アカウント名",
+                    account_description: "アカウント説明",
+                    account_price: "価格 (USD)",
+                    upload_images: "画像をアップロード (1-3枚)",
+                    listing_duration: "掲載期間",
+                    create_listing: "リスト作成",
+                    expires_in: "期限",
+                    days_left: "日残り",
+                    select_listing: "リストを選択",
+                    select_ad_package: "広告パッケージを選択",
+                    upload_ad_image: "広告画像をアップロード"
                 }
             };
             let currentLanguage = 'uz';
@@ -441,6 +616,39 @@
                 const result = await apiCall(endpoint);
                 currentItems = result.items || [];
                 return currentItems;
+            }
+
+            // User listings functions
+            async function createUserListing(listingData) {
+                return await apiCall('/user-listings', 'POST', listingData);
+            }
+
+            async function loadUserListings() {
+                if (!currentUser) return [];
+                
+                try {
+                    const result = await apiCall(`/user-listings/${currentUser.telegram_id}`);
+                    currentUserListings = result.listings || [];
+                    return currentUserListings;
+                } catch (error) {
+                    console.error('Error loading user listings:', error);
+                    return [];
+                }
+            }
+
+            // Advertisement functions
+            async function createAdvertisement(adData) {
+                return await apiCall('/advertisements', 'POST', adData);
+            }
+
+            async function loadAdvertisements() {
+                try {
+                    const result = await apiCall('/advertisements');
+                    return result.advertisements || [];
+                } catch (error) {
+                    console.error('Error loading advertisements:', error);
+                    return [];
+                }
             }
 
             // Purchase functions
@@ -512,8 +720,15 @@
             // Settings functions
             async function loadAppSettings() {
                 try {
-                    const result = await apiCall('/settings');
+                    const result = await apiCall('/admin/settings');
                     appSettings = result.settings || {};
+                    
+                    // Load ad packages
+                    const adPackagesSetting = appSettings.find(s => s.type === 'ad_packages');
+                    if (adPackagesSetting) {
+                        adPackages = adPackagesSetting.packages || {};
+                    }
+                    
                     return appSettings;
                 } catch (error) {
                     console.error('Error loading settings:', error);
@@ -521,7 +736,7 @@
                 }
             }
 
-            // Stars purchase function
+            // Stars purchase function with Telegram payment
             window.buyStars = async function(amount, price) {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -529,15 +744,35 @@
                 }
 
                 try {
-                    // Telegram Stars payment integration would go here
-                    // For now, we'll simulate the purchase
-                    const result = await apiCall('/users/add-balance', 'POST', {
+                    // Create invoice link
+                    const result = await apiCall('/payment/create-invoice', 'POST', {
                         telegram_id: currentUser.telegram_id,
-                        amount: amount
+                        amount: price,
+                        stars: amount
                     });
                     
-                    alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
-                    await loadUserData();
+                    if (result.invoice_link && tg.openInvoice) {
+                        // Open Telegram payment
+                        tg.openInvoice(result.invoice_link, (status) => {
+                            if (status === 'paid') {
+                                alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
+                                loadUserData();
+                            } else if (status === 'cancelled') {
+                                alert('To\'lov bekor qilindi');
+                            } else if (status === 'failed') {
+                                alert('To\'lov amalga oshmadi');
+                            }
+                        });
+                    } else {
+                        // Fallback for testing
+                        const result = await apiCall('/users/add-balance', 'POST', {
+                            telegram_id: currentUser.telegram_id,
+                            amount: amount
+                        });
+                        
+                        alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
+                        await loadUserData();
+                    }
                 } catch (error) {
                     alert('To\'lov amalga oshmadi: ' + error.message);
                 }
@@ -547,7 +782,7 @@
             function navigateTo(pageId) {
                 if(navigationHistory[navigationHistory.length - 1] === pageId) return;
 
-                const isSubPage = ['my-purchases-page', 'help-page', 'chat-page'].includes(pageId);
+                const isSubPage = ['my-purchases-page', 'my-listings-page', 'help-page', 'chat-page'].includes(pageId);
                 
                 if (!isSubPage) {
                     navigationHistory = [pageId];
@@ -583,6 +818,247 @@
                 else { tg.BackButton.hide(); }
             }
 
+            // Modal functions
+            function createModal(content) {
+                const modalContainer = document.getElementById('modal-container');
+                modalContainer.innerHTML = `
+                    <div class="modal-overlay" onclick="closeModal()">
+                        <div class="modal-content" onclick="event.stopPropagation()">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+                tg.BackButton.show();
+                tg.onEvent('backButtonClicked', closeModal);
+            }
+
+            window.closeModal = function() {
+                document.getElementById('modal-container').innerHTML = '';
+                tg.offEvent('backButtonClicked', closeModal);
+                updatePageVisibility(); 
+            }
+
+            // Sell Account Modal
+            function openSellAccountModal() {
+                const modalContent = `
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold mb-4" data-translate-key="sell_account">Account sotish</h2>
+                        <form id="sell-account-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="game_category">O'yin kategoriyasi</label>
+                                <select id="listing-category" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                                    ${categories.filter(cat => cat !== 'All').map(cat => `<option value="${cat}">${cat}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="account_title">Account nomi</label>
+                                <input type="text" id="listing-title" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="account_description">Account haqida ma'lumot</label>
+                                <textarea id="listing-description" rows="3" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" required></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="account_price">Narx (USD)</label>
+                                <input type="number" id="listing-price" min="1" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="upload_images">Rasmlar yuklang (1-3 ta)</label>
+                                <div class="image-upload-area" onclick="document.getElementById('image-upload').click()">
+                                    <input type="file" id="image-upload" multiple accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-2 text-tg-hint">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                    </svg>
+                                    <p class="text-tg-hint">Rasmlarni yuklash uchun bosing</p>
+                                </div>
+                                <div id="image-preview" class="flex gap-2 mt-2 flex-wrap"></div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="listing_duration">E'lon muddati</label>
+                                <select id="listing-duration" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                                    <option value="7">7 kun (10 yulduz)</option>
+                                    <option value="14">14 kun (18 yulduz)</option>
+                                    <option value="30">30 kun (35 yulduz)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg" data-translate-key="create_listing">E'lon yaratish</button>
+                        </form>
+                    </div>
+                `;
+                
+                createModal(modalContent);
+                updateContent();
+                
+                // Handle form submission
+                document.getElementById('sell-account-form').addEventListener('submit', handleSellAccountSubmit);
+            }
+
+            let uploadedImages = [];
+
+            window.handleImageUpload = function(event) {
+                const files = Array.from(event.target.files).slice(0, 3); // Max 3 images
+                const preview = document.getElementById('image-preview');
+                
+                uploadedImages = [];
+                preview.innerHTML = '';
+                
+                files.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedImages.push(e.target.result);
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'image-preview';
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            async function handleSellAccountSubmit(event) {
+                event.preventDefault();
+                
+                if (!currentUser) {
+                    alert('Iltimos, avval tizimga kiring');
+                    return;
+                }
+                
+                const formData = {
+                    seller_telegram_id: currentUser.telegram_id,
+                    category: document.getElementById('listing-category').value,
+                    title: document.getElementById('listing-title').value,
+                    description: document.getElementById('listing-description').value,
+                    price: parseFloat(document.getElementById('listing-price').value),
+                    images: uploadedImages,
+                    listing_days: parseInt(document.getElementById('listing-duration').value)
+                };
+                
+                // Calculate listing cost
+                const duration = formData.listing_days;
+                let cost = 10; // Default 7 days
+                if (duration === 14) cost = 18;
+                else if (duration === 30) cost = 35;
+                
+                formData.listing_cost = cost;
+                
+                if (currentUser.balance < cost) {
+                    alert(`Yetarli yulduz yo'q. Kerak: ${cost} yulduz`);
+                    return;
+                }
+                
+                try {
+                    await createUserListing(formData);
+                    alert('E\'lon muvaffaqiyatli yaratildi!');
+                    await loadUserData();
+                    closeModal();
+                } catch (error) {
+                    alert('E\'lon yaratishda xatolik: ' + error.message);
+                }
+            }
+
+            // Advertise Modal
+            function openAdvertiseModal() {
+                if (currentUserListings.length === 0) {
+                    alert('Avval account sotish e\'lonini yarating');
+                    return;
+                }
+                
+                const modalContent = `
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold mb-4" data-translate-key="advertise">Reklama berish</h2>
+                        <form id="advertise-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="select_listing">E'lonni tanlang</label>
+                                <select id="ad-listing" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" required>
+                                    ${currentUserListings.map(listing => `
+                                        <option value="${listing._id}">${listing.title} - $${listing.price}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="upload_ad_image">Reklama rasmini yuklang</label>
+                                <div class="image-upload-area" onclick="document.getElementById('ad-image-upload').click()">
+                                    <input type="file" id="ad-image-upload" accept="image/*" style="display: none;" onchange="handleAdImageUpload(event)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-2 text-tg-hint">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                    </svg>
+                                    <p class="text-tg-hint">Reklama rasmini yuklang</p>
+                                </div>
+                                <div id="ad-image-preview" class="mt-2"></div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate-key="select_ad_package">Reklama paketini tanlang</label>
+                                <div id="ad-packages" class="space-y-2">
+                                    ${Object.entries(adPackages).map(([key, pkg]) => `
+                                        <label class="flex items-center p-3 border border-gray-600 rounded-lg cursor-pointer hover:bg-white/5">
+                                            <input type="radio" name="ad-package" value="${key}" class="mr-3">
+                                            <div class="flex-grow">
+                                                <div class="font-medium">${pkg.name}</div>
+                                                <div class="text-sm text-tg-hint">${pkg.duration_days} kun - ${pkg.price} yulduz</div>
+                                            </div>
+                                        </label>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-purple-600 text-white font-bold py-3 rounded-lg">Reklama berish</button>
+                        </form>
+                    </div>
+                `;
+                
+                createModal(modalContent);
+                updateContent();
+                
+                document.getElementById('advertise-form').addEventListener('submit', handleAdvertiseSubmit);
+            }
+
+            let adImage = null;
+
+            window.handleAdImageUpload = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    adImage = e.target.result;
+                    
+                    const preview = document.getElementById('ad-image-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            async function handleAdvertiseSubmit(event) {
+                event.preventDefault();
+                
+                const selectedPackage = document.querySelector('input[name="ad-package"]:checked');
+                if (!selectedPackage || !adImage) {
+                    alert('Barcha maydonlarni to\'ldiring');
+                    return;
+                }
+                
+                const packageInfo = adPackages[selectedPackage.value];
+                if (currentUser.balance < packageInfo.price) {
+                    alert(`Yetarli yulduz yo'q. Kerak: ${packageInfo.price} yulduz`);
+                    return;
+                }
+                
+                try {
+                    await createAdvertisement({
+                        user_telegram_id: currentUser.telegram_id,
+                        listing_id: document.getElementById('ad-listing').value,
+                        ad_package: selectedPackage.value,
+                        image: adImage
+                    });
+                    
+                    alert('Reklama muvaffaqiyatli yaratildi!');
+                    await loadUserData();
+                    closeModal();
+                } catch (error) {
+                    alert('Reklama yaratishda xatolik: ' + error.message);
+                }
+            }
+
             // Render functions
             async function renderItems(category = null) {
                 try {
@@ -590,7 +1066,7 @@
                     const container = document.getElementById('card-container');
                     
                     container.innerHTML = items.map(ad => `
-                        <div onclick="openModal('${ad._id}')" class="flex flex-col rounded-2xl ${ad.is_admin_item ? 'bg-blue-900/40' : 'bg-tg-bg'} overflow-hidden cursor-pointer active:scale-95">
+                        <div onclick="openItemModal('${ad._id}')" class="flex flex-col rounded-2xl ${ad.is_admin_item ? 'bg-blue-900/40' : 'bg-tg-bg'} overflow-hidden cursor-pointer active:scale-95">
                             <img class="w-full h-auto aspect-square object-cover" src="${ad.images[0]}" alt="${ad.title}">
                             <div class="p-3">
                                 <p class="font-semibold truncate">${ad.title}</p>
@@ -604,8 +1080,44 @@
                     console.error('Error rendering items:', error);
                 }
             }
+
+            async function renderAdvertisements() {
+                try {
+                    const ads = await loadAdvertisements();
+                    const wrapper = document.getElementById('ads-wrapper');
+                    
+                    if (ads.length === 0) {
+                        // Show default slides if no ads
+                        wrapper.innerHTML = `
+                            <div class="swiper-slide"><img src="/placeholder.svg?height=360&width=600&text=Top+Games" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="/placeholder.svg?height=360&width=600&text=Special+Offers" class="w-full h-full object-cover"></div>
+                        `;
+                    } else {
+                        wrapper.innerHTML = ads.map(ad => `
+                            <div class="swiper-slide">
+                                <img src="${ad.image}" class="w-full h-full object-cover" alt="Advertisement">
+                            </div>
+                        `).join('');
+                    }
+                    
+                    // Reinitialize Swiper
+                    if (window.adsSwiper) {
+                        window.adsSwiper.destroy();
+                    }
+                    window.adsSwiper = new Swiper('#ads-carousel', {
+                        loop: true,
+                        autoplay: { delay: 3000 },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error rendering advertisements:', error);
+                }
+            }
             
-            window.openModal = function(adId) {
+            window.openItemModal = function(adId) {
                 const ad = currentItems.find(item => item._id === adId);
                 if (!ad) return;
 
@@ -633,15 +1145,9 @@
                     </footer>
                 </div>`;
                 
-                updateContent(); // Update translations
+                updateContent();
                 tg.BackButton.show();
                 tg.onEvent('backButtonClicked', closeModal);
-            }
-
-            window.closeModal = function() {
-                document.getElementById('modal-container').innerHTML = '';
-                tg.offEvent('backButtonClicked', closeModal);
-                updatePageVisibility(); 
             }
             
             window.openCarousel = function(adId) {
@@ -693,14 +1199,52 @@
                             </div>
                         </div>`).join('');
                     
-                    updateContent(); // Update translations
+                    updateContent();
                 } catch (error) {
                     console.error('Error rendering purchases:', error);
                 }
             }
 
+            async function renderMyListings() {
+                try {
+                    await loadUserListings();
+                    const cont = document.getElementById('my-listings-container');
+                    
+                    if (currentUserListings.length === 0) {
+                        cont.innerHTML = '<p class="text-center text-tg-hint">Hozircha e\'lonlar yo\'q</p>';
+                        return;
+                    }
+                    
+                    cont.innerHTML = currentUserListings.map(listing => {
+                        const now = new Date();
+                        const expiresAt = new Date(listing.expires_at);
+                        const daysLeft = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
+                        
+                        return `
+                            <div class="bg-tg-secondary-bg p-4 rounded-xl">
+                                <div class="flex gap-3">
+                                    <img src="${listing.images[0]}" class="w-16 h-16 object-cover rounded-lg">
+                                    <div class="flex-grow">
+                                        <h3 class="font-bold text-lg">${listing.title}</h3>
+                                        <p class="text-tg-hint text-sm">${listing.category}</p>
+                                        <p class="text-green-400 font-bold">$${listing.price}</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="text-xs text-tg-hint" data-translate-key="expires_in">Tugash vaqti:</span>
+                                            <span class="countdown-timer text-xs">${daysLeft} <span data-translate-key="days_left">kun qoldi</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    updateContent();
+                } catch (error) {
+                    console.error('Error rendering listings:', error);
+                }
+            }
+
             async function renderHistory() {
-                // Implementation for transaction history
                 const cont = document.getElementById('history-container');
                 cont.innerHTML = '<p class="text-center text-tg-hint">Tarix funksiyasi tez kunda qo\'shiladi</p>';
             }
@@ -736,11 +1280,9 @@
                 
                 if (!message) return;
                 
-                // Add user message
                 addChatMessage(message, true);
                 input.value = '';
                 
-                // Show typing indicator
                 showTypingIndicator();
                 
                 try {
@@ -791,7 +1333,6 @@
                     const userData = await getUserInfo(currentUser.telegram_id);
                     currentUser = userData.user;
                     
-                    // Update UI
                     document.getElementById('user-balance').textContent = currentUser.balance || 0;
                 } catch (error) {
                     console.error('Error loading user data:', error);
@@ -804,22 +1345,19 @@
                 
                 console.log('Updating profile UI with user:', user);
                 
-                // Profile photo
                 const profilePhoto = document.getElementById('profile-photo');
                 if (user.photo_url) {
                     profilePhoto.src = user.photo_url;
                     profilePhoto.onerror = function() {
-                        this.src = 'https://via.placeholder.com/96/2ea6ff/ffffff?text=' + (user.first_name ? user.first_name.charAt(0) : 'U');
+                        this.src = '/placeholder.svg?height=96&width=96&text=' + (user.first_name ? user.first_name.charAt(0) : 'U');
                     };
                 } else {
-                    profilePhoto.src = 'https://via.placeholder.com/96/2ea6ff/ffffff?text=' + (user.first_name ? user.first_name.charAt(0) : 'U');
+                    profilePhoto.src = '/placeholder.svg?height=96&width=96&text=' + (user.first_name ? user.first_name.charAt(0) : 'U');
                 }
                 
-                // Profile name
                 const fullName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
                 document.getElementById('profile-name').textContent = fullName;
                 
-                // Username
                 const usernameElement = document.getElementById('profile-username');
                 if (user.username) {
                     usernameElement.textContent = '@' + user.username;
@@ -828,7 +1366,6 @@
                     usernameElement.style.display = 'none';
                 }
                 
-                // Balance
                 document.getElementById('user-balance').textContent = user.balance || 0;
             }
 
@@ -837,10 +1374,8 @@
                 try {
                     console.log('Initializing app...');
                     
-                    // Load app settings
                     await loadAppSettings();
                     
-                    // Initialize Telegram WebApp
                     if (tg) {
                         tg.ready();
                         tg.expand();
@@ -853,7 +1388,6 @@
                         if (user) {
                             console.log('Telegram user found:', user);
                             
-                            // Register/update user
                             const result = await registerUser({
                                 telegram_id: user.id,
                                 first_name: user.first_name,
@@ -865,12 +1399,10 @@
                             currentUser = result.user;
                             console.log('User registered/updated:', currentUser);
                             
-                            // Update profile UI
                             updateProfileUI(currentUser);
                         } else {
                             console.log('No Telegram user found, creating demo user');
                             
-                            // Demo user for testing
                             const demoUser = {
                                 telegram_id: 987654321,
                                 first_name: 'Demo',
@@ -891,7 +1423,6 @@
                     } else {
                         console.log('Telegram WebApp not available, creating demo user');
                         
-                        // Demo user for testing
                         const demoUser = {
                             telegram_id: 987654321,
                             first_name: 'Demo',
@@ -910,10 +1441,9 @@
                         }
                     }
                     
-                    // Load initial data
                     await renderItems();
+                    await renderAdvertisements();
                     
-                    // Load chat history
                     const chatHistory = await loadChatHistory();
                     const messagesContainer = document.getElementById('chat-messages');
                     messagesContainer.innerHTML = '';
@@ -941,9 +1471,6 @@
                 }
             });
 
-            // Initialize Swiper
-            new Swiper('#home-page .swiper', { loop: true, autoplay: { delay: 3000 } });
-
             // Navigation setup
             const navItems = [
                 { id: 'home-page', key: 'home', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>' },
@@ -963,6 +1490,15 @@
             });
 
             // Profile menu event listeners
+            document.getElementById('sell-account-btn').addEventListener('click', openSellAccountModal);
+            document.getElementById('my-listings-btn').addEventListener('click', async () => {
+                await renderMyListings();
+                navigateTo('my-listings-page');
+            });
+            document.getElementById('advertise-btn').addEventListener('click', async () => {
+                await loadUserListings();
+                openAdvertiseModal();
+            });
             document.getElementById('my-purchases-btn').addEventListener('click', async () => {
                 await renderMyPurchases();
                 navigateTo('my-purchases-page');
