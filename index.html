@@ -242,6 +242,15 @@
             opacity: 0.7;
         }
 
+        .contact-seller-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s;
+        }
+
+        .contact-seller-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
         /* Bottom navigation fix */
         #bottom-nav {
             position: fixed;
@@ -374,6 +383,17 @@
             padding: 12px;
             margin-bottom: 8px;
         }
+
+        /* Currency badges */
+        .currency-badge.stars {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+        }
+
+        .currency-badge.usd {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-tg-bg text-tg-text font-sans antialiased">
@@ -386,7 +406,7 @@
                 <!-- Advertisement Carousel -->
                 <div id="ads-carousel" class="swiper h-48 mb-4">
                     <div class="swiper-wrapper" id="ads-wrapper">
-                        <div class="swiper-slide"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20From%202025-08-04%2022-02-57-2djYOOkgifShDVdt0XnT0yWYm5lJwW.png" class="w-full h-full object-cover"></div>
+                        <div class="swiper-slide"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20From%202025-08-04%2022-02-57-2djYOOkgifShDVdt0XnT0yWYm5lJwW.png" class="w-full h-full  class="w-full h-full object-cover"></div>
                         <div class="swiper-slide"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-muPMwlHUma1EjXee8zwZfu43AtpdPJ.png" class="w-full h-full object-cover"></div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -413,7 +433,7 @@
                         </svg>
                     </div>
                     <h2 class="text-2xl font-bold mb-2" data-translate-key="buy_stars">Yulduz Sotib Olish</h2>
-                    <p class="text-tg-hint text-center mb-8" data-translate-key="stars_description">Yulduzlar bilan o'yin akkauntlarini sotib oling</p>
+                    <p class="text-tg-hint text-center mb-8" data-translate-key="stars_description">Yulduzlar bilan admin akkauntlarini sotib oling</p>
                 </div>
                 
                 <div class="space-y-3 profile-buttons">
@@ -683,9 +703,12 @@
                 </div>
             </div>
 
-            <!-- Sell Account Page -->
+            <!-- Sell Account Page - USD PRICING -->
             <div id="sell-account-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4">💰 Account Sotish</h2>
+                <div class="bg-yellow-600/20 border border-yellow-600 rounded-lg p-3 mb-4">
+                    <p class="text-sm">💡 <strong>Eslatma:</strong> Siz USD da narx belgilaysiz. Xaridorlar admin orqali yoki to'g'ridan-to'g'ri siz bilan bog'lanadi.</p>
+                </div>
                 <form id="sell-account-form" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-2">O'yin kategoriyasi</label>
@@ -706,8 +729,9 @@
                         <textarea id="sell-description" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2 h-24" placeholder="Account haqida batafsil ma'lumot..."></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">Narx (yulduz)</label>
-                        <input type="number" id="sell-price" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" placeholder="100">
+                        <label class="block text-sm font-medium mb-2">Narx (USD) 💵</label>
+                        <input type="number" id="sell-price" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" placeholder="25">
+                        <p class="text-xs text-tg-hint mt-1">Narx USD da belgilanadi</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Rasmlar (1-3 ta)</label>
@@ -914,9 +938,8 @@
                     chat_placeholder: 'Bu chat poydevori.', 
                     chat_welcome: 'Salom! Game Market ilovasiga xush kelibsiz! Sizga qanday yordam bera olaman?',
                     select_language: "Tilni tanlang",
-                    direct_purchase: "To'g'ridan-to'g'ri",
-                    admin_purchase: "Admin orqali",
-                    buyer_admin_purchase: "Sotib olishda yordam",
+                    admin_purchase: "Admin orqali sotib olish",
+                    contact_seller: "Sotuvchi bilan bog'lanish",
                     game_category: "O'yin kategoriyasi",
                     account_title: "Account nomi",
                     account_description: "Account haqida ma'lumot",
@@ -933,7 +956,7 @@
                     admin_offline: "Admin oflayn",
                     ai_assistant: "AI Yordamchi",
                     stars: "Yulduz",
-                    stars_description: "Yulduzlar bilan o'yin akkauntlarini sotib oling",
+                    stars_description: "Yulduzlar bilan admin akkauntlarini sotib oling",
                     basic_package: "Asosiy paket",
                     popular_package: "Mashhur paket",
                     premium_package: "Premium paket",
@@ -978,9 +1001,8 @@
                     chat_placeholder: 'Это заглушка для чата.', 
                     chat_welcome: 'Привет! Добро пожаловать в Game Market! Как я могу вам помочь?',
                     select_language: "Выберите язык",
-                    direct_purchase: "Напрямую",
-                    admin_purchase: "Через админа",
-                    buyer_admin_purchase: "Помощь в покупке",
+                    admin_purchase: "Купить через админа",
+                    contact_seller: "Связаться с продавцом",
                     game_category: "Категория игры",
                     account_title: "Название аккаунта",
                     account_description: "Описание аккаунта",
@@ -997,7 +1019,7 @@
                     admin_offline: "Админ офлайн",
                     ai_assistant: "AI Помощник",
                     stars: "Звезды",
-                    stars_description: "Покупайте игровые аккаунты за звезды",
+                    stars_description: "Покупайте админские аккаунты за звезды",
                     basic_package: "Базовый пакет",
                     popular_package: "Популярный пакет",
                     premium_package: "Премиум пакет",
@@ -1042,9 +1064,8 @@
                     chat_placeholder: 'This is a chat placeholder.', 
                     chat_welcome: 'Hello! Welcome to Game Market! How can I help you?',
                     select_language: "Select Language",
-                    direct_purchase: "Direct",
-                    admin_purchase: "Via Admin",
-                    buyer_admin_purchase: "Purchase Assistance",
+                    admin_purchase: "Buy via Admin",
+                    contact_seller: "Contact Seller",
                     game_category: "Game Category",
                     account_title: "Account Title",
                     account_description: "Account Description",
@@ -1061,7 +1082,7 @@
                     admin_offline: "Admin Offline",
                     ai_assistant: "AI Assistant",
                     stars: "Stars",
-                    stars_description: "Buy gaming accounts with stars",
+                    stars_description: "Buy admin accounts with stars",
                     basic_package: "Basic Package",
                     popular_package: "Popular Package",
                     premium_package: "Premium Package",
@@ -1106,9 +1127,8 @@
                     chat_placeholder: 'これはチャットのプレースホルダーです。', 
                     chat_welcome: 'こんにちは！Game Marketへようこそ！どのようにお手伝いできますか？',
                     select_language: "言語を選択",
-                    direct_purchase: "直接",
-                    admin_purchase: "管理者経由",
-                    buyer_admin_purchase: "購入サポート",
+                    admin_purchase: "管理者経由で購入",
+                    contact_seller: "販売者に連絡",
                     game_category: "ゲームカテゴリ",
                     account_title: "アカウント名",
                     account_description: "アカウント説明",
@@ -1125,7 +1145,7 @@
                     admin_offline: "管理者オフライン",
                     ai_assistant: "AIアシスタント",
                     stars: "スター",
-                    stars_description: "スターでゲームアカウントを購入",
+                    stars_description: "スターで管理者アカウントを購入",
                     basic_package: "ベーシックパッケージ",
                     popular_package: "人気パッケージ",
                     premium_package: "プレミアムパッケージ",
@@ -1470,7 +1490,7 @@
                 }
             }
 
-            // Purchase functions
+            // Purchase functions - UPDATED FOR NEW SYSTEM
             async function purchaseItem(itemId, purchaseType = 'direct') {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -1484,43 +1504,36 @@
                         purchase_type: purchaseType
                     });
                     
-                    alert('Xarid muvaffaqiyatli amalga oshirildi!');
-                    await loadUserData();
-                    closeModal();
+                    if (result.purchase) {
+                        alert('Xarid muvaffaqiyatli amalga oshirildi!');
+                        await loadUserData();
+                        closeModal();
+                    } else if (result.admin_help_requested) {
+                        alert(result.message);
+                        await loadUserData();
+                        closeModal();
+                    } else if (result.direct_contact) {
+                        // Handle direct contact with seller
+                        const seller = result.seller_info;
+                        if (seller.telegram_url) {
+                            if (confirm(`Sotuvchi bilan bog'lanish uchun Telegram profiliga o'tasizmi?\n\nSotuvchi: ${seller.name}\nUsername: @${seller.username}`)) {
+                                window.open(seller.telegram_url, '_blank');
+                            }
+                        } else {
+                            alert(`Sotuvchi ma'lumotlari:\nIsm: ${seller.name}\nTelegram ID: ${seller.telegram_id}`);
+                        }
+                        closeModal();
+                    }
+                    
                     return result;
                 } catch (error) {
                     console.error('Purchase error:', error);
-                    alert('Xarid amalga oshmadi: ' + error.message);
+                    alert('Xatolik: ' + error.message);
                 }
             }
 
-            async function requestBuyerAdminHelp(itemId) {
-                if (!currentUser) {
-                    alert('Iltimos, avval tizimga kiring');
-                    return;
-                }
-
-                const cost = systemSettings.buyer_admin_cost || 25;
-                
-                if (currentUser.balance < cost) {
-                    alert(`Yetarli yulduz yo'q. Kerak: ${cost} yulduz`);
-                    return;
-                }
-
-                if (confirm(`Sotib olishda yordam uchun ${cost} yulduz to'lanadi. Davom etasizmi?`)) {
-                    try {
-                        await apiCall('/users/add-balance', 'POST', {
-                            telegram_id: currentUser.telegram_id,
-                            amount: -cost
-                        });
-                        
-                        alert('So\'rov yuborildi. Admin tez orada sizga yordam beradi.');
-                        await loadUserData();
-                        closeModal();
-                    } catch (error) {
-                        alert('Xatolik: ' + error.message);
-                    }
-                }
+            async function requestAdminHelp(itemId) {
+                return await purchaseItem(itemId, 'admin_help');
             }
 
             async function loadUserPurchases() {
@@ -1661,7 +1674,7 @@
                     const select = document.getElementById('advertise-listing');
                     select.innerHTML = '<option value="">E\'lonni tanlang...</option>' + 
                         listings.map(listing => 
-                            `<option value="${listing._id}">${listing.title} - ${listing.price} ⭐</option>`
+                            `<option value="${listing._id}">${listing.title} - $${listing.price}</option>`
                         ).join('');
                 } catch (error) {
                     console.error('Error loading user listings:', error);
@@ -1803,7 +1816,7 @@
                 updatePageVisibility(); 
             }
 
-            // Render functions
+            // Render functions - UPDATED FOR NEW SYSTEM
             async function renderItems(category = null) {
                 try {
                     const items = await loadItems(category);
@@ -1811,15 +1824,19 @@
                     
                     container.innerHTML = items.map(ad => {
                         const cardClass = ad.is_admin_item ? 'admin-card' : 'user-card';
+                        const currencyBadge = ad.currency === 'stars' ? 
+                            `<div class="currency-badge stars px-2 py-1 rounded text-xs font-bold">${ad.price} ⭐</div>` :
+                            `<div class="currency-badge usd px-2 py-1 rounded text-xs font-bold">$${ad.price}</div>`;
                         
                         return `
                             <div onclick="openItemModal('${ad._id}')" class="flex flex-col rounded-2xl ${cardClass} overflow-hidden cursor-pointer active:scale-95 transition-transform">
-                                <img class="w-full h-auto aspect-square object-cover" src="${ad.images[0]}" alt="${ad.title}">
+                                <img class="w-full h-auto aspect-square object-cover" src="${ad.images[0] || 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game'}" alt="${ad.title}">
                                 <div class="p-3">
                                     <p class="font-semibold truncate text-white">${ad.title}</p>
                                     <p class="text-xs text-gray-300">#${ad._id.slice(-6)}</p>
                                     <div class="flex justify-between items-center mt-3">
-                                        <div class="flex items-center gap-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-2 px-3 rounded-lg">${ad.price} <span data-translate-key="stars">Stars</span></div>
+                                        ${currencyBadge}
+                                        ${ad.is_admin_item ? '<span class="text-xs text-yellow-400">⚡ Admin</span>' : '<span class="text-xs text-green-400">👤 User</span>'}
                                     </div>
                                 </div>
                             </div>
@@ -1837,30 +1854,41 @@
                 if (!ad) return;
 
                 const modalContainer = document.getElementById('modal-container');
-                const buyerAdminEnabled = systemSettings.admin_purchase_enabled && !ad.is_admin_item;
-                const buyerAdminCost = systemSettings.buyer_admin_cost || 25;
+                
+                let buttonsHtml = '';
+                
+                if (ad.is_admin_item) {
+                    // Admin item - direct Stars purchase
+                    buttonsHtml = `<button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-tg-button text-white font-bold py-4 rounded-xl">Sotib olish (${ad.price} ⭐)</button>`;
+                } else {
+                    // User item - two buttons
+                    buttonsHtml = `
+                        <div class="space-y-3">
+                            <button onclick="requestAdminHelp('${ad._id}')" class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl">Admin orqali sotib olish (25 ⭐)</button>
+                            <button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full contact-seller-btn text-white font-bold py-4 rounded-xl">Sotuvchi bilan bog'lanish</button>
+                        </div>
+                    `;
+                }
                 
                 modalContainer.innerHTML = `
                 <div id="item-modal" class="fixed inset-0 bg-tg-bg z-40 flex flex-col transition-opacity duration-300 opacity-100">
                     <div class="flex-grow overflow-y-auto">
-                        <img src="${ad.images[0]}" onclick="openCarousel('${ad._id}')" class="w-full aspect-square object-cover cursor-pointer">
+                        <img src="${ad.images[0] || 'https://via.placeholder.com/400/2ea6ff/ffffff?text=Game'}" class="w-full aspect-square object-cover">
                         <div class="p-4">
-                            <h2 class="text-3xl font-bold mb-2">${ad.title}</h2>
-                            <p class="text-lg text-tg-hint mb-4">#${ad._id.slice(-6)}</p>
+                            <div class="flex justify-between items-start mb-2">
+                                <h2 class="text-3xl font-bold">${ad.title}</h2>
+                                ${ad.currency === 'stars' ? 
+                                    `<div class="currency-badge stars px-3 py-1 rounded-lg text-lg font-bold">${ad.price} ⭐</div>` :
+                                    `<div class="currency-badge usd px-3 py-1 rounded-lg text-lg font-bold">$${ad.price}</div>`
+                                }
+                            </div>
+                            <p class="text-lg text-tg-hint mb-4">#${ad._id.slice(-6)} • ${ad.is_admin_item ? '⚡ Admin Account' : '👤 User Account'}</p>
                             <p class="text-base leading-relaxed">${ad.description}</p>
+                            ${!ad.is_admin_item && ad.seller_name ? `<p class="text-sm text-tg-hint mt-4">Sotuvchi: ${ad.seller_name}</p>` : ''}
                         </div>
                     </div>
                     <footer class="flex-shrink-0 p-4 border-t border-gray-700/50 bg-tg-bg">
-                        ${ad.is_admin_item ? 
-                            `<button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-tg-button text-white font-bold py-4 rounded-xl">Sotib olish (${ad.price} <span data-translate-key="stars">Stars</span>)</button>` :
-                            `<div class="space-y-3">
-                                <button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-white/10 text-tg-text font-bold py-4 rounded-xl" data-translate-key="direct_purchase">To'g'ridan-to'g'ri</button>
-                                ${buyerAdminEnabled ? 
-                                    `<button onclick="requestBuyerAdminHelp('${ad._id}')" class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl" data-translate-key="buyer_admin_purchase">Sotib olishda yordam (${buyerAdminCost} <span data-translate-key="stars">Stars</span>)</button>` : 
-                                    `<button class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl opacity-50 cursor-not-allowed" disabled>Sotib olishda yordam (O'chirilgan)</button>`
-                                }
-                            </div>`
-                        }
+                        ${buttonsHtml}
                     </footer>
                 </div>`;
                 
@@ -1890,6 +1918,10 @@
                                 <p><strong data-translate-key="password">Parol</strong>: ${p.login_info?.password || 'N/A'}</p>
                                 <p><strong data-translate-key="info">Ma'lumot</strong>: ${p.login_info?.additional_info || 'N/A'}</p>
                                 <p class="text-tg-hint text-xs">Xarid sanasi: ${new Date(p.purchase_date).toLocaleDateString()}</p>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="text-lg font-bold">${p.currency === 'stars' ? p.price + ' ⭐' : '$' + p.price}</span>
+                                    <span class="text-xs px-2 py-1 bg-green-600 rounded">${p.status}</span>
+                                </div>
                             </div>
                         </div>`).join('');
                     
@@ -1921,7 +1953,7 @@
                             </div>
                             <p class="text-sm text-tg-hint mb-2">${listing.description}</p>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">${listing.price} ⭐</span>
+                                <span class="font-bold text-lg">$${listing.price}</span>
                                 <span class="text-xs text-tg-hint">Tugash: ${new Date(listing.expires_at).toLocaleDateString()}</span>
                             </div>
                         </div>
