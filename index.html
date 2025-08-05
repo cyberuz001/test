@@ -266,30 +266,39 @@
             padding-bottom: 64px;
         }
 
-        /* Chat page specific styles - Fixed input position */
+        /* Chat page specific styles - FIXED LAYOUT */
         #chat-page {
-            padding-bottom: 0;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-bottom: 0 !important;
         }
 
         #chat-page main {
-            padding-bottom: 0;
+            padding-bottom: 0 !important;
+        }
+
+        #chat-page header {
+            flex-shrink: 0;
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
         }
 
         #chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 16px;
+            min-height: 0;
         }
 
         #chat-page footer {
-            position: sticky;
-            bottom: 0;
+            flex-shrink: 0;
             background: var(--tg-theme-secondary-bg-color, #222e3a);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 8px;
+            position: sticky;
+            bottom: 0;
             z-index: 10;
         }
 
@@ -601,9 +610,9 @@
                 <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
-            <!-- Chat Page - Fixed Layout -->
+            <!-- Chat Page - FIXED LAYOUT -->
             <div id="chat-page" class="page">
-                <header id="chat-header" class="flex-shrink-0 p-4 bg-tg-secondary-bg flex items-center justify-between border-b border-gray-700/50">
+                <header class="flex items-center justify-between p-4 bg-tg-secondary-bg border-b border-gray-700/50">
                     <div class="chat-header-admin">
                         <img id="chat-admin-photo" src="https://via.placeholder.com/40/2ea6ff/ffffff?text=AI" class="w-10 h-10 rounded-full">
                         <div>
@@ -620,11 +629,13 @@
                         </button>
                     </div>
                 </header>
+                
                 <div id="chat-messages">
                     <div class="chat-message bot">
                         <p data-translate-key="chat_welcome">Salom! Game Market ilovasiga xush kelibsiz!</p>
                     </div>
                 </div>
+                
                 <div class="typing-indicator" id="typing-indicator">
                     <div class="typing-dots">
                         <span></span>
@@ -632,7 +643,8 @@
                         <span></span>
                     </div>
                 </div>
-                <footer class="flex items-center gap-2">
+                
+                <footer class="flex items-center gap-2 p-2">
                     <input type="text" id="chat-input" data-translate-key="message_placeholder" placeholder="Xabar yozing..." class="flex-1 bg-tg-bg rounded-full py-2 px-4 focus:outline-none">
                     <button id="send-message-btn" class="w-10 h-10 bg-tg-button rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
@@ -1245,7 +1257,7 @@
                 }
             }
 
-            // Stars purchase function - Fixed payment flow
+            // Stars purchase function - FIXED PAYMENT FLOW
             window.buyStars = async function(amount) {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -1253,20 +1265,25 @@
                 }
 
                 try {
-                    // Simplified purchase flow - no payment gateway errors
+                    // Show loading state
                     const confirmPayment = confirm(`${amount} yulduz sotib olasizmi?`);
-                    if (confirmPayment) {
-                        await apiCall('/users/add-balance', 'POST', {
-                            telegram_id: currentUser.telegram_id,
-                            amount: amount
-                        });
-                        
-                        alert(`${amount} yulduz muvaffaqiyatli qo'shildi!`);
-                        await loadUserData();
-                    }
+                    if (!confirmPayment) return;
+
+                    // Call backend to add balance
+                    const result = await apiCall('/users/add-balance', 'POST', {
+                        telegram_id: currentUser.telegram_id,
+                        amount: amount
+                    });
+                    
+                    // Update UI with new balance
+                    currentUser.balance = result.new_balance;
+                    document.getElementById('user-balance').textContent = currentUser.balance;
+                    
+                    alert(`${amount} yulduz muvaffaqiyatli qo'shildi! Yangi balans: ${currentUser.balance}`);
+                    
                 } catch (error) {
                     console.error('Payment error:', error);
-                    alert('Xatolik yuz berdi. Qayta urinib ko\'ring.');
+                    alert('Xatolik yuz berdi: ' + error.message);
                 }
             }
 
