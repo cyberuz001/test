@@ -84,7 +84,7 @@
             display: flex !important;
         }
 
-        /* FIXED Modal system - NO CLOSE BUTTON */
+        /* Modal system */
         .modal-overlay {
             position: fixed !important;
             top: 0 !important;
@@ -119,12 +119,12 @@
             background: #212121;
         }
 
-        /* Carousel - NO PAGINATION */
+        /* Carousel */
         .carousel-container .swiper-pagination {
             display: none !important;
         }
 
-        /* Chat system - FIXED INPUT */
+        /* Chat system */
         #chat-page {
             height: 100vh;
             display: flex;
@@ -233,7 +233,7 @@
             40% { transform: scale(1); }
         }
 
-        /* Profile and UI elements */
+        /* Profile elements */
         .profile-photo {
             width: 96px;
             height: 96px;
@@ -242,7 +242,7 @@
             border: 3px solid #62bcf9;
         }
 
-        /* Bottom navigation - FIXED TEXT OVERFLOW */
+        /* FIXED Bottom navigation */
         #bottom-nav {
             position: fixed;
             bottom: 0;
@@ -253,23 +253,29 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            height: 64px;
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 8px;
         }
 
         .nav-item {
-            min-width: 0;
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4px;
+            padding: 4px 2px;
+            cursor: pointer;
+            transition: color 0.2s;
         }
 
         .nav-item span {
             font-size: 10px;
-            line-height: 1;
+            line-height: 1.2;
             text-align: center;
+            margin-top: 2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -278,10 +284,10 @@
 
         /* Main content padding */
         main {
-            padding-bottom: 80px;
+            padding-bottom: 70px;
         }
 
-        /* Profile page buttons */
+        /* Profile buttons */
         .profile-btn {
             background: rgba(56, 56, 56, 0.8);
             backdrop-filter: blur(15px);
@@ -309,7 +315,7 @@
             border: 1px solid #8b5cf6;
         }
 
-        /* Cards */
+        /* Cards - CLEAN TELEGRAM STYLE */
         .admin-card {
             background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%) !important;
             border: 1px solid #62bcf9;
@@ -361,36 +367,6 @@
             height: 100vh;
             text-align: center;
             padding: 2rem;
-        }
-
-        /* Three dots menu */
-        .three-dots-menu {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 10;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(47, 47, 47, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            min-width: 120px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Carousel image display */
@@ -494,7 +470,6 @@
                  Advertisement Carousel 
                 <div id="ads-carousel" class="swiper h-48 mb-4 rounded-b-2xl overflow-hidden carousel-container">
                     <div class="swiper-wrapper" id="ads-wrapper">
-                         Default carousel item 
                         <div class="swiper-slide">
                             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Ptg8CTmOZ4TySqu1OuUxahJfJEcRKH.png" class="w-full h-full object-cover rounded-b-2xl" alt="Game Market">
                         </div>
@@ -691,7 +666,7 @@
                 </div>
             </div>
 
-             FIXED Admin Panel Page 
+             Admin Panel Page 
             <div id="admin-panel-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="admin_panel">Admin Panel</h2>
                 
@@ -747,7 +722,7 @@
                     </div>
                 </div>
 
-                 FIXED System Settings Section 
+                 System Settings Section 
                 <div class="admin-section glass">
                     <h3 class="font-bold mb-4">⚙️ Tizim sozlamalari</h3>
                     <div class="space-y-3">
@@ -769,7 +744,7 @@
                     </div>
                 </div>
 
-                 SIMPLIFIED Carousel Management 
+                 Carousel Management 
                 <div class="admin-section glass">
                     <h3 class="font-bold mb-4">🎠 Carousel boshqaruvi</h3>
                     <div class="space-y-3">
@@ -784,10 +759,7 @@
                         </div>
                         <button onclick="addCarouselItem()" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg">Carousel ga qo'shish</button>
                         
-                         Carousel Images Display 
-                        <div id="carousel-images-list" class="space-y-3">
-                             Carousel images will be displayed here 
-                        </div>
+                        <div id="carousel-images-list" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
@@ -887,7 +859,7 @@
                 <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
-             FIXED Chat Page 
+             Chat Page 
             <div id="chat-page" class="page">
                 <main>
                     <header class="glass flex items-center justify-between">
@@ -952,9 +924,7 @@
         </main>
         
          Bottom Navigation 
-        <footer id="bottom-nav" class="glass h-16 flex justify-around items-center">
-             Navigation items will be added by JavaScript 
-        </footer>
+        <footer id="bottom-nav"></footer>
     </div>
     
      Modal Container 
@@ -1595,7 +1565,7 @@
                 }
             }
 
-            // FIXED System Settings Update
+            // System Settings Update
             window.updateSystemSettings = async function() {
                 const adminPurchaseEnabled = document.getElementById('admin-purchase-toggle').checked;
                 const buyerAdminCost = parseInt(document.getElementById('buyer-admin-cost').value) || 25;
@@ -1620,7 +1590,7 @@
                 }
             }
 
-            // SIMPLIFIED Carousel Management
+            // Carousel Management
             window.addCarouselItem = async function() {
                 const imageInput = document.getElementById('carousel-image-input');
                 if (!imageInput.files[0]) {
@@ -1753,7 +1723,7 @@
                 return currentItems;
             }
 
-            // Carousel functions - SIMPLIFIED
+            // Carousel functions
             async function loadCarousel() {
                 try {
                     const result = await apiCall('/carousel');
@@ -1782,7 +1752,6 @@
                     window.adsSwiper = new Swiper('#ads-carousel', { 
                         loop: true, 
                         autoplay: { delay: 4000 }
-                        // NO pagination
                     });
                 } catch (error) {
                     console.error('Error loading carousel:', error);
@@ -1843,7 +1812,7 @@
                 }
             }
 
-            // Purchase functions - UPDATED FOR NEW SYSTEM
+            // Purchase functions
             async function purchaseItem(itemId, purchaseType = 'direct') {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -1974,7 +1943,7 @@
                 }
             }
 
-            // FIXED Stars purchase function
+            // Stars purchase function
             window.buyStars = async function(amount) {
                 if (!currentUser) {
                     alert('Iltimos, avval tizimga kiring');
@@ -2004,7 +1973,7 @@
                 }
             }
 
-            // === PROFILE PAGE FUNCTIONS - FIXED ===
+            // Profile page functions
             window.openSellAccountPage = function() {
                 if (checkUserBlocked()) return;
                 navigateTo('sell-account-page');
@@ -2117,7 +2086,7 @@
                 }
             }
 
-            // FIXED Modal functions - NO CLOSE BUTTON
+            // Modal functions
             function createModal(content) {
                 const modalContainer = document.getElementById('modal-container');
                 modalContainer.innerHTML = `
@@ -2212,7 +2181,7 @@
                 }
             }
 
-            // FIXED Render functions - NO DEBUG TEXT
+            // CLEAN Render functions - NO DEBUG TEXT, NO 3-DOT MENU
             async function renderItems(category = null) {
                 try {
                     const items = await loadItems(category);
@@ -2225,35 +2194,17 @@
                             `<div class="currency-badge usd px-2 py-1 rounded text-xs font-bold">$${ad.price}</div>`;
                         
                         return `
-                            <div class="relative flex flex-col rounded-2xl ${cardClass} overflow-hidden cursor-pointer active:scale-95 transition-transform">
-                                <div class="three-dots-menu">
-                                    <button onclick="toggleDropdown(event, '${ad._id}')" class="p-2 text-white hover:bg-black/20 rounded-full">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                                        </svg>
-                                    </button>
-                                    <div id="dropdown-${ad._id}" class="dropdown-menu hidden">
-                                        <div class="dropdown-item" onclick="copyItemLink('${ad._id}')">
-                                            <span data-translate-key="copy_link">Havolani nusxalash</span>
-                                        </div>
-                                        <div class="dropdown-item" onclick="shareItem('${ad._id}')">
-                                            <span data-translate-key="share">Ulashish</span>
-                                        </div>
+                            <div onclick="openItemModal('${ad._id}')" class="relative flex flex-col rounded-2xl ${cardClass} overflow-hidden cursor-pointer active:scale-95 transition-transform">
+                                <img class="w-full h-auto aspect-square object-cover" src="${ad.images && ad.images[0] || 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game'}" alt="${ad.title}">
+                                <div class="p-3">
+                                    <p class="font-semibold truncate text-white">${ad.title}</p>
+                                    <p class="text-xs text-gray-300">#${ad._id.slice(-6)}</p>
+                                    ${ad.account_type ? `<p class="text-xs text-blue-400">${ad.account_type}</p>` : ''}
+                                    <div class="flex justify-between items-center mt-3">
+                                        ${currencyBadge}
+                                        ${ad.is_admin_item ? '<span class="text-xs text-yellow-400">⚡ Admin</span>' : '<span class="text-xs text-green-400">👤 User</span>'}
                                     </div>
-                                </div>
-                                
-                                <div onclick="openItemModal('${ad._id}')" class="flex-1">
-                                    <img class="w-full h-auto aspect-square object-cover" src="${ad.images && ad.images[0] || 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game'}" alt="${ad.title}">
-                                    <div class="p-3">
-                                        <p class="font-semibold truncate text-white">${ad.title}</p>
-                                        <p class="text-xs text-gray-300">#${ad._id.slice(-6)}</p>
-                                        ${ad.account_type ? `<p class="text-xs text-blue-400">${ad.account_type}</p>` : ''}
-                                        <div class="flex justify-between items-center mt-3">
-                                            ${currencyBadge}
-                                            ${ad.is_admin_item ? '<span class="text-xs text-yellow-400">⚡ Admin</span>' : '<span class="text-xs text-green-400">👤 User</span>'}
-                                        </div>
-                                        ${ad.status === 'sold' ? '<div class="absolute inset-0 bg-black/50 flex items-center justify-center"><span class="bg-red-600 text-white px-3 py-1 rounded-lg font-bold">SOTILDI</span></div>' : ''}
-                                    </div>
+                                    ${ad.status === 'sold' ? '<div class="absolute inset-0 bg-black/50 flex items-center justify-center"><span class="bg-red-600 text-white px-3 py-1 rounded-lg font-bold">SOTILDI</span></div>' : ''}
                                 </div>
                             </div>
                         `;
@@ -2264,30 +2215,8 @@
                     console.error('Error rendering items:', error);
                 }
             }
-
-            window.toggleDropdown = function(event, itemId) {
-                event.stopPropagation();
-                
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu.id !== `dropdown-${itemId}`) {
-                        menu.classList.add('hidden');
-                    }
-                });
-                
-                // Toggle current dropdown
-                const dropdown = document.getElementById(`dropdown-${itemId}`);
-                dropdown.classList.toggle('hidden');
-            }
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function() {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.classList.add('hidden');
-                });
-            });
             
-            // FIXED Item Modal - no bottom nav overlap, NO CLOSE BUTTON
+            // Item Modal
             window.openItemModal = function(adId) {
                 const ad = currentItems.find(item => item._id === adId);
                 if (!ad) return;
@@ -2431,6 +2360,9 @@
                 
                 let messageClass = 'chat-message ';
                 if (isUser) {
+                    messageClass += 'user';
+                } else if (isAdmin) {
+                    messageClass  {
                     messageClass += 'user';
                 } else if (isAdmin) {
                     messageClass += 'admin';
@@ -2706,7 +2638,7 @@
                 navContainer.appendChild(navElement);
             });
 
-            // Profile menu event listeners - FIXED
+            // Profile menu event listeners
             document.getElementById('sell-account-btn').addEventListener('click', openSellAccountPage);
             document.getElementById('my-listings-btn').addEventListener('click', openMyListingsPage);
             document.getElementById('my-purchases-btn').addEventListener('click', async () => {
