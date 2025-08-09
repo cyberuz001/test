@@ -15,63 +15,36 @@
             theme: {
                 extend: {
                     colors: {
-                        'tg-bg': '#212121',
-                        'tg-text': '#ffffff',
-                        'tg-hint': '#aaaaaa',
-                        'tg-link': '#62bcf9',
-                        'tg-button': '#5288c1',
-                        'tg-secondary-bg': '#2f2f2f',
-                        'tg-card': '#383838',
+                        'tg-bg': 'var(--tg-theme-bg-color, #17212b)',
+                        'tg-text': 'var(--tg-theme-text-color, #ffffff)',
+                        'tg-hint': 'var(--tg-theme-hint-color, #708499)',
+                        'tg-link': 'var(--tg-theme-link-color, #62bcf9)',
+                        'tg-button': 'var(--tg-theme-button-color, #5288c1)',
+                        'tg-secondary-bg': 'var(--tg-theme-secondary-bg-color, #222e3a)',
                     }
                 }
             }
         }
     </script>
     <style>
-        * {
-            box-sizing: border-box;
+        .nav-item.active { 
+            color: var(--tg-theme-link-color, #62bcf9) !important; 
         }
+        .category-btn.active { 
+            background-color: var(--tg-theme-button-color, #5288c1) !important; 
+            color: var(--tg-theme-button-text-color, #ffffff) !important; 
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         body {
-            background: #212121;
-            color: #ffffff;
-            overflow-x: hidden;
+            overflow: hidden;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            user-select: none;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            user-select: none; 
         }
 
-        /* Glass effect */
-        .glass {
-            background: rgba(47, 47, 47, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .glass-card {
-            background: rgba(56, 56, 56, 0.6);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Navigation */
-        .nav-item.active { 
-            color: #62bcf9 !important; 
-        }
-        
-        .category-btn.active { 
-            background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%) !important;
-            color: #ffffff !important; 
-        }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Page management */
         .page {
             display: none !important;
         }
@@ -84,86 +57,12 @@
             display: flex !important;
         }
 
-        /* Modal system */
-        .modal-overlay {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            background: #212121 !important;
-            z-index: 9999 !important;
-            display: flex !important;
-            flex-direction: column !important;
+        .carousel-container .swiper-button-next, 
+        .carousel-container .swiper-button-prev { 
+            color: #fff; 
         }
-
-        .modal-content {
-            width: 100% !important;
-            height: 100% !important;
-            background: #212121 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
-        }
-
-        .modal-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0;
-        }
-
-        .modal-footer {
-            padding: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0;
-            background: #212121;
-        }
-
-        /* Carousel */
-        .carousel-container .swiper-pagination {
-            display: none !important;
-        }
-
-        /* Chat system */
-        #chat-page {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 50;
-            background: #212121;
-        }
-
-        #chat-page main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        #chat-page header {
-            flex-shrink: 0;
-            padding: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: #2f2f2f;
-        }
-
-        #chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            min-height: 0;
-        }
-
-        #chat-page footer {
-            flex-shrink: 0;
-            padding: 12px 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: #2f2f2f;
+        .carousel-container .swiper-pagination-bullet-active { 
+            background: #fff; 
         }
 
         .chat-message {
@@ -175,7 +74,7 @@
         }
         
         .chat-message.user {
-            background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%);
+            background-color: var(--tg-theme-button-color, #5288c1);
             color: white;
             margin-left: auto;
             margin-right: 8px;
@@ -183,15 +82,14 @@
         }
         
         .chat-message.bot {
-            background: rgba(56, 56, 56, 0.8);
-            color: #ffffff;
+            background-color: var(--tg-theme-secondary-bg-color, #222e3a);
+            color: var(--tg-theme-text-color, #ffffff);
             margin-left: 8px;
             margin-right: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .chat-message.admin {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background-color: #10b981;
             color: white;
             margin-left: 8px;
             margin-right: auto;
@@ -200,12 +98,11 @@
         .typing-indicator {
             display: none;
             padding: 12px 16px;
-            background: rgba(56, 56, 56, 0.8);
+            background-color: var(--tg-theme-secondary-bg-color, #222e3a);
             border-radius: 18px;
             max-width: 80px;
             margin-left: 8px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .typing-indicator.show {
@@ -220,7 +117,7 @@
         .typing-dots span {
             width: 8px;
             height: 8px;
-            background-color: #aaaaaa;
+            background-color: var(--tg-theme-hint-color, #708499);
             border-radius: 50%;
             animation: typing 1.4s infinite ease-in-out;
         }
@@ -233,65 +130,206 @@
             40% { transform: scale(1); }
         }
 
-        /* Profile elements */
         .profile-photo {
             width: 96px;
             height: 96px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #62bcf9;
+            border: 3px solid var(--tg-theme-link-color, #62bcf9);
         }
 
-        /* FIXED Bottom navigation */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .image-upload-area {
+            border: 2px dashed var(--tg-theme-hint-color, #708499);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .image-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 2px solid var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .countdown-timer {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .admin-card {
+            background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%) !important;
+            border: 1px solid #62bcf9;
+        }
+
+        .user-card {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border: 1px solid #374151;
+        }
+
+        .profile-buttons {
+            padding-bottom: 100px;
+        }
+
+        .chat-header-admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #10b981;
+            border: 2px solid white;
+        }
+
+        .admin-status.offline {
+            background-color: #6b7280;
+        }
+
+        .chat-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buyer-admin-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            transition: all 0.3s;
+        }
+
+        .buyer-admin-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .buyer-admin-btn.offline {
+            background: #6b7280;
+            opacity: 0.7;
+        }
+
+        .contact-seller-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s;
+        }
+
+        .contact-seller-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        /* Bottom navigation fix */
         #bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            background: rgba(47, 47, 47, 0.95) !important;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--tg-theme-secondary-bg-color, #222e3a) !important;
             height: 60px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 8px;
         }
 
+        /* Navigation item colors fix */
         .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 2px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .nav-item span {
+            color: var(--tg-theme-hint-color, #708499);
+            transition: color 0.3s ease;
             font-size: 10px;
-            line-height: 1.2;
-            text-align: center;
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
         }
 
-        /* Main content padding */
+        .nav-item.active {
+            color: var(--tg-theme-link-color, #62bcf9) !important;
+        }
+
+        /* Main content padding to avoid overlap with bottom nav */
         main {
             padding-bottom: 70px;
         }
 
-        /* Profile buttons */
+        /* Chat page specific styles - COMPLETELY FIXED LAYOUT */
+        #chat-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 0 !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+        }
+
+        #chat-page main {
+            padding-bottom: 0 !important;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        #chat-page header {
+            flex-shrink: 0;
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            min-height: 0;
+        }
+
+        #chat-page footer {
+            flex-shrink: 0;
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        /* Profile page button styling */
         .profile-btn {
-            background: rgba(56, 56, 56, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
@@ -310,29 +348,22 @@
             border: 1px solid #10b981;
         }
 
+        .profile-btn.special:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
         .profile-btn.purple {
             background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
             border: 1px solid #8b5cf6;
         }
 
-        /* Cards - CLEAN TELEGRAM STYLE */
-        .admin-card {
-            background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%) !important;
-            border: 1px solid #62bcf9;
+        .profile-btn.purple:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
         }
 
-        .user-card {
-            background: rgba(56, 56, 56, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Admin panel */
+        /* Admin panel styles */
         .admin-section {
-            background: rgba(56, 56, 56, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 16px;
@@ -347,6 +378,14 @@
             color: white;
         }
 
+        .user-search-result {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
         /* Currency badges */
         .currency-badge.stars {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
@@ -358,109 +397,91 @@
             color: white;
         }
 
-        /* Blocked user page */
-        .blocked-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        /* Carousel image display */
-        .carousel-image-item {
-            width: 100%;
-            height: 120px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 12px;
-        }
-
-        .carousel-image-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-delete-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
+        /* TELEGRAM STYLE CARDS - Image on left, details on right */
+        .telegram-card {
+            background: var(--tg-theme-secondary-bg-color, #222e3a);
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
             cursor: pointer;
-        }
-
-        /* File upload styles */
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .file-upload input[type=file] {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .file-upload label {
-            display: block;
-            width: 100%;
-            padding: 12px 16px;
-            background: #2f2f2f;
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .file-upload label:hover {
-            border-color: #62bcf9;
-            background: rgba(98, 188, 249, 0.1);
-        }
-
-        /* Image upload button in chat */
-        .image-upload-btn {
-            width: 40px;
-            height: 40px;
-            background: #383838;
+            transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            margin-bottom: 8px;
         }
 
-        .image-upload-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .telegram-card:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Responsive improvements */
-        @media (max-width: 640px) {
-            .chat-message {
-                max-width: 90%;
-            }
-            
-            .nav-item span {
-                font-size: 9px;
-            }
+        .telegram-card:active {
+            transform: scale(0.98);
+        }
+
+        .telegram-card.admin {
+            background: linear-gradient(135deg, #5288c1 0%, #62bcf9 100%);
+            border: 1px solid #62bcf9;
+        }
+
+        .telegram-card-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .telegram-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .telegram-card-title {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1.2;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .telegram-card-subtitle {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color, #708499);
+            margin-bottom: 4px;
+        }
+
+        .telegram-card-price {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--tg-theme-link-color, #62bcf9);
+        }
+
+        .telegram-card.admin .telegram-card-price {
+            color: #fbbf24;
+        }
+
+        .telegram-card-badge {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .telegram-card-badge.admin {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .telegram-card-badge.user {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
         }
     </style>
 </head>
-<body>
+<body class="bg-tg-bg text-tg-text font-sans antialiased">
 
     <div id="app" class="h-screen w-screen flex flex-col">
         <main class="flex-grow overflow-y-auto">
@@ -468,12 +489,12 @@
              Home Page 
             <div id="home-page" class="page active">
                  Advertisement Carousel 
-                <div id="ads-carousel" class="swiper h-48 mb-4 rounded-b-2xl overflow-hidden carousel-container">
+                <div id="ads-carousel" class="swiper h-48 mb-4">
                     <div class="swiper-wrapper" id="ads-wrapper">
-                        <div class="swiper-slide">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Ptg8CTmOZ4TySqu1OuUxahJfJEcRKH.png" class="w-full h-full object-cover rounded-b-2xl" alt="Game Market">
-                        </div>
+                        <div class="swiper-slide"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20From%202025-08-04%2022-02-57-2djYOOkgifShDVdt0XnT0yWYm5lJwW.png" class="w-full h-full object-cover"></div>
+                        <div class="swiper-slide"><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-muPMwlHUma1EjXee8zwZfu43AtpdPJ.png" class="w-full h-full object-cover"></div>
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
                 
                  Categories 
@@ -483,9 +504,9 @@
                 
                  Items 
                 <div class="flex justify-between items-center px-4 pt-1 pb-3">
-                    <h2 class="text-2xl font-bold tracking-tight" data-translate-key="all_items">Barcha mahsulotlar</h2>
+                    <h2 class="text-xl font-bold tracking-tight" data-translate-key="all_items">Barcha mahsulotlar</h2>
                 </div>
-                <div id="card-container" class="px-4 pb-4 grid grid-cols-2 gap-4"></div>
+                <div id="card-container" class="px-4 pb-4"></div>
             </div>
 
              Buy Stars Page 
@@ -500,8 +521,8 @@
                     <p class="text-tg-hint text-center mb-8" data-translate-key="stars_description">Yulduzlar bilan admin akkauntlarini sotib oling</p>
                 </div>
                 
-                <div class="space-y-3">
-                    <div onclick="buyStars(10)" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                <div class="space-y-3 profile-buttons">
+                    <div onclick="buyStars(10)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-lg">10</span>
@@ -516,7 +537,7 @@
                         </svg>
                     </div>
                     
-                    <div onclick="buyStars(50)" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div onclick="buyStars(50)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-lg">50</span>
@@ -531,7 +552,7 @@
                         </svg>
                     </div>
                     
-                    <div onclick="buyStars(100)" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div onclick="buyStars(100)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-violet-400 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-lg">100</span>
@@ -546,7 +567,7 @@
                         </svg>
                     </div>
 
-                    <div onclick="buyStars(500)" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div onclick="buyStars(500)" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-400 rounded-full flex items-center justify-center">
                                 <span class="text-white font-bold text-sm">500</span>
@@ -589,7 +610,7 @@
                     </div>
                 </div>
                 
-                <div class="px-4 flex flex-col gap-3 pb-20">
+                <div class="px-4 flex flex-col gap-3 profile-buttons">
                      Sell Account Button 
                     <div id="sell-account-btn" class="profile-btn special p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
@@ -604,7 +625,7 @@
                     </div>
                     
                      My Listings Button 
-                    <div id="my-listings-btn" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="my-listings-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -616,7 +637,20 @@
                         </svg>
                     </div>
                     
-                    <div id="my-purchases-btn" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                     Advertise Button 
+                    <div id="advertise-btn" class="profile-btn purple p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                            </svg>
+                            <span class="font-medium text-white" data-translate-key="advertise">Reklama berish</span>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                    
+                    <div id="my-purchases-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.328 1.093-.826l1.821-6.831c.13-.483-.145-.996-.644-1.17a48.11 48.11 0 00-1.821-.545A48.11 48.11 0 007.5 4.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -627,8 +661,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    
-                    <div id="help-btn" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="help-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
@@ -639,8 +672,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    
-                    <div id="support-btn" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="support-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.325 3.218.086 6.533-.533 9.491-2.311A2.25 2.25 0 0021 18.75V7.5a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 7.5v1.51z" />
@@ -651,8 +683,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
-                    
-                    <div id="language-btn" class="profile-btn glass-card p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
+                    <div id="language-btn" class="profile-btn p-4 rounded-xl flex justify-between items-center cursor-pointer active:scale-[0.98]">
                         <div class="flex items-center gap-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-tg-hint">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502Z" />
@@ -666,12 +697,12 @@
                 </div>
             </div>
 
-             Admin Panel Page 
+             Enhanced Admin Panel Page 
             <div id="admin-panel-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="admin_panel">Admin Panel</h2>
                 
                  Analytics Section 
-                <div class="admin-section glass">
+                <div class="admin-section">
                     <h3 class="font-bold mb-4">📊 Statistika</h3>
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div class="stat-card">
@@ -695,20 +726,17 @@
                 </div>
 
                  User Management Section 
-                <div class="admin-section glass">
+                <div class="admin-section">
                     <h3 class="font-bold mb-4">👥 Foydalanuvchilarni boshqarish</h3>
                     <div class="space-y-3">
                         <input type="text" id="user-search" placeholder="ID, username yoki ism bo'yicha qidirish" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                        <div class="flex gap-2">
-                            <button onclick="searchUsers()" class="flex-1 bg-blue-600 text-white font-bold py-2 rounded-lg">Qidirish</button>
-                            <button onclick="listAllUsers()" class="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg">Barcha foydalanuvchilar</button>
-                        </div>
+                        <button onclick="searchUsers()" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg">Qidirish</button>
                         <div id="user-search-results" class="space-y-2"></div>
                     </div>
                 </div>
 
                  Role Assignment Section 
-                <div class="admin-section glass">
+                <div class="admin-section">
                     <h3 class="font-bold mb-4">🔐 Rollarni tayinlash</h3>
                     <div class="space-y-3">
                         <input type="number" id="target-user-id" placeholder="Telegram ID" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
@@ -723,65 +751,50 @@
                 </div>
 
                  System Settings Section 
-                <div class="admin-section glass">
+                <div class="admin-section">
                     <h3 class="font-bold mb-4">⚙️ Tizim sozlamalari</h3>
                     <div class="space-y-3">
                         <label class="flex items-center justify-between">
-                            <span>Admin orqali xarid (25 yulduz)</span>
+                            <span>Admin orqali xarid</span>
                             <input type="checkbox" id="admin-purchase-toggle" class="rounded">
                         </label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="text-sm text-tg-hint">Admin yordam narxi (yulduz)</label>
-                                <input type="number" id="buyer-admin-cost" placeholder="25" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            </div>
-                            <div>
-                                <label class="text-sm text-tg-hint">E'lon narxi (yulduz)</label>
-                                <input type="number" id="listing-cost" placeholder="10" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            </div>
+                        <div class="flex gap-2">
+                            <input type="number" id="buyer-admin-cost" placeholder="Admin yordam narxi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <span class="flex items-center text-sm text-tg-hint">yulduz</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="number" id="listing-cost" placeholder="E'lon narxi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <span class="flex items-center text-sm text-tg-hint">yulduz</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="number" id="commission-rate" placeholder="Komissiya foizi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <span class="flex items-center text-sm text-tg-hint">%</span>
                         </div>
                         <button onclick="updateSystemSettings()" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg">Sozlamalarni yangilash</button>
                     </div>
                 </div>
 
-                 Carousel Management 
-                <div class="admin-section glass">
-                    <h3 class="font-bold mb-4">🎠 Carousel boshqaruvi</h3>
+                 Ad Package Management 
+                <div class="admin-section">
+                    <h3 class="font-bold mb-4">📢 Reklama paketlari</h3>
                     <div class="space-y-3">
-                        <div class="file-upload">
-                            <input type="file" id="carousel-image-input" accept="image/*">
-                            <label for="carousel-image-input">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mx-auto mb-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-                                </svg>
-                                <span>Rasm yuklash uchun bosing</span>
-                            </label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="number" id="basic-ad-price" placeholder="Asosiy narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <input type="number" id="premium-ad-price" placeholder="Premium narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <input type="number" id="vip-ad-price" placeholder="VIP narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
                         </div>
-                        <button onclick="addCarouselItem()" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg">Carousel ga qo'shish</button>
-                        
-                        <div id="carousel-images-list" class="space-y-3"></div>
+                        <button onclick="updateAdPackages()" class="w-full bg-purple-600 text-white font-bold py-2 rounded-lg">Reklama narxlarini yangilash</button>
                     </div>
                 </div>
             </div>
 
-             Sell Account Page 
+             Sell Account Page - USD PRICING 
             <div id="sell-account-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4">💰 Account Sotish</h2>
-                <div class="glass-card rounded-lg p-3 mb-4">
+                <div class="bg-yellow-600/20 border border-yellow-600 rounded-lg p-3 mb-4">
                     <p class="text-sm">💡 <strong>Eslatma:</strong> Siz USD da narx belgilaysiz. Xaridorlar admin orqali yoki to'g'ridan-to'g'ri siz bilan bog'lanadi.</p>
                 </div>
                 <form id="sell-account-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Account turi</label>
-                        <select id="sell-account-type" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <option value="Twitter">Twitter</option>
-                            <option value="Google">Google</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="TikTok">TikTok</option>
-                            <option value="Other">Boshqa</option>
-                        </select>
-                    </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">O'yin kategoriyasi</label>
                         <select id="sell-category" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
@@ -797,14 +810,6 @@
                         <input type="text" id="sell-title" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" placeholder="Masalan: PUBG Level 50 Account">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">Login</label>
-                        <input type="text" id="sell-login" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" placeholder="Login yoki email">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Parol</label>
-                        <input type="text" id="sell-password" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2" placeholder="Parol">
-                    </div>
-                    <div>
                         <label class="block text-sm font-medium mb-2">Tavsif</label>
                         <textarea id="sell-description" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2 h-24" placeholder="Account haqida batafsil ma'lumot..."></textarea>
                     </div>
@@ -814,24 +819,20 @@
                         <p class="text-xs text-tg-hint mt-1">Narx USD da belgilanadi</p>
                     </div>
                     <div>
+                        <label class="block text-sm font-medium mb-2">Rasmlar (1-3 ta)</label>
+                        <div class="image-upload-area" onclick="document.getElementById('sell-images').click()">
+                            <p>Rasmlarni yuklash uchun bosing</p>
+                            <input type="file" id="sell-images" multiple accept="image/*" class="hidden">
+                        </div>
+                        <div id="sell-image-previews" class="flex gap-2 mt-2"></div>
+                    </div>
+                    <div>
                         <label class="block text-sm font-medium mb-2">E'lon muddati</label>
                         <select id="sell-duration" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
                             <option value="7">7 kun (10 yulduz)</option>
                             <option value="14">14 kun (18 yulduz)</option>
                             <option value="30">30 kun (35 yulduz)</option>
                         </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Account rasmi</label>
-                        <div class="file-upload">
-                            <input type="file" id="account-image-input" accept="image/*">
-                            <label for="account-image-input">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mx-auto mb-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                </svg>
-                                <span>Account rasmini yuklang</span>
-                            </label>
-                        </div>
                     </div>
                     <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg">E'lon yaratish</button>
                 </form>
@@ -853,23 +854,76 @@
                 </div>
             </div>
 
+             Advertise Page 
+            <div id="advertise-page" class="page p-4">
+                <h2 class="text-xl font-bold mb-4">📢 Reklama berish</h2>
+                <div id="advertise-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">E'lonni tanlang</label>
+                        <select id="advertise-listing" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            <option value="">E'lonni tanlang...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Reklama paketi</label>
+                        <div class="space-y-2">
+                            <div class="border border-gray-600 rounded-lg p-3 cursor-pointer hover:bg-white/5" onclick="selectAdPackage('basic')">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-bold">Asosiy paket</h4>
+                                        <p class="text-sm text-tg-hint">3 kun davomida</p>
+                                    </div>
+                                    <div class="text-lg font-bold">50 ⭐</div>
+                                </div>
+                            </div>
+                            <div class="border border-gray-600 rounded-lg p-3 cursor-pointer hover:bg-white/5" onclick="selectAdPackage('premium')">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-bold">Premium paket</h4>
+                                        <p class="text-sm text-tg-hint">7 kun davomida</p>
+                                    </div>
+                                    <div class="text-lg font-bold">100 ⭐</div>
+                                </div>
+                            </div>
+                            <div class="border border-gray-600 rounded-lg p-3 cursor-pointer hover:bg-white/5" onclick="selectAdPackage('vip')">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-bold">VIP paket</h4>
+                                        <p class="text-sm text-tg-hint">14 kun davomida</p>
+                                    </div>
+                                    <div class="text-lg font-bold">200 ⭐</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="create-ad-btn" onclick="createAdvertisement()" class="w-full bg-purple-600 text-white font-bold py-3 rounded-lg" disabled>Reklama yaratish</button>
+                </div>
+            </div>
+            
              Help Page 
             <div id="help-page" class="page p-4">
                 <h2 class="text-xl font-bold text-center mb-4" data-translate-key="help_title">Yordam Markazi</h2>
                 <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
-             Chat Page 
+             Chat Page - COMPLETELY FIXED LAYOUT 
             <div id="chat-page" class="page">
                 <main>
-                    <header class="glass flex items-center justify-between">
-                        <div class="flex items-center gap-3">
+                    <header class="flex items-center justify-between">
+                        <div class="chat-header-admin">
                             <img id="chat-admin-photo" src="https://via.placeholder.com/40/2ea6ff/ffffff?text=AI" class="w-10 h-10 rounded-full">
                             <div>
                                 <h3 id="chat-admin-name" class="font-bold" data-translate-key="support">Qo'llab-quvvatlash</h3>
                                 <p id="chat-admin-status" class="text-sm text-tg-hint" data-translate-key="ai_assistant">AI Assistant</p>
                             </div>
-                            <div id="chat-admin-indicator" class="w-3 h-3 bg-green-500 rounded-full hidden"></div>
+                            <div id="chat-admin-indicator" class="admin-status hidden"></div>
+                        </div>
+                        <div class="chat-actions">
+                            <button id="close-chat-btn" class="hidden p-2 rounded-full hover:bg-white/10" onclick="closeSupportSession()">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
                     </header>
                     
@@ -888,19 +942,8 @@
                     </div>
                 </main>
                 
-                <footer class="glass flex items-center gap-3">
-                     Image Upload Button 
-                    <div class="image-upload-btn" onclick="document.getElementById('chat-image-input').click()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-tg-hint">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                        </svg>
-                    </div>
-                    <input type="file" id="chat-image-input" accept="image/*" style="display: none;" onchange="handleChatImageUpload(this)">
-                    
-                     Text Input 
-                    <input type="text" id="chat-input" data-translate-key="message_placeholder" placeholder="Xabar yozing..." class="flex-1 bg-transparent rounded-full py-2 px-4 focus:outline-none border border-gray-600 focus:border-tg-link">
-                    
-                     Send Button 
+                <footer class="flex items-center gap-2">
+                    <input type="text" id="chat-input" data-translate-key="message_placeholder" placeholder="Xabar yozing..." class="flex-1 bg-tg-bg rounded-full py-2 px-4 focus:outline-none border border-gray-600">
                     <button id="send-message-btn" class="w-10 h-10 bg-tg-button rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -909,22 +952,11 @@
                 </footer>
             </div>
 
-             Blocked User Page 
-            <div id="blocked-page" class="page blocked-page hidden">
-                <img id="blocked-profile-photo" class="profile-photo mb-4" src="https://via.placeholder.com/96/ff0000/ffffff?text=X" alt="Blocked">
-                <h2 id="blocked-profile-name" class="text-2xl font-bold mb-2">Foydalanuvchi</h2>
-                <div class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg mb-6">
-                    <p>Siz bloklangansiz</p>
-                </div>
-                <button onclick="navigateTo('chat-page')" class="bg-tg-button text-white font-bold py-2 px-6 rounded-lg">
-                    Qo'llab-quvvatlash
-                </button>
-            </div>
-
         </main>
         
          Bottom Navigation 
-        <footer id="bottom-nav"></footer>
+        <footer id="bottom-nav" class="h-16 backdrop-blur-xl border-t border-gray-700/50 flex justify-around items-center">
+        </footer>
     </div>
     
      Modal Container 
@@ -932,7 +964,7 @@
 
      Language Modal 
     <div id="language-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
-        <div class="glass rounded-2xl w-full max-w-sm p-4">
+        <div class="bg-tg-secondary-bg rounded-2xl w-full max-w-sm p-4">
             <h3 class="text-lg font-bold text-center mb-4" data-translate-key="select_language">Tilni tanlang</h3>
             <div class="flex flex-col gap-2">
                 <button onclick="selectLanguage('uz')" class="w-full text-left p-3 rounded-lg hover:bg-white/10">O'zbekcha</button>
@@ -960,7 +992,6 @@
             let currentSupportAdmin = null;
             let systemSettings = {};
             let selectedAdPackage = null;
-            let carouselItems = [];
             
             const categories = ['All', 'PUBG', 'Free Fire', 'Mobile Legends', 'CSGO', 'Valorant'];
             
@@ -1026,37 +1057,32 @@
                     update_settings: "Sozlamalarni yangilash",
                     no_purchases: "Hozircha xaridlar yo'q",
                     no_listings: "Hozircha e'lonlar yo'q",
-                    history_empty: "Tarix funksiyasi tez kunda qo'shiladi",
-                    copy_link: "Havolani nusxalash",
-                    share: "Ulashish",
-                    edit: "Tahrirlash",
-                    delete: "O'chirish",
-                    mark_sold: "Sotildi deb belgilash"
+                    history_empty: "Tarix funksiyasi tez kunda qo'shiladi"
                 },
-                'ru': {
-                    home: 'Главная',
-                    all_items: 'Все товары',
-                    buy_stars_nav: 'Звезды',
-                    buy_stars: 'Купить Звезды',
-                    history: 'История',
-                    profile: 'Профиль',
-                    my_purchases: "Мои покупки",
+                'ru': { 
+                    home: 'Главная', 
+                    all_items: 'Все товары', 
+                    buy_stars_nav: 'Звезды', 
+                    buy_stars: 'Купить Звезды', 
+                    history: 'История', 
+                    profile: 'Профиль', 
+                    my_purchases: "Мои покупки", 
                     my_listings: "Мои объявления",
                     sell_account: "Продать аккаунт",
                     advertise: "Реклама",
-                    help: "Помощь",
-                    support: "Поддержка",
-                    language: "Сменить язык",
-                    help_title: "Центр помощи",
-                    help_content: "Если у вас есть вопросы, обратитесь в службу поддержки.",
-                    support_chat: "Чат с поддержкой",
-                    message_placeholder: "Напишите сообщение...",
-                    coming_soon: "Этот раздел скоро будет доступен.",
-                    no_history: "Пока нет транзакций.",
-                    login: "Логин",
-                    password: "Пароль",
-                    info: "Информация",
-                    chat_placeholder: 'Это заглушка для чата.',
+                    help: "Помощь", 
+                    support: "Поддержка", 
+                    language: "Сменить язык", 
+                    help_title: "Центр помощи", 
+                    help_content: "Если у вас есть вопросы, обратитесь в службу поддержки.", 
+                    support_chat: "Чат с поддержкой", 
+                    message_placeholder: "Напишите сообщение...", 
+                    coming_soon: "Этот раздел скоро будет доступен.", 
+                    no_history: "Пока нет транзакций.", 
+                    login: "Логин", 
+                    password: "Пароль", 
+                    info: "Информация", 
+                    chat_placeholder: 'Это заглушка для чата.', 
                     chat_welcome: 'Привет! Добро пожаловать в Game Market! Как я могу вам помочь?',
                     select_language: "Выберите язык",
                     admin_purchase: "Купить через админа",
@@ -1094,37 +1120,32 @@
                     update_settings: "Обновить настройки",
                     no_purchases: "Пока нет покупок",
                     no_listings: "Пока нет объявлений",
-                    history_empty: "Функция истории скоро будет добавлена",
-                    copy_link: "Копировать ссылку",
-                    share: "Поделиться",
-                    edit: "Редактировать",
-                    delete: "Удалить",
-                    mark_sold: "Отметить как проданное"
+                    history_empty: "Функция истории скоро будет добавлена"
                 },
-                'en': {
-                    home: 'Home',
-                    all_items: 'All Items',
-                    buy_stars_nav: 'Stars',
-                    buy_stars: 'Buy Stars',
-                    history: 'History',
-                    profile: 'Profile',
-                    my_purchases: "My Purchases",
+                'en': { 
+                    home: 'Home', 
+                    all_items: 'All Items', 
+                    buy_stars_nav: 'Stars', 
+                    buy_stars: 'Buy Stars', 
+                    history: 'History', 
+                    profile: 'Profile', 
+                    my_purchases: "My Purchases", 
                     my_listings: "My Listings",
                     sell_account: "Sell Account",
                     advertise: "Advertise",
-                    help: "Help",
-                    support: "Support",
-                    language: "Change Language",
-                    help_title: "Help Center",
-                    help_content: "If you have any questions, please contact support.",
-                    support_chat: "Support Chat",
-                    message_placeholder: "Write a message...",
-                    coming_soon: "This section will be available soon.",
-                    no_history: "No transactions yet.",
-                    login: "Login",
-                    password: "Password",
-                    info: "Information",
-                    chat_placeholder: 'This is a chat placeholder.',
+                    help: "Help", 
+                    support: "Support", 
+                    language: "Change Language", 
+                    help_title: "Help Center", 
+                    help_content: "If you have any questions, please contact support.", 
+                    support_chat: "Support Chat", 
+                    message_placeholder: "Write a message...", 
+                    coming_soon: "This section will be available soon.", 
+                    no_history: "No transactions yet.", 
+                    login: "Login", 
+                    password: "Password", 
+                    info: "Information", 
+                    chat_placeholder: 'This is a chat placeholder.', 
                     chat_welcome: 'Hello! Welcome to Game Market! How can I help you?',
                     select_language: "Select Language",
                     admin_purchase: "Buy via Admin",
@@ -1162,37 +1183,32 @@
                     update_settings: "Update Settings",
                     no_purchases: "No purchases yet",
                     no_listings: "No listings yet",
-                    history_empty: "History feature will be added soon",
-                    copy_link: "Copy Link",
-                    share: "Share",
-                    edit: "Edit",
-                    delete: "Delete",
-                    mark_sold: "Mark as Sold"
+                    history_empty: "History feature will be added soon"
                 },
-                'ja': {
-                    home: 'ホーム',
-                    all_items: 'すべての商品',
-                    buy_stars_nav: 'スター',
-                    buy_stars: 'スターを購入',
-                    history: '履歴',
-                    profile: 'プロフィール',
-                    my_purchases: "私の購入",
+                'ja': { 
+                    home: 'ホーム', 
+                    all_items: 'すべての商品', 
+                    buy_stars_nav: 'スター', 
+                    buy_stars: 'スターを購入', 
+                    history: '履歴', 
+                    profile: 'プロフィール', 
+                    my_purchases: "私の購入", 
                     my_listings: "私のリスト",
                     sell_account: "アカウント販売",
                     advertise: "広告",
-                    help: "ヘルプ",
-                    support: "サポート",
-                    language: "言語を変更",
-                    help_title: "ヘルプセンター",
-                    help_content: "ご不明な点がございましたら、サポートにお問い合わせください。",
-                    support_chat: "サポートチャット",
-                    message_placeholder: "メッセージを書いてください...",
-                    coming_soon: "このセクションは間もなく利用可能になります。",
-                    no_history: "まだ取引はありません。",
-                    login: "ログイン",
-                    password: "パスワード",
-                    info: "情報",
-                    chat_placeholder: 'これはチャットのプレースホルダーです。',
+                    help: "ヘルプ", 
+                    support: "サポート", 
+                    language: "言語を変更", 
+                    help_title: "ヘルプセンター", 
+                    help_content: "ご不明な点がございましたら、サポートにお問い合わせください。", 
+                    support_chat: "サポートチャット", 
+                    message_placeholder: "メッセージを書いてください...", 
+                    coming_soon: "このセクションは間もなく利用可能になります。", 
+                    no_history: "まだ取引はありません。", 
+                    login: "ログイン", 
+                    password: "パスワード", 
+                    info: "情報", 
+                    chat_placeholder: 'これはチャットのプレースホルダーです。', 
                     chat_welcome: 'こんにちは！Game Marketへようこそ！どのようにお手伝いできますか？',
                     select_language: "言語を選択",
                     admin_purchase: "管理者経由で購入",
@@ -1230,12 +1246,7 @@
                     update_settings: "設定を更新",
                     no_purchases: "まだ購入はありません",
                     no_listings: "まだリストはありません",
-                    history_empty: "履歴機能は間もなく追加されます",
-                    copy_link: "リンクをコピー",
-                    share: "共有",
-                    edit: "編集",
-                    delete: "削除",
-                    mark_sold: "売却済みとしてマーク"
+                    history_empty: "履歴機能は間もなく追加されます"
                 }
             };
             let currentLanguage = 'uz';
@@ -1297,76 +1308,7 @@
                 return await apiCall(`/users/${telegramId}`);
             }
 
-            // Check if user is blocked
-            function checkUserBlocked() {
-                if (currentUser && currentUser.is_banned) {
-                    showBlockedPage();
-                    return true;
-                }
-                return false;
-            }
-
-            function showBlockedPage() {
-                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-                document.getElementById('blocked-page').classList.remove('hidden');
-                document.getElementById('blocked-page').classList.add('active');
-                document.getElementById('bottom-nav').style.display = 'none';
-                
-                // Update blocked page info
-                if (currentUser) {
-                    const blockedPhoto = document.getElementById('blocked-profile-photo');
-                    const blockedName = document.getElementById('blocked-profile-name');
-                    
-                    if (currentUser.photo_url) {
-                        blockedPhoto.src = currentUser.photo_url;
-                    }
-                    blockedName.textContent = `${currentUser.first_name} ${currentUser.last_name || ''}`.trim();
-                }
-            }
-
-            // File upload helper function
-            function handleFileUpload(input, callback) {
-                const file = input.files[0];
-                if (!file) return;
-                
-                // For demo, we'll use a placeholder URL
-                // In real app, upload to your server/cloud storage
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    callback(e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-
-            // Chat image upload handler
-            window.handleChatImageUpload = function(input) {
-                const file = input.files[0];
-                if (!file) return;
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Add image message to chat
-                    const messagesContainer = document.getElementById('chat-messages');
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = 'chat-message user';
-                    messageDiv.innerHTML = `<img src="${e.target.result}" class="max-w-full h-auto rounded-lg" alt="Uploaded image">`;
-                    messagesContainer.appendChild(messageDiv);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    
-                    // Send to AI for processing
-                    showTypingIndicator();
-                    setTimeout(() => {
-                        hideTypingIndicator();
-                        addChatMessage('Rasm qabul qilindi. Sizga qanday yordam bera olaman?');
-                    }, 1500);
-                };
-                reader.readAsDataURL(file);
-                
-                // Clear input
-                input.value = '';
-            }
-
-            // === ENHANCED ADMIN FUNCTIONS ===
+            // Admin functions
             window.assignRole = async function() {
                 const targetId = parseInt(document.getElementById('target-user-id').value);
                 const role = document.getElementById('role-select').value;
@@ -1400,96 +1342,22 @@
                         query: query
                     });
                     
-                    displayUserSearchResults(result.users);
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
-            }
-
-            window.listAllUsers = async function() {
-                try {
-                    const result = await apiCall(`/admin/users/list?admin_telegram_id=${currentUser.telegram_id}`);
-                    displayUserSearchResults(result.users);
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
-            }
-
-            function displayUserSearchResults(users) {
-                const container = document.getElementById('user-search-results');
-                container.innerHTML = users.map(user => `
-                    <div class="glass-card rounded-lg p-3">
-                        <div class="flex justify-between items-center">
-                            <div class="flex-1">
-                                <h4 class="font-bold">${user.first_name} ${user.last_name || ''}</h4>
-                                <p class="text-sm text-tg-hint">@${user.username || 'N/A'} • ID: ${user.telegram_id}</p>
-                                <p class="text-sm">Balans: ${user.balance || 0} ⭐ • Rol: ${user.role}</p>
-                                <p class="text-xs text-tg-hint">Ro'yxatdan o'tgan: ${new Date(user.created_at).toLocaleDateString()}</p>
-                            </div>
-                            <div class="flex flex-col gap-1">
-                                <button onclick="showUserDetails(${user.telegram_id})" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">Ko'rish</button>
-                                <button onclick="addUserBalance(${user.telegram_id})" class="bg-green-600 text-white px-3 py-1 rounded text-sm">+⭐</button>
-                                <button onclick="deductUserBalance(${user.telegram_id})" class="bg-orange-600 text-white px-3 py-1 rounded text-sm">-⭐</button>
-                                <button onclick="blockUser(${user.telegram_id}, ${!user.is_banned})" class="bg-red-600 text-white px-3 py-1 rounded text-sm">${user.is_banned ? 'Unblock' : 'Block'}</button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            window.showUserDetails = async function(userId) {
-                try {
-                    const result = await apiCall(`/admin/users/${userId}/details?admin_telegram_id=${currentUser.telegram_id}`);
-                    const user = result.user;
-                    const purchases = result.purchases;
-                    const listings = result.listings;
-                    const transactions = result.transactions;
-                    
-                    const modalContent = `
-                        <div class="modal-body p-4">
-                            <div class="flex items-center gap-4 mb-6">
-                                <img src="${user.photo_url || `https://via.placeholder.com/64/2ea6ff/ffffff?text=${user.first_name?.charAt(0) || 'U'}`}" class="w-16 h-16 rounded-full">
+                    const container = document.getElementById('user-search-results');
+                    container.innerHTML = result.users.map(user => `
+                        <div class="user-search-result">
+                            <div class="flex justify-between items-center">
                                 <div>
-                                    <h3 class="text-xl font-bold">${user.first_name} ${user.last_name || ''}</h3>
-                                    <p class="text-tg-hint">@${user.username || 'N/A'} • ID: ${user.telegram_id}</p>
+                                    <h4 class="font-bold">${user.first_name} ${user.last_name || ''}</h4>
+                                    <p class="text-sm text-tg-hint">@${user.username || 'N/A'} • ID: ${user.telegram_id}</p>
                                     <p class="text-sm">Balans: ${user.balance || 0} ⭐ • Rol: ${user.role}</p>
                                 </div>
-                            </div>
-                            
-                            <div class="space-y-4">
-                                <div>
-                                    <h4 class="font-bold mb-2">📊 Statistika</h4>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="glass-card p-3 rounded-lg text-center">
-                                            <div class="text-lg font-bold">${purchases.length}</div>
-                                            <div class="text-sm text-tg-hint">Xaridlar</div>
-                                        </div>
-                                        <div class="glass-card p-3 rounded-lg text-center">
-                                            <div class="text-lg font-bold">${listings.length}</div>
-                                            <div class="text-sm text-tg-hint">E'lonlar</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h4 class="font-bold mb-2">💰 So'nggi tranzaksiyalar</h4>
-                                    <div class="space-y-2 max-h-40 overflow-y-auto">
-                                        ${transactions.slice(0, 5).map(t => `
-                                            <div class="glass-card p-2 rounded text-sm">
-                                                <div class="flex justify-between">
-                                                    <span>${t.description}</span>
-                                                    <span class="${t.amount > 0 ? 'text-green-400' : 'text-red-400'}">${t.amount > 0 ? '+' : ''}${t.amount} ⭐</span>
-                                                </div>
-                                                <div class="text-xs text-tg-hint">${new Date(t.timestamp).toLocaleString()}</div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
+                                <div class="flex gap-2">
+                                    <button onclick="addUserBalance(${user.telegram_id})" class="bg-green-600 text-white px-3 py-1 rounded text-sm">+⭐</button>
+                                    <button onclick="blockUser(${user.telegram_id}, ${!user.is_banned})" class="bg-red-600 text-white px-3 py-1 rounded text-sm">${user.is_banned ? 'Unblock' : 'Block'}</button>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    
-                    createModal(modalContent);
+                    `).join('');
                 } catch (error) {
                     alert('Xatolik: ' + error.message);
                 }
@@ -1497,7 +1365,7 @@
 
             window.addUserBalance = async function(userId) {
                 const amount = prompt('Qancha yulduz qo\'shmoqchisiz?');
-                if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
+                if (!amount || isNaN(amount)) return;
                 
                 try {
                     await apiCall('/users/add-balance', 'POST', {
@@ -1506,45 +1374,13 @@
                     });
                     
                     alert('Yulduz muvaffaqiyatli qo\'shildi');
-                    // Refresh search results
-                    const query = document.getElementById('user-search').value.trim();
-                    if (query) {
-                        searchUsers();
-                    } else {
-                        listAllUsers();
-                    }
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
-            }
-
-            window.deductUserBalance = async function(userId) {
-                const amount = prompt('Qancha yulduz ayirmoqchisiz?');
-                if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
-                
-                try {
-                    await apiCall('/users/add-balance', 'POST', {
-                        telegram_id: userId,
-                        amount: -parseFloat(amount)
-                    });
-                    
-                    alert('Yulduz muvaffaqiyatli ayirildi');
-                    // Refresh search results
-                    const query = document.getElementById('user-search').value.trim();
-                    if (query) {
-                        searchUsers();
-                    } else {
-                        listAllUsers();
-                    }
+                    searchUsers();
                 } catch (error) {
                     alert('Xatolik: ' + error.message);
                 }
             }
 
             window.blockUser = async function(userId, isBlocked) {
-                const action = isBlocked ? 'bloklash' : 'blokdan chiqarish';
-                if (!confirm(`Haqiqatan ham bu foydalanuvchini ${action}ni xohlaysizmi?`)) return;
-                
                 try {
                     await apiCall('/admin/users/block', 'POST', {
                         admin_telegram_id: currentUser.telegram_id,
@@ -1553,23 +1389,17 @@
                     });
                     
                     alert(isBlocked ? 'Foydalanuvchi bloklandi' : 'Foydalanuvchi blokdan chiqarildi');
-                    // Refresh search results
-                    const query = document.getElementById('user-search').value.trim();
-                    if (query) {
-                        searchUsers();
-                    } else {
-                        listAllUsers();
-                    }
+                    searchUsers();
                 } catch (error) {
                     alert('Xatolik: ' + error.message);
                 }
             }
 
-            // System Settings Update
             window.updateSystemSettings = async function() {
                 const adminPurchaseEnabled = document.getElementById('admin-purchase-toggle').checked;
                 const buyerAdminCost = parseInt(document.getElementById('buyer-admin-cost').value) || 25;
                 const listingCost = parseInt(document.getElementById('listing-cost').value) || 10;
+                const commissionRate = parseFloat(document.getElementById('commission-rate').value) || 0.1;
                 
                 try {
                     await apiCall('/admin/settings', 'POST', {
@@ -1579,7 +1409,7 @@
                             admin_purchase_enabled: adminPurchaseEnabled,
                             buyer_admin_cost: buyerAdminCost,
                             listing_cost: listingCost,
-                            commission_rate: 0.1
+                            commission_rate: commissionRate / 100
                         }
                     });
                     
@@ -1590,64 +1420,29 @@
                 }
             }
 
-            // Carousel Management
-            window.addCarouselItem = async function() {
-                const imageInput = document.getElementById('carousel-image-input');
-                if (!imageInput.files[0]) {
-                    alert('Iltimos, rasm tanlang');
-                    return;
-                }
-                
-                // For demo purposes, we'll use base64. In production, upload to server
-                const reader = new FileReader();
-                reader.onload = async function(e) {
-                    try {
-                        await apiCall('/carousel', 'POST', {
-                            admin_telegram_id: currentUser.telegram_id,
-                            image_url: e.target.result, // In production, use actual uploaded URL
-                            title: '',
-                            description: '',
-                            order: carouselItems.length + 1
-                        });
-                        
-                        alert('Carousel item qo\'shildi');
-                        imageInput.value = '';
-                        await loadCarousel();
-                        displayCarouselImages();
-                    } catch (error) {
-                        alert('Xatolik: ' + error.message);
-                    }
-                };
-                reader.readAsDataURL(imageInput.files[0]);
-            }
-
-            window.deleteCarouselItem = async function(itemId) {
-                if (!confirm('Bu rasmni carousel dan olib tashlamoqchimisiz?')) return;
+            window.updateAdPackages = async function() {
+                const basicPrice = parseInt(document.getElementById('basic-ad-price').value) || 50;
+                const premiumPrice = parseInt(document.getElementById('premium-ad-price').value) || 100;
+                const vipPrice = parseInt(document.getElementById('vip-ad-price').value) || 200;
                 
                 try {
-                    await apiCall(`/carousel/${itemId}?admin_telegram_id=${currentUser.telegram_id}`, 'DELETE');
-                    alert('Carousel item o\'chirildi');
-                    await loadCarousel();
-                    displayCarouselImages();
+                    await apiCall('/admin/settings', 'POST', {
+                        admin_telegram_id: currentUser.telegram_id,
+                        type: 'ad_packages',
+                        data: {
+                            packages: {
+                                basic: { price: basicPrice, duration_days: 3, name: "Asosiy" },
+                                premium: { price: premiumPrice, duration_days: 7, name: "Premium" },
+                                vip: { price: vipPrice, duration_days: 14, name: "VIP" }
+                            }
+                        }
+                    });
+                    
+                    alert('Reklama narxlari yangilandi');
+                    await loadAppSettings();
                 } catch (error) {
                     alert('Xatolik: ' + error.message);
                 }
-            }
-
-            function displayCarouselImages() {
-                const container = document.getElementById('carousel-images-list');
-                if (!container) return;
-                
-                container.innerHTML = carouselItems.map(item => `
-                    <div class="carousel-image-item">
-                        <img src="${item.image_url}" alt="Carousel Image">
-                        <button onclick="deleteCarouselItem('${item._id}')" class="carousel-delete-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                `).join('');
             }
 
             async function loadAnalytics() {
@@ -1661,7 +1456,6 @@
                     document.getElementById('total-users').textContent = analytics.total.users;
                     document.getElementById('total-purchases').textContent = analytics.total.purchases;
                     
-                    // Create chart
                     const ctx = document.getElementById('analytics-chart').getContext('2d');
                     new Chart(ctx, {
                         type: 'line',
@@ -1712,7 +1506,6 @@
             window.openAdminPanel = function() {
                 navigateTo('admin-panel-page');
                 loadAnalytics();
-                displayCarouselImages();
             }
 
             // Items functions
@@ -1721,41 +1514,6 @@
                 const result = await apiCall(endpoint);
                 currentItems = result.items || [];
                 return currentItems;
-            }
-
-            // Carousel functions
-            async function loadCarousel() {
-                try {
-                    const result = await apiCall('/carousel');
-                    carouselItems = result.carousel || [];
-                    
-                    const wrapper = document.getElementById('ads-wrapper');
-                    if (carouselItems.length > 0) {
-                        wrapper.innerHTML = carouselItems.map(item => `
-                            <div class="swiper-slide">
-                                <img src="${item.image_url}" class="w-full h-full object-cover rounded-b-2xl" alt="Carousel">
-                            </div>
-                        `).join('');
-                    } else {
-                        // Show default image
-                        wrapper.innerHTML = `
-                            <div class="swiper-slide">
-                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Ptg8CTmOZ4TySqu1OuUxahJfJEcRKH.png" class="w-full h-full object-cover rounded-b-2xl" alt="Game Market">
-                            </div>
-                        `;
-                    }
-                    
-                    // Reinitialize Swiper without pagination
-                    if (window.adsSwiper) {
-                        window.adsSwiper.destroy();
-                    }
-                    window.adsSwiper = new Swiper('#ads-carousel', { 
-                        loop: true, 
-                        autoplay: { delay: 4000 }
-                    });
-                } catch (error) {
-                    console.error('Error loading carousel:', error);
-                }
             }
 
             // Support system
@@ -1798,17 +1556,20 @@
                 const nameEl = document.getElementById('chat-admin-name');
                 const statusEl = document.getElementById('chat-admin-status');
                 const indicatorEl = document.getElementById('chat-admin-indicator');
+                const closeBtnEl = document.getElementById('close-chat-btn');
                 
                 if (currentSupportAdmin) {
                     photoEl.src = currentSupportAdmin.photo_url || `https://via.placeholder.com/40/10b981/ffffff?text=${currentSupportAdmin.first_name?.charAt(0) || 'A'}`;
                     nameEl.textContent = `${currentSupportAdmin.first_name} ${currentSupportAdmin.last_name || ''}`.trim();
                     statusEl.textContent = translations[currentLanguage].admin_online;
-                    indicatorEl.classList.remove('hidden');
+                    indicatorEl.classList.remove('hidden', 'offline');
+                    closeBtnEl.classList.remove('hidden');
                 } else {
                     photoEl.src = 'https://via.placeholder.com/40/2ea6ff/ffffff?text=AI';
                     nameEl.textContent = translations[currentLanguage].support;
                     statusEl.textContent = translations[currentLanguage].ai_assistant;
                     indicatorEl.classList.add('hidden');
+                    closeBtnEl.classList.add('hidden');
                 }
             }
 
@@ -1818,8 +1579,6 @@
                     alert('Iltimos, avval tizimga kiring');
                     return;
                 }
-
-                if (checkUserBlocked()) return;
 
                 try {
                     const result = await apiCall('/purchases', 'POST', {
@@ -1832,13 +1591,11 @@
                         alert('Xarid muvaffaqiyatli amalga oshirildi!');
                         await loadUserData();
                         closeModal();
-                        await renderItems(); // Refresh items to show sold status
                     } else if (result.admin_help_requested) {
                         alert(result.message);
                         await loadUserData();
                         closeModal();
                     } else if (result.direct_contact) {
-                        // Handle direct contact with seller
                         const seller = result.seller_info;
                         if (seller.telegram_url) {
                             if (confirm(`Sotuvchi bilan bog'lanish uchun Telegram profiliga o'tasizmi?\n\nSotuvchi: ${seller.name}\nUsername: @${seller.username}`)) {
@@ -1876,8 +1633,6 @@
             // Chat functions
             async function sendChatMessage(message) {
                 if (!currentUser || !message.trim()) return;
-
-                if (checkUserBlocked()) return;
 
                 try {
                     const result = await apiCall('/chat/send', 'POST', {
@@ -1929,11 +1684,15 @@
                         systemSettings = systemSetting.data || {};
                     }
                     
-                    // Update admin panel inputs
                     if (document.getElementById('admin-purchase-toggle')) {
-                        document.getElementById('admin-purchase-toggle').checked = systemSettings.admin_purchase_enabled !== false;
+                        document.getElementById('admin-purchase-toggle').checked = systemSettings.admin_purchase_enabled || false;
                         document.getElementById('buyer-admin-cost').value = systemSettings.buyer_admin_cost || 25;
                         document.getElementById('listing-cost').value = systemSettings.listing_cost || 10;
+                        document.getElementById('commission-rate').value = (systemSettings.commission_rate || 0.1) * 100;
+                        
+                        document.getElementById('basic-ad-price').value = adPackages.basic?.price || 50;
+                        document.getElementById('premium-ad-price').value = adPackages.premium?.price || 100;
+                        document.getElementById('vip-ad-price').value = adPackages.vip?.price || 200;
                     }
                     
                     return appSettings;
@@ -1950,8 +1709,6 @@
                     return;
                 }
 
-                if (checkUserBlocked()) return;
-
                 try {
                     const result = await apiCall('/payment/create-invoice', 'POST', {
                         telegram_id: currentUser.telegram_id,
@@ -1959,13 +1716,11 @@
                     });
                     
                     if (result.test_mode) {
-                        // Test mode - stars added directly
                         currentUser.balance = (currentUser.balance || 0) + amount;
                         document.getElementById('user-balance').textContent = currentUser.balance;
                         alert(result.message);
                     } else if (result.success) {
-                        // Real payment - Telegram invoice sent to user
-                        alert('To\'lov havolasi Telegram orqali yuborildi. Iltimos, to\'lovni amalga oshiring.');
+                        alert('To\'lov tizimi ishga tushirilmoqda...');
                     }
                 } catch (error) {
                     console.error('Payment error:', error);
@@ -1975,74 +1730,103 @@
 
             // Profile page functions
             window.openSellAccountPage = function() {
-                if (checkUserBlocked()) return;
                 navigateTo('sell-account-page');
             }
 
             window.openMyListingsPage = async function() {
-                if (checkUserBlocked()) return;
                 await renderMyListings();
                 navigateTo('my-listings-page');
             }
 
-            // Sell account form handler with image upload
+            window.openAdvertisePage = async function() {
+                await loadUserListingsForAd();
+                navigateTo('advertise-page');
+            }
+
+            async function loadUserListingsForAd() {
+                if (!currentUser) return;
+                
+                try {
+                    const result = await apiCall(`/user-listings/${currentUser.telegram_id}`);
+                    const listings = result.listings || [];
+                    
+                    const select = document.getElementById('advertise-listing');
+                    select.innerHTML = '<option value="">E\'lonni tanlang...</option>' + 
+                        listings.map(listing => 
+                            `<option value="${listing._id}">${listing.title} - $${listing.price}</option>`
+                        ).join('');
+                } catch (error) {
+                    console.error('Error loading user listings:', error);
+                }
+            }
+
+            window.selectAdPackage = function(packageType) {
+                selectedAdPackage = packageType;
+                
+                document.querySelectorAll('[onclick^="selectAdPackage"]').forEach(el => {
+                    el.classList.remove('border-blue-500');
+                });
+                event.target.closest('div').classList.add('border-blue-500');
+                
+                document.getElementById('create-ad-btn').disabled = false;
+            }
+
+            window.createAdvertisement = async function() {
+                const listingId = document.getElementById('advertise-listing').value;
+                
+                if (!listingId || !selectedAdPackage) {
+                    alert('Iltimos, e\'lon va reklama paketini tanlang');
+                    return;
+                }
+                
+                try {
+                    await apiCall('/advertisements', 'POST', {
+                        user_telegram_id: currentUser.telegram_id,
+                        listing_id: listingId,
+                        ad_package: selectedAdPackage
+                    });
+                    
+                    alert('Reklama muvaffaqiyatli yaratildi!');
+                    await loadUserData();
+                    navigateTo('profile-page');
+                } catch (error) {
+                    alert('Xatolik: ' + error.message);
+                }
+            }
+
+            // Sell account form handler
             document.getElementById('sell-account-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                if (checkUserBlocked()) return;
+                const formData = {
+                    seller_telegram_id: currentUser.telegram_id,
+                    category: document.getElementById('sell-category').value,
+                    title: document.getElementById('sell-title').value,
+                    description: document.getElementById('sell-description').value,
+                    price: parseInt(document.getElementById('sell-price').value),
+                    images: [],
+                    listing_days: parseInt(document.getElementById('sell-duration').value),
+                    listing_cost: document.getElementById('sell-duration').value === '7' ? 10 : 
+                                 document.getElementById('sell-duration').value === '14' ? 18 : 35
+                };
                 
-                const imageInput = document.getElementById('account-image-input');
-                let imageUrl = 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game';
-                
-                if (imageInput.files[0]) {
-                    // For demo, convert to base64. In production, upload to server
-                    const reader = new FileReader();
-                    reader.onload = async function(e) {
-                        imageUrl = e.target.result;
-                        await submitListing(imageUrl);
-                    };
-                    reader.readAsDataURL(imageInput.files[0]);
-                } else {
-                    await submitListing(imageUrl);
+                if (!formData.title || !formData.description || !formData.price) {
+                    alert('Iltimos, barcha maydonlarni to\'ldiring');
+                    return;
                 }
                 
-                async function submitListing(imageUrl) {
-                    const formData = {
-                        seller_telegram_id: currentUser.telegram_id,
-                        account_type: document.getElementById('sell-account-type').value,
-                        category: document.getElementById('sell-category').value,
-                        title: document.getElementById('sell-title').value,
-                        description: document.getElementById('sell-description').value,
-                        price: parseInt(document.getElementById('sell-price').value),
-                        images: [imageUrl],
-                        listing_days: parseInt(document.getElementById('sell-duration').value),
-                        listing_cost: document.getElementById('sell-duration').value === '7' ? 10 : 
-                                     document.getElementById('sell-duration').value === '14' ? 18 : 35
-                    };
-                    
-                    if (!formData.title || !formData.description || !formData.price) {
-                        alert('Iltimos, barcha majburiy maydonlarni to\'ldiring');
-                        return;
-                    }
-                    
-                    try {
-                        await apiCall('/user-listings', 'POST', formData);
-                        alert('E\'lon muvaffaqiyatli yaratildi!');
-                        await loadUserData();
-                        navigateTo('profile-page');
-                        
-                        // Clear form
-                        document.getElementById('sell-account-form').reset();
-                    } catch (error) {
-                        alert('Xatolik: ' + error.message);
-                    }
+                try {
+                    await apiCall('/user-listings', 'POST', formData);
+                    alert('E\'lon muvaffaqiyatli yaratildi!');
+                    await loadUserData();
+                    navigateTo('profile-page');
+                } catch (error) {
+                    alert('Xatolik: ' + error.message);
                 }
             });
 
             // Navigation functions
             function navigateTo(pageId) {
-                if (checkUserBlocked() && pageId !== 'chat-page') return;
-                
                 if(navigationHistory[navigationHistory.length - 1] === pageId) return;
 
                 const isSubPage = ['my-purchases-page', 'my-listings-page', 'help-page', 'chat-page', 'admin-panel-page', 'sell-account-page', 'advertise-page'].includes(pageId);
@@ -2090,8 +1874,8 @@
             function createModal(content) {
                 const modalContainer = document.getElementById('modal-container');
                 modalContainer.innerHTML = `
-                    <div class="modal-overlay">
-                        <div class="modal-content">
+                    <div class="modal-overlay" onclick="closeModal()">
+                        <div class="modal-content" onclick="event.stopPropagation()">
                             ${content}
                         </div>
                     </div>
@@ -2110,101 +1894,28 @@
                 updatePageVisibility(); 
             }
 
-            // Share/Copy functions
-            window.shareItem = async function(itemId) {
-                try {
-                    const result = await apiCall(`/items/${itemId}/share`);
-                    
-                    if (navigator.share) {
-                        await navigator.share({
-                            title: 'Game Market - Account',
-                            text: result.copy_text,
-                            url: result.share_link
-                        });
-                    } else {
-                        // Fallback - copy to clipboard
-                        await navigator.clipboard.writeText(result.copy_text);
-                        alert('Havola nusxalandi!');
-                    }
-                } catch (error) {
-                    console.error('Share error:', error);
-                    alert('Xatolik yuz berdi');
-                }
-            }
-
-            window.copyItemLink = async function(itemId) {
-                try {
-                    const result = await apiCall(`/items/${itemId}/share`);
-                    await navigator.clipboard.writeText(result.share_link);
-                    alert('Havola nusxalandi!');
-                } catch (error) {
-                    console.error('Copy error:', error);
-                    alert('Xatolik yuz berdi');
-                }
-            }
-
-            // Item management functions
-            window.editItem = function(itemId) {
-                // Implementation for editing items
-                alert('Tahrirlash funksiyasi tez kunda qo\'shiladi');
-            }
-
-            window.deleteItem = async function(itemId) {
-                if (!confirm('Haqiqatan ham bu e\'lonni o\'chirmoqchimisiz?')) return;
-                
-                try {
-                    await apiCall(`/items/${itemId}`, 'DELETE', {
-                        user_telegram_id: currentUser.telegram_id
-                    });
-                    
-                    alert('E\'lon o\'chirildi');
-                    await renderMyListings();
-                    await renderItems(); // Refresh main page
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
-            }
-
-            window.markItemSold = async function(itemId) {
-                if (!confirm('Bu e\'lonni sotildi deb belgilamoqchimisiz?')) return;
-                
-                try {
-                    await apiCall(`/items/${itemId}/mark-sold`, 'POST', {
-                        user_telegram_id: currentUser.telegram_id
-                    });
-                    
-                    alert('E\'lon sotildi deb belgilandi');
-                    await renderMyListings();
-                    await renderItems(); // Refresh main page
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
-            }
-
-            // CLEAN Render functions - NO DEBUG TEXT, NO 3-DOT MENU
+            // TELEGRAM STYLE RENDER FUNCTIONS - Image on left, details on right
             async function renderItems(category = null) {
                 try {
                     const items = await loadItems(category);
                     const container = document.getElementById('card-container');
                     
                     container.innerHTML = items.map(ad => {
-                        const cardClass = ad.is_admin_item ? 'admin-card' : 'user-card glass-card';
-                        const currencyBadge = ad.is_admin_item ? 
-                            `<div class="currency-badge stars px-2 py-1 rounded text-xs font-bold">${ad.price} ⭐</div>` :
-                            `<div class="currency-badge usd px-2 py-1 rounded text-xs font-bold">$${ad.price}</div>`;
+                        const cardClass = ad.is_admin_item ? 'telegram-card admin' : 'telegram-card';
+                        const badgeClass = ad.is_admin_item ? 'telegram-card-badge admin' : 'telegram-card-badge user';
+                        const badgeText = ad.is_admin_item ? '⚡ Admin' : '👤 User';
+                        const priceText = ad.currency === 'stars' ? `${ad.price} ⭐` : `$${ad.price}`;
                         
                         return `
-                            <div onclick="openItemModal('${ad._id}')" class="relative flex flex-col rounded-2xl ${cardClass} overflow-hidden cursor-pointer active:scale-95 transition-transform">
-                                <img class="w-full h-auto aspect-square object-cover" src="${ad.images && ad.images[0] || 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game'}" alt="${ad.title}">
-                                <div class="p-3">
-                                    <p class="font-semibold truncate text-white">${ad.title}</p>
-                                    <p class="text-xs text-gray-300">#${ad._id.slice(-6)}</p>
-                                    ${ad.account_type ? `<p class="text-xs text-blue-400">${ad.account_type}</p>` : ''}
-                                    <div class="flex justify-between items-center mt-3">
-                                        ${currencyBadge}
-                                        ${ad.is_admin_item ? '<span class="text-xs text-yellow-400">⚡ Admin</span>' : '<span class="text-xs text-green-400">👤 User</span>'}
+                            <div onclick="openItemModal('${ad._id}')" class="${cardClass}">
+                                <img class="telegram-card-image" src="${ad.images && ad.images[0] || 'https://via.placeholder.com/60/2ea6ff/ffffff?text=Game'}" alt="${ad.title}">
+                                <div class="telegram-card-content">
+                                    <div class="telegram-card-title">${ad.title}</div>
+                                    <div class="telegram-card-subtitle">#${ad._id.slice(-6)} • ${ad.category || 'Game'}</div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="telegram-card-price">${priceText}</div>
+                                        <div class="${badgeClass}">${badgeText}</div>
                                     </div>
-                                    ${ad.status === 'sold' ? '<div class="absolute inset-0 bg-black/50 flex items-center justify-center"><span class="bg-red-600 text-white px-3 py-1 rounded-lg font-bold">SOTILDI</span></div>' : ''}
                                 </div>
                             </div>
                         `;
@@ -2216,48 +1927,33 @@
                 }
             }
             
-            // Item Modal
             window.openItemModal = function(adId) {
                 const ad = currentItems.find(item => item._id === adId);
                 if (!ad) return;
 
                 let buttonsHtml = '';
                 
-                if (ad.status === 'sold') {
-                    buttonsHtml = `<div class="bg-red-600 text-white font-bold py-4 rounded-xl text-center">SOTILDI</div>`;
-                } else if (ad.is_admin_item) {
-                    // Admin item - direct Stars purchase
+                if (ad.is_admin_item) {
                     buttonsHtml = `<button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-tg-button text-white font-bold py-4 rounded-xl">Sotib olish (${ad.price} ⭐)</button>`;
                 } else {
-                    // User item - two buttons
                     buttonsHtml = `
                         <div class="space-y-3">
-                            <button onclick="requestAdminHelp('${ad._id}')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 rounded-xl">Admin orqali sotib olish (25 ⭐)</button>
-                            <button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold py-4 rounded-xl">Sotuvchi bilan bog'lanish</button>
+                            <button onclick="requestAdminHelp('${ad._id}')" class="w-full buyer-admin-btn text-white font-bold py-4 rounded-xl">Admin orqali sotib olish (25 ⭐)</button>
+                            <button onclick="purchaseItem('${ad._id}', 'direct')" class="w-full contact-seller-btn text-white font-bold py-4 rounded-xl">Sotuvchi bilan bog'lanish</button>
                         </div>
                     `;
                 }
                 
                 const modalContent = `
-                    <div class="modal-body">
-                        <img src="${ad.images && ad.images[0] || 'https://via.placeholder.com/400/2ea6ff/ffffff?text=Game'}" class="w-full aspect-square object-cover">
-                        <div class="p-4">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h3 class="text-2xl font-bold">${ad.title}</h3>
-                                    <p class="text-lg text-tg-hint">#${ad._id.slice(-6)} • ${ad.is_admin_item ? '⚡ Admin Account' : '👤 User Account'}</p>
-                                    ${ad.account_type ? `<p class="text-sm text-blue-400">📱 ${ad.account_type}</p>` : ''}
-                                </div>
-                                ${ad.is_admin_item ? 
-                                    `<div class="currency-badge stars px-3 py-1 rounded-lg text-lg font-bold">${ad.price} ⭐</div>` :
-                                    `<div class="currency-badge usd px-3 py-1 rounded-lg text-lg font-bold">$${ad.price}</div>`
-                                }
-                            </div>
-                            <p class="text-base leading-relaxed mb-4">${ad.description}</p>
-                            ${!ad.is_admin_item && ad.seller_name ? `<p class="text-sm text-tg-hint">Sotuvchi: ${ad.seller_name}</p>` : ''}
+                    <div class="p-4">
+                        <img src="${ad.images && ad.images[0] || 'https://via.placeholder.com/400/2ea6ff/ffffff?text=Game'}" class="w-full aspect-square object-cover rounded-lg mb-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h2 class="text-2xl font-bold">${ad.title}</h2>
+                            <div class="text-xl font-bold text-tg-link">${ad.currency === 'stars' ? ad.price + ' ⭐' : '$' + ad.price}</div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
+                        <p class="text-lg text-tg-hint mb-4">#${ad._id.slice(-6)} • ${ad.is_admin_item ? '⚡ Admin Account' : '👤 User Account'}</p>
+                        <p class="text-base leading-relaxed mb-6">${ad.description}</p>
+                        ${!ad.is_admin_item && ad.seller_name ? `<p class="text-sm text-tg-hint mb-4">Sotuvchi: ${ad.seller_name}</p>` : ''}
                         ${buttonsHtml}
                     </div>
                 `;
@@ -2278,20 +1974,15 @@
                     }
                     
                     cont.innerHTML = purchases.map(p => `
-                        <div class="glass-card p-4 rounded-xl">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="font-bold text-lg">${p.item_title}</h3>
-                                <span class="text-xs px-2 py-1 bg-green-600 rounded">Admin dan sotib olgan</span>
-                            </div>
-                            <div class="space-y-2 text-sm">
-                                <div class="glass-card p-3 rounded-lg">
-                                    <p><strong data-translate-key="login">Login</strong>: ${p.login_info?.login || 'N/A'}</p>
-                                    <p><strong data-translate-key="password">Parol</strong>: ${p.login_info?.password || 'N/A'}</p>
-                                    ${p.login_info?.additional_info ? `<p><strong data-translate-key="info">Ma'lumot</strong>: ${p.login_info.additional_info}</p>` : ''}
-                                </div>
+                        <div class="bg-tg-secondary-bg p-4 rounded-xl">
+                            <h3 class="font-bold text-lg mb-2">${p.item_title}</h3>
+                            <div class="space-y-1 text-sm">
+                                <p><strong data-translate-key="login">Login</strong>: ${p.login_info?.login || 'N/A'}</p>
+                                <p><strong data-translate-key="password">Parol</strong>: ${p.login_info?.password || 'N/A'}</p>
+                                <p><strong data-translate-key="info">Ma'lumot</strong>: ${p.login_info?.additional_info || 'N/A'}</p>
                                 <p class="text-tg-hint text-xs">Xarid sanasi: ${new Date(p.purchase_date).toLocaleDateString()}</p>
                                 <div class="flex justify-between items-center mt-2">
-                                    <span class="text-lg font-bold">${p.price} ⭐</span>
+                                    <span class="text-lg font-bold">${p.currency === 'stars' ? p.price + ' ⭐' : '$' + p.price}</span>
                                     <span class="text-xs px-2 py-1 bg-green-600 rounded">${p.status}</span>
                                 </div>
                             </div>
@@ -2318,25 +2009,16 @@
                     }
                     
                     cont.innerHTML = listings.map(listing => `
-                        <div class="glass-card p-4 rounded-xl">
+                        <div class="bg-tg-secondary-bg p-4 rounded-xl">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-bold text-lg">${listing.title}</h3>
                                 <span class="text-sm px-2 py-1 rounded ${listing.status === 'available' ? 'bg-green-600' : 'bg-red-600'}">${listing.status}</span>
                             </div>
                             <p class="text-sm text-tg-hint mb-2">${listing.description}</p>
-                            ${listing.account_type ? `<p class="text-xs text-blue-400 mb-2">📱 ${listing.account_type}</p>` : ''}
-                            <div class="flex justify-between items-center mb-3">
-                                <span class="font-bold text-lg">${listing.is_admin_item ? listing.price + ' ⭐' : '$' + listing.price}</span>
-                                ${listing.expires_at ? `<span class="text-xs text-tg-hint">Tugash: ${new Date(listing.expires_at).toLocaleDateString()}</span>` : ''}
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$${listing.price}</span>
+                                <span class="text-xs text-tg-hint">Tugash: ${new Date(listing.expires_at).toLocaleDateString()}</span>
                             </div>
-                            
-                            ${listing.status === 'available' ? `
-                                <div class="flex gap-2">
-                                    <button onclick="editItem('${listing._id}')" class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm" data-translate-key="edit">Tahrirlash</button>
-                                    <button onclick="markItemSold('${listing._id}')" class="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm" data-translate-key="mark_sold">Sotildi</button>
-                                    <button onclick="deleteItem('${listing._id}')" class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm" data-translate-key="delete">O'chirish</button>
-                                </div>
-                            ` : ''}
                         </div>
                     `).join('');
                     
@@ -2360,9 +2042,6 @@
                 
                 let messageClass = 'chat-message ';
                 if (isUser) {
-                    messageClass += 'user';
-                } else if (isAdmin) {
-                    messageClass  {
                     messageClass += 'user';
                 } else if (isAdmin) {
                     messageClass += 'admin';
@@ -2446,8 +2125,8 @@
                     const key = el.getAttribute('data-translate-key');
                     const translation = translations[currentLanguage]?.[key];
                     if (translation) {
-                        if (el.placeholder !== undefined) el.placeholder = translation;
-                        else el.textContent = translation;
+                         if (el.placeholder !== undefined) el.placeholder = translation;
+                         else el.textContent = translation;
                     }
                 });
                 
@@ -2461,12 +2140,6 @@
                 try {
                     const userData = await getUserInfo(currentUser.telegram_id);
                     currentUser = userData.user;
-                    
-                    // Check if user is blocked
-                    if (currentUser.is_banned) {
-                        showBlockedPage();
-                        return;
-                    }
                     
                     document.getElementById('user-balance').textContent = currentUser.balance || 0;
                     
@@ -2523,7 +2196,6 @@
                     console.log('Initializing app...');
                     
                     await loadAppSettings();
-                    await loadCarousel();
                     
                     if (tg && tg.initDataUnsafe) {
                         tg.ready();
@@ -2543,12 +2215,6 @@
                             currentUser = result.user;
                             updateProfileUI(currentUser);
                             startActivityTracking();
-                            
-                            // Check if user is blocked
-                            if (currentUser.is_banned) {
-                                showBlockedPage();
-                                return;
-                            }
                         } else {
                             await createDemoUser();
                         }
@@ -2620,20 +2286,30 @@
                 }
             });
 
+            // Initialize Swiper for ads
+            new Swiper('#ads-carousel', { 
+                loop: true, 
+                autoplay: { delay: 3000 },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                }
+            });
+
             // Navigation setup
             const navItems = [
-                { id: 'home-page', key: 'home', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>' },
-                { id: 'buy-stars-page', key: 'buy_stars_nav', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>' },
-                { id: 'history-page', key: 'history', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>' },
-                { id: 'profile-page', key: 'profile', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>' }
+                { id: 'home-page', key: 'home', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>' },
+                { id: 'buy-stars-page', key: 'buy_stars_nav', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>' },
+                { id: 'history-page', key: 'history', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>' },
+                { id: 'profile-page', key: 'profile', icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>' }
             ];
             
             const navContainer = document.getElementById('bottom-nav');
             navItems.forEach(item => {
                 const navElement = document.createElement('div');
-                navElement.className = 'nav-item cursor-pointer';
+                navElement.className = 'nav-item flex-1 flex flex-col items-center justify-center cursor-pointer p-2';
                 navElement.dataset.page = item.id;
-                navElement.innerHTML = `<div class="w-6 h-6 mb-1">${item.icon}</div><span class="text-xs font-medium" data-translate-key="${item.key}"></span>`;
+                navElement.innerHTML = `<div class="mb-1">${item.icon}</div><span class="text-xs font-medium" data-translate-key="${item.key}"></span>`;
                 navElement.addEventListener('click', () => navigateTo(item.id));
                 navContainer.appendChild(navElement);
             });
@@ -2641,8 +2317,8 @@
             // Profile menu event listeners
             document.getElementById('sell-account-btn').addEventListener('click', openSellAccountPage);
             document.getElementById('my-listings-btn').addEventListener('click', openMyListingsPage);
+            document.getElementById('advertise-btn').addEventListener('click', openAdvertisePage);
             document.getElementById('my-purchases-btn').addEventListener('click', async () => {
-                if (checkUserBlocked()) return;
                 await renderMyPurchases();
                 navigateTo('my-purchases-page');
             });
@@ -2652,7 +2328,7 @@
 
             // Category buttons setup
             const categoryContainer = document.getElementById('category-container');
-            categoryContainer.innerHTML = categories.map(cat => `<button data-category="${cat}" class="category-btn glass-card px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap">${cat}</button>`).join('');
+            categoryContainer.innerHTML = categories.map(cat => `<button data-category="${cat}" class="category-btn bg-tg-secondary-bg px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap">${cat}</button>`).join('');
 
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.addEventListener('click', () => filterItems(btn.dataset.category));
