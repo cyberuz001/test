@@ -1,18 +1,13 @@
-<!-- SAVE AS index.html and replace API_BASE with your backend URL -->
 <!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Game Market — Mini App</title>
-
-  <!-- Tailwind for quick styling -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
-    /* ---------- CORE STYLES ---------- */
     :root{
       --bg:#071226; --card:#0b1220; --muted:#9aa6b2; --accent:#3b82f6; --accent2:#10b981;
     }
@@ -22,11 +17,9 @@
     header.site-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
     .logo{font-weight:700;font-size:18px;color:var(--accent);}
 
-    /* ---------- CAROUSEL (admin only) ---------- */
     .carousel {display:flex; gap:12px; overflow-x:auto; padding:8px 0; margin-bottom:12px; -webkit-overflow-scrolling:touch;}
     .carousel img{height:140px;border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.5); object-fit:cover; flex-shrink:0; min-width:260px;}
 
-    /* ---------- CARD GRID ---------- */
     .cards {display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px;}
     .card {background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:10px; border-radius:12px; box-shadow:0 6px 18px rgba(2,6,23,0.6); position:relative; overflow:hidden;}
     .card img {width:100%; height:140px; object-fit:cover; border-radius:8px;}
@@ -37,35 +30,28 @@
     .btn-primary {background:linear-gradient(90deg,var(--accent),#60a5fa); color:white;}
     .btn-ghost {background:transparent;color:var(--muted); border:1px solid rgba(255,255,255,0.04);}
 
-    /* three dots menu */
     .menu-dot {position:absolute; top:10px; right:10px; font-size:18px; cursor:pointer; padding:6px; border-radius:8px; background:rgba(255,255,255,0.02);}
     .menu-box {position:absolute; right:12px; top:38px; background:#051022; border-radius:8px; padding:6px; display:none; z-index:40; border:1px solid rgba(255,255,255,0.03);}
     .menu-box button{display:block; width:200px; text-align:left; padding:8px; border:none; background:transparent; color:var(--muted); cursor:pointer;}
 
-    /* ---------- PAGES ---------- */
     .page {display:none;}
     .page.active {display:block;}
 
-    /* ---------- BOTTOM NAV ---------- */
     .bottom-nav {position:fixed; left:0; right:0; bottom:0; height:72px; background:linear-gradient(180deg, rgba(2,6,23,0.94), rgba(2,6,23,0.98)); display:flex; gap:8px; justify-content:center; align-items:center; border-top:1px solid rgba(255,255,255,0.03); z-index:60;}
     .nav-item{flex:1; text-align:center; color:var(--muted); font-weight:700; cursor:pointer;}
     .nav-item.active{color:var(--accent);}
 
-    /* ---------- CHAT ---------- */
-    .chat-wrap {display:flex; flex-direction:column; height:calc(100vh - 80px);}
-    .messages{flex:1; overflow:auto; padding:12px;}
-    .chat-input-wrap{display:flex; gap:8px; padding:10px; border-top:1px solid rgba(255,255,255,0.03); background:linear-gradient(180deg,#071226,#081226);}
+    .chat-wrap {display:flex; flex-direction:column; height:calc(100vh - 160px);}
+    .messages{flex:1; overflow:auto; padding:12px; background:linear-gradient(180deg,transparent, rgba(0,0,0,0.06)); border-radius:8px;}
+    .chat-input-wrap{display:flex; gap:8px; padding:10px; border-top:1px solid rgba(255,255,255,0.03); background:linear-gradient(180deg,#071226,#081226); align-items:center;}
     .chat-input{flex:1; padding:10px 12px; border-radius:999px; background:#061022; border:1px solid rgba(255,255,255,0.03); color:#dfeefe;}
 
-    /* ---------- PROFILE BLOCK ---------- */
     .blocked-box{padding:30px;text-align:center;background:linear-gradient(180deg,#081226,#061022); border-radius:12px;}
     .profile-photo{width:96px;height:96px;border-radius:12px;object-fit:cover}
 
-    /* ---------- MODAL ---------- */
     .modal-overlay{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:80}
     .modal{background:#041022;padding:16px;border-radius:12px;width:100%;max-width:720px;border:1px solid rgba(255,255,255,0.03)}
 
-    /* responsive */
     @media (max-width:768px){
       .cards{grid-template-columns:1fr}
       .carousel img{min-width:200px;height:120px}
@@ -84,11 +70,9 @@
         </div>
       </header>
 
-      <!-- HOME PAGE -->
+      <!-- HOME -->
       <main id="home-page" class="page active">
-        <!-- carousel - only admin -->
         <div id="carousel" class="carousel" aria-hidden="false"></div>
-
         <section>
           <h3 class="text-lg font-semibold mb-2">Barcha mahsulotlar</h3>
           <div id="cards" class="cards"></div>
@@ -104,550 +88,534 @@
       <!-- PROFILE -->
       <section id="profile-page" class="page p-4">
         <div id="profile-area"></div>
+        <div id="stars-buy" class="mt-4"></div>
       </section>
 
-      <!-- CHAT -->
+      <!-- SUPPORT / CHAT -->
       <section id="chat-page" class="page p-0">
-        <div class="chat-wrap">
+        <div class="chat-wrap p-4">
           <div class="messages" id="chat-messages">
             <div style="color:var(--muted);padding:12px">Qo'llab-quvvatlashga xush kelibsiz — Savolingizni yozing.</div>
           </div>
+
+          <!-- file input for image -->
           <div class="chat-input-wrap">
             <input id="chat-input" class="chat-input" placeholder="Xabar yozing..." />
+            <input id="chat-image" type="file" accept="image/*" style="display:none"/>
+            <button id="attach-btn" class="btn btn-ghost">🖼</button>
             <button id="send-chat" class="btn btn-primary">Yuborish</button>
           </div>
         </div>
       </section>
+
+      <!-- ADMIN PANEL (simple) -->
+      <section id="admin-page" class="page p-4">
+        <h3 class="text-lg font-semibold mb-3">Admin Panel</h3>
+
+        <div class="mb-4 p-3 bg-[#04142a] rounded">
+          <h4 class="font-bold">⚙️ Tizim sozlamalari</h4>
+          <div class="mt-2 space-y-2">
+            <label class="flex items-center gap-2">
+              <input id="setting-admin-purchase" type="checkbox"/>
+              <span>Admin orqali sotib olishni yoqish</span>
+            </label>
+
+            <div class="flex gap-2">
+              <input id="setting-buyer-admin-cost" type="number" placeholder="Admin yordam narxi (yulduz)" class="p-2 rounded bg-[#06122a] flex-1"/>
+              <input id="setting-listing-cost" type="number" placeholder="E'lon narxi (yulduz)" class="p-2 rounded bg-[#06122a] flex-1"/>
+            </div>
+
+            <div class="flex gap-2">
+              <input id="setting-commission-rate" type="number" placeholder="Komissiya (foiz)" class="p-2 rounded bg-[#06122a] flex-1"/>
+              <button id="save-settings" class="btn btn-primary">Saqlash</button>
+            </div>
+
+            <div id="admin-warning" class="text-yellow-400 mt-2"></div>
+          </div>
+        </div>
+
+        <div class="mb-4 p-3 bg-[#04142a] rounded">
+          <h4 class="font-bold">🖼 Carousel (faqat admin)</h4>
+          <div class="mt-2">
+            <input id="carousel-image" type="file" accept="image/*" />
+            <button id="upload-carousel" class="btn btn-primary mt-2">Rasmni joylashtirish</button>
+            <div id="carousel-admin-msg" class="text-tg-hint mt-2"></div>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav" id="bottom-nav">
       <div class="nav-item active" data-target="home-page">Bosh sahifa</div>
       <div class="nav-item" data-target="my-listings-page">Mening e'lonlarim</div>
       <div class="nav-item" data-target="profile-page">Profil</div>
       <div class="nav-item" data-target="chat-page">Yordam</div>
+      <div class="nav-item" data-target="admin-page">Admin</div>
     </nav>
   </div>
 
-  <!-- MODAL: Create / Edit Listing -->
+  <!-- MODAL skeleton -->
   <div id="modalRoot" style="display:none" class="modal-overlay">
     <div class="modal">
-      <h4 class="font-bold mb-2">E'lon yaratish / tahrirlash</h4>
-      <form id="listingForm" class="space-y-3">
-        <input id="lst-id" type="hidden" />
-        <div>
-          <label class="text-sm text-gray-300">Platforma</label>
-          <select id="lst-platform" class="w-full p-2 rounded-md bg-[#06122a]">
-            <option value="twitter">Twitter</option>
-            <option value="google">Google</option>
-            <option value="facebook">Facebook</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-sm text-gray-300">Title</label>
-          <input id="lst-title" type="text" class="w-full p-2 rounded-md bg-[#06122a]" required />
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="text-sm text-gray-300">Login</label>
-            <input id="lst-login" type="text" class="w-full p-2 rounded-md bg-[#06122a]" required />
-          </div>
-          <div>
-            <label class="text-sm text-gray-300">Parol</label>
-            <input id="lst-pass" type="text" class="w-full p-2 rounded-md bg-[#06122a]" required />
-          </div>
-        </div>
-        <div>
-          <label class="text-sm text-gray-300">Narx (Stars)</label>
-          <input id="lst-price" type="number" class="w-full p-2 rounded-md bg-[#06122a]" required />
-        </div>
-        <div>
-          <label class="text-sm text-gray-300">Rasmlar (link)</label>
-          <input id="lst-images" type="text" class="w-full p-2 rounded-md bg-[#06122a]" placeholder="Agar bir nechta bo'lsa, vergul bilan ajrating" />
-        </div>
-
-        <div class="flex gap-2 justify-end mt-2">
-          <button type="button" id="saveListingBtn" class="btn btn-primary">Saqlash</button>
-          <button type="button" id="cancelListingBtn" class="btn btn-ghost">Bekor qilish</button>
-        </div>
-      </form>
+      <div id="modal-content"></div>
+      <div class="mt-3 text-right"><button onclick="closeModal()" class="btn btn-ghost">Yopish</button></div>
     </div>
   </div>
 
 <script>
-/* =======================
-   CONFIG
-   ======================= */
-// Backend base URL — o'zingizning backendga o'zgartiring
-const API_BASE = 'https://your-backend.example/api';
-
-// Telegram WebApp
+/* ============ CONFIG ============ */
+const API_BASE = 'https://cyberuz81.alwaysdata.net/api'; // <--- o'zingizni API_BASE bilan almashtiring
 const tg = window.Telegram ? window.Telegram.WebApp : null;
-if (tg && tg.expand) {
-  try { tg.expand(); } catch(e){}
-}
+if (tg && tg.expand) { try { tg.expand(); } catch(e){} }
 
-/* =======================
-   STATE
-   ======================= */
-// currentUser: o'zgartiring yoki backenddan yuklang (auth)
+/* ============ STATE ============ */
 let currentUser = {
   telegram_id: 12345,
   username: "user1",
-  is_admin: true, // agar admin bo'lsa true
-  is_blocked: false
+  is_admin: true,    // test uchun true/false o'zgartiring
+  is_blocked: false,
+  balance: 0
 };
+let listings = []; // serverdan yuklanadi
+let carouselImages = []; // admin tomonidan to'ldiriladi
+let currentChatId = null;
 
-// listings — odatda backenddan olinadi; bu demo uchun boshlang'ich
-let listings = [
-  { id: 101, title: "Admin: Premium Twitter account", platform:"twitter", login:"@proacc", pass:"pw123", price_stars: 120, images:[], owner:'admin', ad:true, sold:false },
-  { id: 201, title: "Google account level 5", platform:"google", login:"user123", pass:"pw123", price_stars: 30, images:[], owner:'userA', ad:false, sold:false },
-  { id: 202, title: "Facebook old account", platform:"facebook", login:"fb_user", pass:"pwFB", price_stars: 45, images:[], owner:'userB', ad:false, sold:false },
-];
+/* ============ HELPERS ============ */
+const q = s => document.querySelector(s);
+const qAll = s => Array.from(document.querySelectorAll(s));
+function htmlEscape(s){ return s ? String(s).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])) : ''; }
+function openModal(html){ q('#modalRoot').style.display='flex'; q('#modal-content').innerHTML = html; }
+function closeModal(){ q('#modalRoot').style.display='none'; q('#modal-content').innerHTML=''; }
 
-let isAdminView = currentUser.is_admin;
-let isBlocked = currentUser.is_blocked;
+/* ============ RENDER ============ */
+async function fetchInitial(){
+  try {
+    const res = await fetch(`${API_BASE}/items`);
+    if (res.ok){
+      const data = await res.json();
+      // if backend returns items
+      listings = data.items || [];
+    } else {
+      listings = [];
+    }
+  } catch(e){
+    console.warn('Items fetch failed', e);
+    listings = [];
+  }
 
-/* =======================
-   UTIL
-   ======================= */
-function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function q(sel){ return document.querySelector(sel); }
-function qAll(sel){ return document.querySelectorAll(sel); }
+  // Load ads (only active)
+  try {
+    const adRes = await fetch(`${API_BASE}/advertisements`);
+    if (adRes.ok){
+      const adData = await adRes.json();
+      carouselImages = (adData.advertisements || []).map(a => a.image).filter(Boolean);
+    } else carouselImages = [];
+  } catch(e){ carouselImages = []; }
 
-/* =======================
-   RENDER
-   ======================= */
+  // load admin settings
+  await loadAdminSettings();
+
+  renderAll();
+}
+
 function renderCarousel(){
   const el = q('#carousel'); el.innerHTML = '';
-  if (!isAdminView) { el.style.display = 'none'; return; }
+  if (!currentUser.is_admin || !carouselImages.length) { el.style.display = 'none'; return; }
   el.style.display = 'flex';
-  // images typically from backend admin carousel
-  const imgs = [
-    'https://images.unsplash.com/photo-1622495896217-1e6b1c0eeb1b?w=1200&q=60',
-    'https://images.unsplash.com/photo-1602524815666-4d4a6df5d2c4?w=1200&q=60'
-  ];
-  imgs.forEach(src=>{
-    const img = document.createElement('img'); img.src = src; img.alt='ad'; el.appendChild(img);
+  carouselImages.forEach(src=>{
+    const img = document.createElement('img'); img.src = src; el.appendChild(img);
   });
 }
 
 function renderCards(){
   const container = q('#cards'); container.innerHTML = '';
-
-  // Filter out fake/invalid cards (backend should ensure)
-  const validListings = listings.filter(l=>l && !l.is_fake);
-
-  // admin listings first, others random (except sold)
-  const adminList = validListings.filter(l=>l.ad).sort((a,b)=>a.id-b.id);
-  const others = validListings.filter(l=>!l.ad && !l.sold);
-
-  // randomize others
-  for (let i = others.length -1; i>0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [others[i], others[j]] = [others[j], others[i]];
+  // filter fake? backend should have filtered; here just map items -> cards
+  const items = listings.filter(x=> x && x.status !== 'sold');
+  // admin items first
+  const adminItems = items.filter(i => i.is_admin_item);
+  const others = items.filter(i => !i.is_admin_item);
+  // shuffle others for variety
+  for (let i = others.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1)); [others[i], others[j]]=[others[j], others[i]];
   }
-
-  const all = [...adminList, ...others];
-
-  all.forEach(l=>{
-    const card = document.createElement('div'); card.className = 'card';
-    const imgSrc = (l.images && l.images.length) ? l.images[0] : 'https://via.placeholder.com/640x360?text=Account';
+  const all = [...adminItems, ...others];
+  all.forEach(it=>{
+    const card = document.createElement('div'); card.className='card';
+    const img = (it.images && it.images.length) ? it.images[0] : 'https://via.placeholder.com/640x360?text=Account';
     card.innerHTML = `
-      <div class="menu-dot" data-id="${l.id}">⋮</div>
-      <div class="menu-box" id="menu-${l.id}" style="display:none">
-        <button onclick="copyLink(${l.id}); event.stopPropagation();">Havolani nusxalash</button>
-        <button onclick="shareListing(${l.id}); event.stopPropagation();">Ulashish</button>
+      <div class="menu-dot">⋮</div>
+      <div class="menu-box" style="display:none">
+        <button onclick="copyLink('${it._id || it.id}')">Havolani nusxalash</button>
+        <button onclick="shareListing('${it._id || it.id}')">Ulashish</button>
       </div>
-      <img src="${escapeHtml(imgSrc)}" alt="">
-      <div class="title">${escapeHtml(l.title)} ${l.sold ? ' — <span style="color:#f59e0b">Sotildi</span>':''}</div>
-      <div class="meta">Platforma: ${escapeHtml(l.platform)} • Narx: ${l.price_stars} ⭐</div>
+      <img src="${htmlEscape(img)}" alt="" />
+      <div class="title">${htmlEscape(it.title || it.item_title || 'Anon')}${it.status==='sold' ? ' — <span style="color:#f59e0b">Sotildi</span>' : ''}</div>
+      <div class="meta">Platforma: ${htmlEscape(it.platform||'—')} • Narx: ${htmlEscape(String(it.price||it.price_stars||0))} ⭐</div>
       <div class="actions">
-        ${ l.ad ? `<button class="btn btn-primary" onclick="buy(${l.id})">${l.price_stars} ⭐ Sotib olish</button>` : '' }
-        <button class="btn btn-ghost" onclick="openDetail(${l.id})">Ko'rish</button>
+        ${ it.is_admin_item ? `<button class="btn btn-primary" onclick="buyPrompt('${it._id||it.id}')">${htmlEscape(String(it.price||it.price_stars||0))} ⭐ Sotib olish</button>` : '' }
+        <button class="btn btn-ghost" onclick="openDetail('${it._id||it.id}')">Ko'rish</button>
       </div>
     `;
     container.appendChild(card);
-
     // menu toggle
-    const dot = card.querySelector('.menu-dot');
-    const box = card.querySelector('.menu-box');
-    dot.addEventListener('click', (ev)=>{
-      ev.stopPropagation();
-      document.querySelectorAll('.menu-box').forEach(b=>b.style.display='none');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    });
+    const dot = card.querySelector('.menu-dot'), box = card.querySelector('.menu-box');
+    dot.addEventListener('click', e=>{ e.stopPropagation(); document.querySelectorAll('.menu-box').forEach(b=>b.style.display='none'); box.style.display = box.style.display==='block' ? 'none' : 'block'; });
   });
-
-  // close menus on outside click
   document.body.addEventListener('click', ()=> document.querySelectorAll('.menu-box').forEach(b=>b.style.display='none'));
 }
 
-function renderMyListings(){
-  const container = q('#my-listings'); container.innerHTML = '';
-  const mine = listings.filter(l=>l.owner === 'admin' || l.owner === currentUser.username);
-  if (mine.length === 0) { container.innerHTML = `<div class="text-muted">Hozircha e'lonlaringiz yo'q</div>`; return; }
+function renderMyListings(){ // simplified
+  const container = q('#my-listings'); container.innerHTML='';
+  const mine = listings.filter(l=> (l.seller_telegram_id && l.seller_telegram_id === currentUser.telegram_id) || (l.owner && l.owner === currentUser.username));
+  if (!mine.length){ container.innerHTML = '<div class="text-muted">Hozircha e\'lonlaringiz yo\'q</div>'; return; }
   mine.forEach(l=>{
     const el = document.createElement('div'); el.className='card';
-    const imgSrc = (l.images && l.images.length) ? l.images[0] : 'https://via.placeholder.com/640x360?text=Account';
-    el.innerHTML = `
-      <img src="${escapeHtml(imgSrc)}" alt="">
-      <div class="title">${escapeHtml(l.title)}</div>
-      <div class="meta">Platforma: ${escapeHtml(l.platform)} • Narx: ${l.price_stars} ⭐</div>
+    const img = (l.images && l.images[0]) || 'https://via.placeholder.com/640x360?text=Account';
+    el.innerHTML = `<img src="${htmlEscape(img)}"/><div class="title">${htmlEscape(l.title||l.item_title)}</div><div class="meta">Narx: ${htmlEscape(String(l.price||l.price_stars||0))} ⭐</div>
       <div class="actions">
-        <button class="btn btn-ghost" onclick="openEdit(${l.id})">Edit</button>
-        <button class="btn btn-ghost" onclick="confirmDelete(${l.id})">Delete</button>
-        <button class="btn btn-primary" onclick="markSold(${l.id})">${l.sold ? 'Sotildi' : 'Mark Sotildi'}</button>
-      </div>
-    `;
+        <button class="btn btn-ghost" onclick="openEdit('${l._id||l.id}')">Edit</button>
+        <button class="btn btn-ghost" onclick="confirmDelete('${l._id||l.id}')">Delete</button>
+        <button class="btn btn-primary" onclick="markSold('${l._id||l.id}')">${l.status==='sold' ? 'Sotildi' : 'Mark Sotildi'}</button>
+      </div>`;
     container.appendChild(el);
   });
 }
 
 function renderProfile(){
-  const area = q('#profile-area');
-  if (isBlocked){
-    area.innerHTML = `
-      <div class="blocked-box">
-        <img class="profile-photo" src="https://via.placeholder.com/96" />
-        <div style="font-weight:700;margin-top:8px">Foydalanuvchi (${escapeHtml(currentUser.username)})</div>
-        <div style="color:var(--muted); margin-top:8px">Siz bloklangansiz</div>
-        <div style="margin-top:12px"><button class="btn btn-ghost" onclick="contactSupport()">Supportga yozish</button></div>
-      </div>
-    `;
-    q('#bottom-nav').style.display = 'none';
-  } else {
-    q('#bottom-nav').style.display = 'flex';
-    area.innerHTML = `
-      <div class="card" style="display:flex;gap:12px;align-items:center">
-        <img src="https://via.placeholder.com/96" style="width:96px;height:96px;border-radius:12px;object-fit:cover" />
-        <div>
-          <div style="font-weight:700">Foydalanuvchi (${escapeHtml(currentUser.username)})</div>
-          <div style="color:var(--muted)">Balance: <span id="user-balance">0</span> ⭐</div>
-          <div style="margin-top:8px"><button class="btn btn-primary" onclick="openCreate()">${currentUser.is_admin ? 'Admin: yangi e\'lon' : 'E\'lon yaratish'}</button></div>
-        </div>
-      </div>
-      <div class="mt-4">
-        <h4 class="font-semibold mb-2">Mening sotib olinganlar</h4>
-        <div id="my-purchases" class="cards"></div>
-      </div>
-    `;
-    renderPurchases();
+  const area = q('#profile-area'); area.innerHTML='';
+  if (currentUser.is_blocked){
+    area.innerHTML = `<div class="blocked-box"><img class="profile-photo" src="https://via.placeholder.com/96"/><div style="font-weight:700;margin-top:8px">Foydalanuvchi (${htmlEscape(currentUser.username)})</div><div style="color:var(--muted);margin-top:8px">Siz bloklangansiz</div></div>`;
+    q('#bottom-nav').style.display='none';
+    return;
   }
+  q('#bottom-nav').style.display='flex';
+  area.innerHTML = `<div class="card" style="display:flex;gap:12px;align-items:center"><img src="https://via.placeholder.com/96" style="width:96px;height:96px;border-radius:12px;object-fit:cover"/><div><div style="font-weight:700">Foydalanuvchi (${htmlEscape(currentUser.username)})</div><div style="color:var(--muted)">Balance: <span id="user-balance">${htmlEscape(String(currentUser.balance||0))}</span> ⭐</div></div></div>`;
+  renderStarsBuy();
+  renderPurchases();
 }
 
-function renderPurchases(){
-  const container = q('#my-purchases');
-  container.innerHTML = '';
-  const purchases = listings.filter(l=> l.buyer === currentUser.username);
-  if (!purchases.length) { container.innerHTML = '<div class="text-muted">Hozircha sotib olinganlar yo‘q</div>'; return; }
-  purchases.forEach(l=>{
-    const el = document.createElement('div'); el.className='card';
-    const img = (l.images && l.images[0]) || 'https://via.placeholder.com/640x360?text=Account';
-    el.innerHTML = `<img src="${escapeHtml(img)}"><div class="title">${escapeHtml(l.title)}</div><div class="meta">Login: ${escapeHtml(l.login)} • Parol: ${escapeHtml(l.pass)}</div>`;
-    container.appendChild(el);
+/* Stars buy UI */
+function renderStarsBuy(){
+  const container = q('#stars-buy'); container.innerHTML = '';
+  const amounts = [10,50,100,500];
+  const wrap = document.createElement('div'); wrap.className='mt-4';
+  wrap.innerHTML = '<h4 class="font-semibold mb-2">Yulduzlar sotib olish</h4>';
+  const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px';
+  amounts.forEach(a=>{
+    const btn = document.createElement('button'); btn.className='btn btn-ghost'; btn.textContent = a + ' ⭐'; btn.onclick = ()=> buyStars(a);
+    row.appendChild(btn);
   });
+  wrap.appendChild(row); container.appendChild(wrap);
 }
 
-function renderAll(){
-  renderCarousel();
-  renderCards();
-  renderMyListings();
-  renderProfile();
+/* purchases */
+function renderPurchases(){
+  // call backend for purchases? for now local placeholder
 }
 
-/* =======================
-   PAGE NAV
-   ======================= */
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  const nav = document.querySelector(`.nav-item[data-target="${id}"]`);
-  if (nav) nav.classList.add('active');
+/* global render */
+function renderAll(){ renderCarousel(); renderCards(); renderMyListings(); renderProfile(); }
 
-  if (id === 'chat-page') {
-    setTimeout(()=>{ const m = q('.messages'); if(m) m.scrollTop = m.scrollHeight; }, 80);
-  }
-}
-qAll('.nav-item').forEach(el=> el.addEventListener('click', ()=> showPage(el.dataset.target)));
+/* ============ NAV ============ */
+qAll('.nav-item').forEach(el=>el.addEventListener('click', ()=> {
+  qAll('.page').forEach(p=>p.classList.remove('active'));
+  const target = el.dataset.target;
+  document.getElementById(target).classList.add('active');
+  qAll('.nav-item').forEach(n=>n.classList.remove('active')); el.classList.add('active');
+  if (target === 'chat-page'){ loadChatHistory(); }
+}));
 
-/* =======================
-   CREATE / EDIT / DELETE
-   ======================= */
-function openCreate(){
-  if (!currentUser) return alert('Login qiling');
-  openModal();
-  fillForm(null);
-}
-function openEdit(id){
-  const lst = listings.find(x=>x.id===id);
-  if (!lst) return alert('E\'lon topilmadi');
-  openModal();
-  fillForm(lst);
-}
-function openModal(){ q('#modalRoot').style.display='flex'; }
-function closeModal(){ q('#modalRoot').style.display='none'; }
-function fillForm(lst){
-  q('#lst-id').value = lst ? lst.id : '';
-  q('#lst-platform').value = lst ? lst.platform : 'twitter';
-  q('#lst-title').value = lst ? lst.title : '';
-  q('#lst-login').value = lst ? lst.login : '';
-  q('#lst-pass').value = lst ? lst.pass : '';
-  q('#lst-price').value = lst ? lst.price_stars : '';
-  q('#lst-images').value = lst && lst.images ? lst.images.join(',') : '';
-}
-
-q('#cancelListingBtn').addEventListener('click', ()=> closeModal());
-
-q('#saveListingBtn').addEventListener('click', async ()=>{
-  const id = q('#lst-id').value;
-  const platform = q('#lst-platform').value;
-  const title = q('#lst-title').value.trim();
-  const login = q('#lst-login').value.trim();
-  const pass = q('#lst-pass').value.trim();
-  const price = parseInt(q('#lst-price').value) || 0;
-  const images = q('#lst-images').value.split(',').map(s=>s.trim()).filter(Boolean);
-
-  if (!title || !login) return alert('Title va login kiriting');
-
+/* ============ CREATE/EDIT/DELETE (short) ============ */
+function openEdit(id){ openModal(`<div>Tahrirlash kerak: ${id}</div>`); }
+function confirmDelete(id){ if (confirm('O\'chirmoqchimisiz?')) deleteItem(id); }
+async function deleteItem(id){
   try {
-    if (id){
-      const resp = await fetch(`${API_BASE}/listings/${id}`, {
-        method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-          title, platform, login, pass, price_stars: price, images
-        })
-      });
-      if (!resp.ok) throw new Error('Edit failed');
-      const updated = await resp.json();
-      listings = listings.map(l=> l.id==id ? {...l, title, platform, login, pass, price_stars:price, images} : l);
-      alert('E\'lon tahrirlandi');
-    } else {
-      const resp = await fetch(`${API_BASE}/listings`, {
-        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-          title, platform, login, pass, price_stars: price, images, owner: currentUser.username, ad: currentUser.is_admin ? true : false
-        })
-      });
-      if (!resp.ok) throw new Error('Create failed');
-      const created = await resp.json();
-      listings.unshift({...created});
-      alert('E\'lon yaratildi');
-    }
-    closeModal();
+    const res = await fetch(`${API_BASE}/items/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('O\'chirishda xatolik');
+    listings = listings.filter(x => (x._id||x.id) !== id);
     renderAll();
-  } catch (err) {
-    console.error(err);
-    alert('Server bilan ishlashda xatolik: ' + err.message);
-  }
-});
-
-function confirmDelete(id){
-  if (!confirm('E\'lonni o\'chirmoqchimisiz?')) return;
-  deleteListing(id);
+    alert('O\'chirildi');
+  } catch(e){ alert('Xatolik: '+e.message); }
 }
-
-async function deleteListing(id){
-  try {
-    const resp = await fetch(`${API_BASE}/listings/${id}`, { method: 'DELETE' });
-    if (!resp.ok) throw new Error('Delete failed');
-    listings = listings.filter(l=>l.id!==id);
-    renderAll();
-    alert('E\'lon o\'chirildi');
-  } catch (err) {
-    console.error(err);
-    alert('O\'chirishda xatolik: ' + err.message);
-  }
-}
-
 async function markSold(id){
-  const l = listings.find(x=>x.id===id); if(!l) return alert('Topilmadi');
-  if (l.sold) return alert('E\'lon allaqachon sotilgan');
   try {
-    const resp = await fetch(`${API_BASE}/listings/${id}/mark-sold`, { method:'POST' });
-    if (!resp.ok) throw new Error('Server failed');
-    l.sold = true;
-    renderAll();
-    alert('E\'lon sotildi deb belgilandi');
-  } catch (err) {
-    console.error(err);
-    alert('Xatolik: ' + err.message);
+    // endpoint may differ — use purchases marking or item update
+    await fetch(`${API_BASE}/items/${id}/mark-sold`, { method:'POST' }).catch(()=>{});
+    const it = listings.find(x => (x._id||x.id) === id); if (it) it.status='sold'; renderAll();
+    alert('Belgilandi');
+  } catch(e){ alert('Xato'); }
+}
+
+/* ============ COPY / SHARE ============ */
+function copyLink(id){ const url = location.origin + location.pathname + '?listing=' + id; navigator.clipboard.writeText(url).then(()=>alert('Havola nusxalandi')); }
+function shareListing(id){ const url = location.origin + location.pathname + '?listing=' + id; if (navigator.share) navigator.share({title:'E\'lon', text:'Bu e\'lonni ko\'ring', url}).catch(()=>{}); else alert('Link: ' + url); }
+
+/* ============ DETAIL / BUY PROMPT ============ */
+async function openDetail(id){
+  const item = (listings.find(l=> (l._id||l.id) == id) || {});
+  openModal(`<div><h3>${htmlEscape(item.title||item.item_title||'—')}</h3><p>Platforma: ${htmlEscape(item.platform||'—')}</p><p>Narx: ${htmlEscape(String(item.price||item.price_stars||0))} ⭐</p>
+    <div class="mt-4"><button class="btn btn-primary" onclick="buyPrompt('${id}')">Sotib olish</button></div></div>`);
+}
+function buyPrompt(id){ closeModal(); const it = listings.find(l=> (l._id||l.id)==id); if(!it) return alert('Topilmadi'); if (!it.is_admin_item) return alert('Admin e\'loni emas'); if (confirm(`${it.title}\nNarx: ${it.price||it.price_stars} ⭐\nTo'lovni boshlaysizmi?`)) buyItem(id); }
+
+/* ============ BUY FLOW (Stars) ============ */
+async function buyItem(id){
+  // We prefer server-side invoice. We'll call backend to create/send invoice.
+  try {
+    const it = listings.find(l=> (l._id||l.id) == id);
+    if (!it) return alert('Topilmadi');
+    // call backend purchases or sendInvoice — here we open purchase flow
+    const payload = { item_id: id, buyer_telegram_id: currentUser.telegram_id, purchase_type: 'admin_purchase' };
+    // If admin_purchase_enabled must be true; check settings first
+    const sres = await fetch(`${API_BASE}/admin/settings`);
+    // ignore errors; try purchase
+    // Create purchase via Telegram Stars (backend should send invoice / return invoice link)
+    const resp = await fetch(`${API_BASE}/payment/create-invoice`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+        telegram_id: currentUser.telegram_id,
+        stars: it.price || it.price_stars || 0
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Invoice yaratilmadi');
+    if (data.test_mode){
+      // backend in test mode: it already credited stars; proceed to mark purchase via backend
+      await fetch(`${API_BASE}/purchases`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+        item_id: id, buyer_telegram_id: currentUser.telegram_id
+      })});
+      alert('Test rejimida to\'lov muvaffaqiyatli amalga oshirildi.');
+      renderAll();
+      return;
+    }
+    // If backend returns an invoice_link (recommended), open it in Telegram
+    if (data.invoice_link){
+      if (tg && typeof tg.openInvoice === 'function'){
+        try {
+          tg.openInvoice(data.invoice_link);
+        } catch(e){ window.open(data.invoice_link, '_blank'); }
+      } else {
+        window.open(data.invoice_link, '_blank');
+      }
+      alert('To\'lov oynasi ochildi. To\'lovni Telegram orqali yakunlang.');
+    } else if (data.payload){
+      // backend created invoice by sendInvoice to user's chat — inform user to check Telegram messages
+      alert('Sizga Telegram orqali invoice yuborildi. Telegram chatni tekshiring va to\'lovni yakunlang.');
+    } else {
+      alert('Invoice yaratishda nomaʼlum javob keldi. Server javobini tekshiring.');
+    }
+  } catch(e){
+    console.error(e); alert('Xato: ' + (e.message || e));
   }
 }
 
-/* =======================
-   COPY / SHARE
-   ======================= */
-function copyLink(id){
-  const url = location.origin + location.pathname + '?listing=' + id;
-  navigator.clipboard.writeText(url).then(()=> alert('Havola nusxalandi'));
-}
-function shareListing(id){
-  const url = location.origin + location.pathname + '?listing=' + id;
-  if (navigator.share){
-    navigator.share({ title:'E\'lon', text:'Bu e\'lonni ko\'ring', url }).catch(()=>{});
-  } else {
-    alert('Brauzer share API ni qo\'llab-quvvatlamaydi. Nusxalash: ' + url);
-  }
+/* ============ STARS BUY (direct amounts) ============ */
+async function buyStars(amount){
+  try {
+    const resp = await fetch(`${API_BASE}/payment/create-invoice`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+        telegram_id: currentUser.telegram_id,
+        stars: amount
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Invoice yaratilmadi');
+
+    if (data.test_mode){
+      currentUser.balance = (currentUser.balance||0) + amount;
+      q('#user-balance').textContent = currentUser.balance;
+      alert(`${amount} yulduz test rejimida qo'shildi`);
+      return;
+    }
+    if (data.invoice_link){
+      if (tg && typeof tg.openInvoice === 'function'){ try { tg.openInvoice(data.invoice_link); } catch(e){ window.open(data.invoice_link,'_blank'); } }
+      else window.open(data.invoice_link,'_blank');
+      alert('To\'lov oynasi ochildi. Telegramni tekshiring.');
+      return;
+    }
+    if (data.payload){
+      alert('Invoice server orqali yuborildi. Telegramni tekshiring.');
+      return;
+    }
+    alert('Invoice uchun nomaʼlum javob: ' + JSON.stringify(data));
+  } catch(e){ console.error(e); alert('Xato: ' + (e.message || e)); }
 }
 
-/* =======================
-   OPEN DETAIL (modal or simple)
-   ======================= */
-function openDetail(id){
-  const l = listings.find(x=>x.id===id); if(!l) return alert('Topilmadi');
-  const info = `Title: ${l.title}\nPlatforma: ${l.platform}\nLogin: ${l.login}\nNarx: ${l.price_stars} ⭐\n\nAgar hokimiyat: admin elonlari to‘lash orqali olinadi.`;
-  if (confirm(info + '\n\nSotib olishni xohlaysizmi?')) {
-    if (l.ad) buy(id);
-    else alert('Bu e\'lon to‘g‘ridan-to‘g‘ri sotilmaydi (foydalanuvchi eloni).');
-  }
+/* ============ SUPPORT CHAT ============ */
+/* Fixes implemented:
+   - When opening chat page we call /api/support/get-available-admin to reserve admin (if any)
+   - send messages to /api/chat/send including optional base64 image as "image_base64"
+   - load chat history from /api/chat/history/<telegram_id>
+   NOTE: backend must accept "image_base64" in /api/chat/send to save images.
+*/
+
+async function loadChatHistory(){
+  try {
+    const resp = await fetch(`${API_BASE}/chat/history/${currentUser.telegram_id}`);
+    if (!resp.ok) { q('#chat-messages').innerHTML = '<div style="color:var(--muted)">Chat tarixini yuklab bo‘lmadi</div>'; return; }
+    const data = await resp.json();
+    const msgs = data.messages || [];
+    const box = q('#chat-messages'); box.innerHTML = '';
+    msgs.forEach(m=>{
+      const div = document.createElement('div'); div.style.margin='8px 0'; div.style.padding='8px'; div.style.borderRadius='10px';
+      if (m.sender_type === 'user') { div.style.background='#06202f'; div.style.textAlign='right'; div.textContent = m.message || ''; }
+      else if (m.sender_type === 'ai' || m.sender_type === 'admin') { div.style.background='#0b2a39'; div.textContent = m.message || ''; }
+      if (m.image){ // if backend stores image url or base64
+        const img = document.createElement('img'); img.src = m.image; img.style.maxWidth='180px'; img.style.display='block'; img.style.marginTop='8px'; div.appendChild(img);
+      }
+      box.appendChild(div);
+    });
+    box.scrollTop = box.scrollHeight;
+  } catch(e){ console.error(e); }
 }
 
-/* =======================
-   CHAT
-   ======================= */
-q('#send-chat').addEventListener('click', ()=>{
-  const txt = q('#chat-input').value.trim();
-  if (!txt) return;
-  const div = document.createElement('div');
-  div.style.margin='8px 0'; div.style.padding='10px'; div.style.background='#06202f'; div.style.borderRadius='12px'; div.textContent = txt;
-  q('#chat-messages').appendChild(div);
-  q('#chat-input').value='';
-  q('.messages').scrollTop = q('.messages').scrollHeight;
+q('#attach-btn').addEventListener('click', ()=> q('#chat-image').click());
+q('#chat-image').addEventListener('change', ()=> {
+  const file = q('#chat-image').files[0];
+  if (!file) return;
+  // show preview in input placeholder
+  q('#chat-input').placeholder = 'Rasm tanlandi: ' + file.name + ' — qo\'shish uchun yuboring';
 });
 
-/* =======================
-   BUY -> create invoice (Telegram Stars)
-   ======================= */
-async function buy(listingId){
-  const l = listings.find(x=>x.id===listingId);
-  if (!l) return alert('E\'lon topilmadi');
-  if (!l.ad) return alert('Bu e\'lon admin orqali sotilmaydi.');
+q('#send-chat').addEventListener('click', async ()=>{
+  const message = q('#chat-input').value.trim();
+  const file = q('#chat-image').files[0];
+
+  if (!message && !file) return alert('Xabar yoki rasm kiriting');
+
+  let image_base64 = null;
+  if (file){
+    // convert to base64 (be careful with very large files)
+    image_base64 = await toBase64(file);
+  }
 
   try {
-    const resp = await fetch(`${API_BASE}/create-invoice`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        listing_id: listingId,
-        amount_stars: l.price_stars,
-        description: l.title,
-        buyer_telegram_id: currentUser.telegram_id
-      })
+    const payload = {
+      user_telegram_id: currentUser.telegram_id,
+      message: message || '',
+      image_base64: image_base64 // <-- backend must accept this field to save image
+    };
+    const resp = await fetch(`${API_BASE}/chat/send`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
     });
-    if (!resp.ok) {
-      const txt = await resp.text();
-      throw new Error('Invoice yaratilmadi: ' + txt);
-    }
     const data = await resp.json();
-    const invoiceLink = data.invoice_link;
+    if (!resp.ok) throw new Error(data.error || 'Chat send failed');
 
-    if (!invoiceLink) throw new Error('Invoice link bo\'sh');
-
-    if (tg && typeof tg.openInvoice === 'function') {
-      try {
-        tg.openInvoice(invoiceLink, (status) => {
-          console.log('openInvoice callback status:', status);
-          if (status === 'paid') {
-            onSuccessfulPurchase(listingId);
-            alert('To\'lov muvaffaqiyatli amalga oshirildi!');
-          } else {
-            alert('To\'lov holati: ' + status);
-          }
-        });
-      } catch(e) {
-        window.open(invoiceLink, '_blank');
-        alert('To\'lov oynasi ochildi — agar Telegram ichida bo\'lmasa, sahifada davom eting.');
-      }
-    } else if (window.open) {
-      window.open(invoiceLink, '_blank');
-      alert('To\'lov oynasi ochildi — sahifada davom eting.');
-    } else {
-      alert('Sizning muhitda to\'lovni ochib bo\'lmadi.');
+    // append user message
+    const box = q('#chat-messages');
+    const div = document.createElement('div'); div.style.margin='8px 0'; div.style.padding='10px'; div.style.background='#06202f'; div.style.borderRadius='12px'; div.style.textAlign='right';
+    div.textContent = message || (file ? 'Rasm yuborildi' : '');
+    if (image_base64){
+      const img = document.createElement('img'); img.src = image_base64; img.style.maxWidth='200px'; img.style.display='block'; img.style.marginTop='8px'; div.appendChild(img);
     }
-  } catch (err) {
-    console.error(err);
-    alert('To\'lov hosil qilishda xatolik: ' + err.message);
-  }
-}
+    box.appendChild(div);
 
-/* Called when payment is known to be successful locally (backend should confirm via webhook too) */
-async function onSuccessfulPurchase(listingId){
+    // show ai/admin response if returned
+    if (data.ai_response || data.admin_response){
+      const respDiv = document.createElement('div'); respDiv.style.margin='8px 0'; respDiv.style.padding='10px'; respDiv.style.background='#0b2a39'; respDiv.style.borderRadius='12px';
+      respDiv.textContent = data.ai_response || data.admin_response || 'Adminga yuborildi';
+      box.appendChild(respDiv);
+    }
+
+    box.scrollTop = box.scrollHeight;
+    q('#chat-input').value = ''; q('#chat-image').value = '';
+    q('#chat-input').placeholder = 'Xabar yozing...';
+  } catch(e){ console.error(e); alert('Xato: ' + (e.message||e)); }
+});
+
+function toBase64(file){ return new Promise((resolve, reject)=>{ const reader = new FileReader(); reader.onload = ()=> resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
+
+/* ============ ADMIN SETTINGS UI ============ */
+async function loadAdminSettings(){
   try {
-    const resp = await fetch(`${API_BASE}/listings/${listingId}/purchase`, {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-        buyer_telegram_id: currentUser.telegram_id,
-        buyer_username: currentUser.username
-      })
-    });
-    if (!resp.ok) throw new Error('Server purchase failed');
-    const result = await resp.json();
-    const l = listings.find(x=>x.id===listingId);
-    if (l) { l.sold = true; l.buyer = currentUser.username; }
-    renderAll();
-  } catch (err) {
-    console.error(err);
-    const l = listings.find(x=>x.id===listingId);
-    if (l) { l.sold = true; l.buyer = currentUser.username; }
-    renderAll();
-    alert('Server bilan sinxronlashda xatolik: ' + err.message);
-  }
+    const res = await fetch(`${API_BASE}/admin/settings`);
+    if (!res.ok) throw new Error('Settings yuklanmadi');
+    const data = await res.json();
+    const settings = (data.settings && data.settings.length) ? data.settings.reduce((acc,s)=>{ acc[s.type]=s.data; return acc; }, {}) : {};
+    const sys = settings['system_settings'] || {
+      admin_purchase_enabled:true, buyer_admin_cost:25, listing_cost:10, commission_rate:0.1
+    };
+    // fill UI
+    q('#setting-admin-purchase').checked = !!sys.admin_purchase_enabled;
+    q('#setting-buyer-admin-cost').value = sys.buyer_admin_cost || 25;
+    q('#setting-listing-cost').value = sys.listing_cost || 10;
+    q('#setting-commission-rate').value = (sys.commission_rate||0.1)*100;
+    // check if buyer_admin assigned (backend not providing quick check here) -> show message if not
+    // We'll call support admin endpoint to see if any buyer_admin exists
+    const usersResp = await fetch(`${API_BASE}/admin/users/search`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ admin_telegram_id: currentUser.telegram_id, query:'' }) }).catch(()=>null);
+    if (usersResp && usersResp.ok){
+      const usersData = await usersResp.json();
+      const hasBuyerAdmin = (usersData.users || []).some(u => u.role === 'buyer_admin');
+      if (!hasBuyerAdmin) q('#admin-warning').textContent = 'Avval "admin orqali sotib olish" funksiyasini ishlatish uchun buyer_admin tayinlang.';
+      else q('#admin-warning').textContent = '';
+    }
+  } catch(e){ console.warn('Load settings failed', e); }
 }
 
-/* =======================
-   DEEP LINK handling (?listing=)
-   ======================= */
-(function handleDeepLink(){
-  const params = new URLSearchParams(location.search);
-  const id = params.get('listing');
-  if (id) {
-    const numeric = parseInt(id);
-    const l = listings.find(x=>x.id===numeric);
-    if (l) {
-      if (l.ad) buy(numeric);
-      else openDetail(numeric);
+q('#save-settings').addEventListener('click', async ()=>{
+  const body = {
+    admin_telegram_id: currentUser.telegram_id,
+    type: 'system_settings',
+    data: {
+      admin_purchase_enabled: !!q('#setting-admin-purchase').checked,
+      buyer_admin_cost: parseFloat(q('#setting-buyer-admin-cost').value) || 25,
+      listing_cost: parseFloat(q('#setting-listing-cost').value) || 10,
+      commission_rate: (parseFloat(q('#setting-commission-rate').value) || 10)/100
     }
-  }
+  };
+  try {
+    const res = await fetch(`${API_BASE}/admin/settings`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.error || 'Settings save failed');
+    alert('Sozlamalar yangilandi');
+    await loadAdminSettings();
+  } catch(e){ alert('Xato: ' + (e.message||e)); }
+});
+
+/* ============ ADMIN Carousel upload ============ */
+q('#upload-carousel').addEventListener('click', async ()=>{
+  const file = q('#carousel-image').files[0];
+  if (!file) return alert('Rasm tanlang');
+  const b64 = await toBase64(file);
+  // send to backend as advertisement (backend /api/advertisements expects ad_package based on settings;
+  // here we send ad_package='basic' temporarily — better to add a dedicated admin upload endpoint)
+  const payload = {
+    user_telegram_id: currentUser.telegram_id,
+    listing_id: null,
+    ad_package: 'basic',
+    image: b64
+  };
+  try {
+    const res = await fetch(`${API_BASE}/advertisements`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Upload failed');
+    q('#carousel-admin-msg').textContent = 'Rasm joylashtirildi (yuklandi).';
+    // refresh carousel
+    await fetchInitial();
+  } catch(e){ alert('Xato: ' + (e.message||e)); }
+});
+
+/* ============ SUPPORT: get available admin when opening chat page ============ */
+async function reserveSupportAdmin(){
+  try {
+    const res = await fetch(`${API_BASE}/support/get-available-admin`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ user_telegram_id: currentUser.telegram_id })});
+    const d = await res.json();
+    if (res.ok && d.admin){ /* admin reserved */ return d.admin; }
+    return null;
+  } catch(e){ return null; }
+}
+
+/* ============ INIT ============ */
+(async function init(){
+  // If you have actual Telegram WebApp data, you should register user with backend here.
+  // For now use demo currentUser.
+  await fetchInitial();
+  // reserve support admin silently
+  reserveSupportAdmin();
 })();
 
-/* =======================
-   ADMIN toggle button (dev)
-   ======================= */
-q('#btnAdminMode').addEventListener('click', ()=>{
-  isAdminView = !isAdminView;
-  currentUser.is_admin = isAdminView;
-  alert('Admin mode: ' + (isAdminView ? 'ON' : 'OFF'));
-  renderAll();
-});
+async function loadChatHistory(){ await loadChatHistory(); } // alias to match earlier call
 
-/* create listing quick open */
-q('#btnOpenCreate').addEventListener('click', ()=>{
-  if (!currentUser) return alert('Kirish qilingan emas');
-  openCreate();
-});
-
-/* init */
-renderAll();
-
-/* =======================
-   POLLING / WEBSOCKET for updates (recommended)
-   ======================= */
-let pollInterval = null;
-function startPolling(){
-  if (pollInterval) clearInterval(pollInterval);
-  pollInterval = setInterval(async ()=>{
-    try {
-      const resp = await fetch(`${API_BASE}/listings`);
-      if (resp.ok){
-        const data = await resp.json();
-        listings = data.listings || listings;
-        renderAll();
-      }
-    } catch(e){
-      console.warn('Polling failed', e);
-    }
-  }, 15000);
-}
-// startPolling(); // aktivlashtirish uchun uncomment qiling
 </script>
 </body>
 </html>
