@@ -83,13 +83,53 @@
             display: flex !important;
         }
 
-        /* Carousel */
-        .carousel-container .swiper-button-next, 
-        .carousel-container .swiper-button-prev { 
-            color: #fff; 
+        /* FIXED Modal system - completely above everything */
+        .modal-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: rgba(0, 0, 0, 0.95) !important;
+            z-index: 9999 !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
-        .carousel-container .swiper-pagination-bullet-active { 
-            background: #fff; 
+
+        .modal-content {
+            width: 100% !important;
+            height: 100% !important;
+            background: #0f0f0f !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .modal-footer {
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            background: #0f0f0f;
+        }
+
+        /* Carousel - NO PAGINATION */
+        .carousel-container .swiper-pagination {
+            display: none !important;
         }
 
         /* Chat system - COMPLETELY FIXED */
@@ -214,30 +254,6 @@
             border: 3px solid #62bcf9;
         }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-content {
-            background: #1a1a1a;
-            border-radius: 1rem;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         /* Bottom navigation - FIXED */
         #bottom-nav {
             position: fixed;
@@ -339,15 +355,6 @@
             padding: 2rem;
         }
 
-        /* Item modal improvements */
-        .item-modal-actions {
-            position: sticky;
-            bottom: 0;
-            background: #0f0f0f;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-        }
-
         /* Three dots menu */
         .three-dots-menu {
             position: absolute;
@@ -378,20 +385,77 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        /* Carousel image display */
+        .carousel-image-item {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .carousel-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* File upload styles */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload label {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            border-color: #62bcf9;
+            background: rgba(98, 188, 249, 0.1);
+        }
+
         /* Responsive improvements */
         @media (max-width: 640px) {
-            .modal-content {
-                margin: 0.5rem;
-                max-height: 95vh;
-            }
-            
-            #chat-messages {
-                padding: 12px;
-            }
-            
             .chat-message {
                 max-width: 90%;
             }
+        }
+
+        /* Remove debug texts */
+        .debug-text {
+            display: none !important;
         }
     </style>
 </head>
@@ -403,11 +467,13 @@
              Home Page 
             <div id="home-page" class="page active">
                  Advertisement Carousel 
-                <div id="ads-carousel" class="swiper h-48 mb-4 rounded-b-2xl overflow-hidden">
+                <div id="ads-carousel" class="swiper h-48 mb-4 rounded-b-2xl overflow-hidden carousel-container">
                     <div class="swiper-wrapper" id="ads-wrapper">
-                         Carousel items will be loaded dynamically 
+                         Default carousel item 
+                        <div class="swiper-slide">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Ptg8CTmOZ4TySqu1OuUxahJfJEcRKH.png" class="w-full h-full object-cover rounded-b-2xl" alt="Game Market">
+                        </div>
                     </div>
-                    <div class="swiper-pagination"></div>
                 </div>
                 
                  Categories 
@@ -600,7 +666,7 @@
                 </div>
             </div>
 
-             Enhanced Admin Panel Page 
+             FIXED Admin Panel Page 
             <div id="admin-panel-page" class="page p-4">
                 <h2 class="text-xl font-bold mb-4" data-translate-key="admin_panel">Admin Panel</h2>
                 
@@ -656,51 +722,47 @@
                     </div>
                 </div>
 
-                 System Settings Section 
+                 FIXED System Settings Section 
                 <div class="admin-section glass">
                     <h3 class="font-bold mb-4">⚙️ Tizim sozlamalari</h3>
                     <div class="space-y-3">
                         <label class="flex items-center justify-between">
-                            <span>Admin orqali xarid</span>
+                            <span>Admin orqali xarid (25 yulduz)</span>
                             <input type="checkbox" id="admin-purchase-toggle" class="rounded">
                         </label>
-                        <div class="flex gap-2">
-                            <input type="number" id="buyer-admin-cost" placeholder="Admin yordam narxi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <span class="flex items-center text-sm text-tg-hint">yulduz</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <input type="number" id="listing-cost" placeholder="E'lon narxi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <span class="flex items-center text-sm text-tg-hint">yulduz</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <input type="number" id="commission-rate" placeholder="Komissiya foizi" class="flex-1 bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <span class="flex items-center text-sm text-tg-hint">%</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-sm text-tg-hint">Admin yordam narxi (yulduz)</label>
+                                <input type="number" id="buyer-admin-cost" placeholder="25" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            </div>
+                            <div>
+                                <label class="text-sm text-tg-hint">E'lon narxi (yulduz)</label>
+                                <input type="number" id="listing-cost" placeholder="10" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                            </div>
                         </div>
                         <button onclick="updateSystemSettings()" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg">Sozlamalarni yangilash</button>
                     </div>
                 </div>
 
-                 Ad Package Management 
-                <div class="admin-section glass">
-                    <h3 class="font-bold mb-4">📢 Reklama paketlari</h3>
-                    <div class="space-y-3">
-                        <div class="grid grid-cols-3 gap-2">
-                            <input type="number" id="basic-ad-price" placeholder="Asosiy narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <input type="number" id="premium-ad-price" placeholder="Premium narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                            <input type="number" id="vip-ad-price" placeholder="VIP narx" class="bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                        </div>
-                        <button onclick="updateAdPackages()" class="w-full bg-purple-600 text-white font-bold py-2 rounded-lg">Reklama narxlarini yangilash</button>
-                    </div>
-                </div>
-
-                 Carousel Management 
+                 SIMPLIFIED Carousel Management 
                 <div class="admin-section glass">
                     <h3 class="font-bold mb-4">🎠 Carousel boshqaruvi</h3>
                     <div class="space-y-3">
-                        <input type="url" id="carousel-image-url" placeholder="Rasm URL" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                        <input type="text" id="carousel-title" placeholder="Sarlavha" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
-                        <input type="text" id="carousel-description" placeholder="Tavsif" class="w-full bg-tg-bg border border-gray-600 rounded-lg px-3 py-2">
+                        <div class="file-upload">
+                            <input type="file" id="carousel-image-input" accept="image/*">
+                            <label for="carousel-image-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mx-auto mb-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                </svg>
+                                <span>Rasm yuklash uchun bosing</span>
+                            </label>
+                        </div>
                         <button onclick="addCarouselItem()" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-lg">Carousel ga qo'shish</button>
+                        
+                         Carousel Images Display 
+                        <div id="carousel-images-list" class="space-y-3">
+                             Carousel images will be displayed here 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -762,6 +824,18 @@
                             <option value="30">30 kun (35 yulduz)</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Account rasmi</label>
+                        <div class="file-upload">
+                            <input type="file" id="account-image-input" accept="image/*">
+                            <label for="account-image-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mx-auto mb-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                </svg>
+                                <span>Account rasmini yuklang</span>
+                            </label>
+                        </div>
+                    </div>
                     <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg">E'lon yaratish</button>
                 </form>
             </div>
@@ -788,7 +862,7 @@
                 <p class="text-tg-hint text-center" data-translate-key="help_content">Savollaringiz bo'lsa, yordam xizmatiga murojaat qiling.</p>
             </div>
             
-             Chat Page - COMPLETELY FIXED LAYOUT 
+             FIXED Chat Page 
             <div id="chat-page" class="page">
                 <main>
                     <header class="glass flex items-center justify-between">
@@ -1251,6 +1325,20 @@
                 }
             }
 
+            // File upload helper function
+            function handleFileUpload(input, callback) {
+                const file = input.files[0];
+                if (!file) return;
+                
+                // For demo, we'll use a placeholder URL
+                // In real app, upload to your server/cloud storage
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+
             // === ENHANCED ADMIN FUNCTIONS ===
             window.assignRole = async function() {
                 const targetId = parseInt(document.getElementById('target-user-id').value);
@@ -1331,11 +1419,19 @@
                     const transactions = result.transactions;
                     
                     const modalContent = `
-                        <div class="p-6">
+                        <div class="modal-header">
+                            <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <h2 class="text-xl font-bold">Foydalanuvchi ma'lumotlari</h2>
+                        </div>
+                        <div class="modal-body p-4">
                             <div class="flex items-center gap-4 mb-6">
                                 <img src="${user.photo_url || `https://via.placeholder.com/64/2ea6ff/ffffff?text=${user.first_name?.charAt(0) || 'U'}`}" class="w-16 h-16 rounded-full">
                                 <div>
-                                    <h2 class="text-xl font-bold">${user.first_name} ${user.last_name || ''}</h2>
+                                    <h3 class="text-xl font-bold">${user.first_name} ${user.last_name || ''}</h3>
                                     <p class="text-tg-hint">@${user.username || 'N/A'} • ID: ${user.telegram_id}</p>
                                     <p class="text-sm">Balans: ${user.balance || 0} ⭐ • Rol: ${user.role}</p>
                                 </div>
@@ -1343,7 +1439,7 @@
                             
                             <div class="space-y-4">
                                 <div>
-                                    <h3 class="font-bold mb-2">📊 Statistika</h3>
+                                    <h4 class="font-bold mb-2">📊 Statistika</h4>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="glass-card p-3 rounded-lg text-center">
                                             <div class="text-lg font-bold">${purchases.length}</div>
@@ -1357,7 +1453,7 @@
                                 </div>
                                 
                                 <div>
-                                    <h3 class="font-bold mb-2">💰 So'nggi tranzaksiyalar</h3>
+                                    <h4 class="font-bold mb-2">💰 So'nggi tranzaksiyalar</h4>
                                     <div class="space-y-2 max-h-40 overflow-y-auto">
                                         ${transactions.slice(0, 5).map(t => `
                                             <div class="glass-card p-2 rounded text-sm">
@@ -1371,8 +1467,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <button onclick="closeModal()" class="w-full mt-6 bg-tg-button text-white font-bold py-2 rounded-lg">Yopish</button>
                         </div>
                     `;
                     
@@ -1452,11 +1546,11 @@
                 }
             }
 
+            // FIXED System Settings Update
             window.updateSystemSettings = async function() {
                 const adminPurchaseEnabled = document.getElementById('admin-purchase-toggle').checked;
                 const buyerAdminCost = parseInt(document.getElementById('buyer-admin-cost').value) || 25;
                 const listingCost = parseInt(document.getElementById('listing-cost').value) || 10;
-                const commissionRate = parseFloat(document.getElementById('commission-rate').value) || 10;
                 
                 try {
                     await apiCall('/admin/settings', 'POST', {
@@ -1466,7 +1560,7 @@
                             admin_purchase_enabled: adminPurchaseEnabled,
                             buyer_admin_cost: buyerAdminCost,
                             listing_cost: listingCost,
-                            commission_rate: commissionRate / 100
+                            commission_rate: 0.1
                         }
                     });
                     
@@ -1477,59 +1571,64 @@
                 }
             }
 
-            window.updateAdPackages = async function() {
-                const basicPrice = parseInt(document.getElementById('basic-ad-price').value) || 50;
-                const premiumPrice = parseInt(document.getElementById('premium-ad-price').value) || 100;
-                const vipPrice = parseInt(document.getElementById('vip-ad-price').value) || 200;
+            // SIMPLIFIED Carousel Management
+            window.addCarouselItem = async function() {
+                const imageInput = document.getElementById('carousel-image-input');
+                if (!imageInput.files[0]) {
+                    alert('Iltimos, rasm tanlang');
+                    return;
+                }
+                
+                // For demo purposes, we'll use base64. In production, upload to server
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        await apiCall('/carousel', 'POST', {
+                            admin_telegram_id: currentUser.telegram_id,
+                            image_url: e.target.result, // In production, use actual uploaded URL
+                            title: '',
+                            description: '',
+                            order: carouselItems.length + 1
+                        });
+                        
+                        alert('Carousel item qo\'shildi');
+                        imageInput.value = '';
+                        await loadCarousel();
+                        displayCarouselImages();
+                    } catch (error) {
+                        alert('Xatolik: ' + error.message);
+                    }
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+
+            window.deleteCarouselItem = async function(itemId) {
+                if (!confirm('Bu rasmni carousel dan olib tashlamoqchimisiz?')) return;
                 
                 try {
-                    await apiCall('/admin/settings', 'POST', {
-                        admin_telegram_id: currentUser.telegram_id,
-                        type: 'ad_packages',
-                        data: {
-                            packages: {
-                                basic: { price: basicPrice, duration_days: 3, name: "Asosiy" },
-                                premium: { price: premiumPrice, duration_days: 7, name: "Premium" },
-                                vip: { price: vipPrice, duration_days: 14, name: "VIP" }
-                            }
-                        }
-                    });
-                    
-                    alert('Reklama narxlari yangilandi');
-                    await loadAppSettings();
+                    await apiCall(`/carousel/${itemId}?admin_telegram_id=${currentUser.telegram_id}`, 'DELETE');
+                    alert('Carousel item o\'chirildi');
+                    await loadCarousel();
+                    displayCarouselImages();
                 } catch (error) {
                     alert('Xatolik: ' + error.message);
                 }
             }
 
-            window.addCarouselItem = async function() {
-                const imageUrl = document.getElementById('carousel-image-url').value.trim();
-                const title = document.getElementById('carousel-title').value.trim();
-                const description = document.getElementById('carousel-description').value.trim();
+            function displayCarouselImages() {
+                const container = document.getElementById('carousel-images-list');
+                if (!container) return;
                 
-                if (!imageUrl) {
-                    alert('Rasm URL ni kiriting');
-                    return;
-                }
-                
-                try {
-                    await apiCall('/carousel', 'POST', {
-                        admin_telegram_id: currentUser.telegram_id,
-                        image_url: imageUrl,
-                        title: title,
-                        description: description,
-                        order: carouselItems.length + 1
-                    });
-                    
-                    alert('Carousel item qo\'shildi');
-                    document.getElementById('carousel-image-url').value = '';
-                    document.getElementById('carousel-title').value = '';
-                    document.getElementById('carousel-description').value = '';
-                    
-                    await loadCarousel();
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
-                }
+                container.innerHTML = carouselItems.map(item => `
+                    <div class="carousel-image-item">
+                        <img src="${item.image_url}" alt="Carousel Image">
+                        <button onclick="deleteCarouselItem('${item._id}')" class="carousel-delete-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                `).join('');
             }
 
             async function loadAnalytics() {
@@ -1594,6 +1693,7 @@
             window.openAdminPanel = function() {
                 navigateTo('admin-panel-page');
                 loadAnalytics();
+                displayCarouselImages();
             }
 
             // Items functions
@@ -1604,34 +1704,36 @@
                 return currentItems;
             }
 
-            // Carousel functions
+            // Carousel functions - SIMPLIFIED
             async function loadCarousel() {
                 try {
                     const result = await apiCall('/carousel');
                     carouselItems = result.carousel || [];
                     
                     const wrapper = document.getElementById('ads-wrapper');
-                    wrapper.innerHTML = carouselItems.map(item => `
-                        <div class="swiper-slide">
-                            <img src="${item.image_url}" class="w-full h-full object-cover rounded-b-2xl" alt="${item.title}">
-                            ${item.title ? `<div class="absolute bottom-4 left-4 text-white">
-                                <h3 class="font-bold text-lg">${item.title}</h3>
-                                ${item.description ? `<p class="text-sm opacity-90">${item.description}</p>` : ''}
-                            </div>` : ''}
-                        </div>
-                    `).join('');
+                    if (carouselItems.length > 0) {
+                        wrapper.innerHTML = carouselItems.map(item => `
+                            <div class="swiper-slide">
+                                <img src="${item.image_url}" class="w-full h-full object-cover rounded-b-2xl" alt="Carousel">
+                            </div>
+                        `).join('');
+                    } else {
+                        // Show default image
+                        wrapper.innerHTML = `
+                            <div class="swiper-slide">
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Ptg8CTmOZ4TySqu1OuUxahJfJEcRKH.png" class="w-full h-full object-cover rounded-b-2xl" alt="Game Market">
+                            </div>
+                        `;
+                    }
                     
-                    // Reinitialize Swiper
+                    // Reinitialize Swiper without pagination
                     if (window.adsSwiper) {
                         window.adsSwiper.destroy();
                     }
                     window.adsSwiper = new Swiper('#ads-carousel', { 
                         loop: true, 
-                        autoplay: { delay: 4000 },
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true
-                        }
+                        autoplay: { delay: 4000 }
+                        // NO pagination
                     });
                 } catch (error) {
                     console.error('Error loading carousel:', error);
@@ -1814,14 +1916,9 @@
                     
                     // Update admin panel inputs
                     if (document.getElementById('admin-purchase-toggle')) {
-                        document.getElementById('admin-purchase-toggle').checked = systemSettings.admin_purchase_enabled || false;
+                        document.getElementById('admin-purchase-toggle').checked = systemSettings.admin_purchase_enabled !== false;
                         document.getElementById('buyer-admin-cost').value = systemSettings.buyer_admin_cost || 25;
                         document.getElementById('listing-cost').value = systemSettings.listing_cost || 10;
-                        document.getElementById('commission-rate').value = (systemSettings.commission_rate || 0.1) * 100;
-                        
-                        document.getElementById('basic-ad-price').value = adPackages.basic?.price || 50;
-                        document.getElementById('premium-ad-price').value = adPackages.premium?.price || 100;
-                        document.getElementById('vip-ad-price').value = adPackages.vip?.price || 200;
                     }
                     
                     return appSettings;
@@ -1873,61 +1970,57 @@
                 navigateTo('my-listings-page');
             }
 
-            async function loadUserListingsForAd() {
-                if (!currentUser) return;
-                
-                try {
-                    const result = await apiCall(`/user-listings/${currentUser.telegram_id}`);
-                    const listings = result.listings || [];
-                    
-                    const select = document.getElementById('advertise-listing');
-                    if (select) {
-                        select.innerHTML = '<option value="">E\'lonni tanlang...</option>' + 
-                            listings.filter(l => l.status === 'available').map(listing => 
-                                `<option value="${listing._id}">${listing.title} - $${listing.price}</option>`
-                            ).join('');
-                    }
-                } catch (error) {
-                    console.error('Error loading user listings:', error);
-                }
-            }
-
-            // Sell account form handler
+            // Sell account form handler with image upload
             document.getElementById('sell-account-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 if (checkUserBlocked()) return;
                 
-                const formData = {
-                    seller_telegram_id: currentUser.telegram_id,
-                    account_type: document.getElementById('sell-account-type').value,
-                    category: document.getElementById('sell-category').value,
-                    title: document.getElementById('sell-title').value,
-                    description: document.getElementById('sell-description').value,
-                    price: parseInt(document.getElementById('sell-price').value),
-                    login: document.getElementById('sell-login').value,
-                    password: document.getElementById('sell-password').value,
-                    images: [], // Would handle image upload here
-                    listing_days: parseInt(document.getElementById('sell-duration').value),
-                    listing_cost: document.getElementById('sell-duration').value === '7' ? 10 : 
-                                 document.getElementById('sell-duration').value === '14' ? 18 : 35
-                };
+                const imageInput = document.getElementById('account-image-input');
+                let imageUrl = 'https://via.placeholder.com/300/2ea6ff/ffffff?text=Game';
                 
-                if (!formData.title || !formData.description || !formData.price || !formData.login || !formData.password) {
-                    alert('Iltimos, barcha maydonlarni to\'ldiring');
-                    return;
+                if (imageInput.files[0]) {
+                    // For demo, convert to base64. In production, upload to server
+                    const reader = new FileReader();
+                    reader.onload = async function(e) {
+                        imageUrl = e.target.result;
+                        await submitListing(imageUrl);
+                    };
+                    reader.readAsDataURL(imageInput.files[0]);
+                } else {
+                    await submitListing(imageUrl);
                 }
                 
-                try {
-                    await apiCall('/user-listings', 'POST', formData);
-                    alert('E\'lon muvaffaqiyatli yaratildi!');
-                    await loadUserData();
-                    navigateTo('profile-page');
+                async function submitListing(imageUrl) {
+                    const formData = {
+                        seller_telegram_id: currentUser.telegram_id,
+                        account_type: document.getElementById('sell-account-type').value,
+                        category: document.getElementById('sell-category').value,
+                        title: document.getElementById('sell-title').value,
+                        description: document.getElementById('sell-description').value,
+                        price: parseInt(document.getElementById('sell-price').value),
+                        images: [imageUrl],
+                        listing_days: parseInt(document.getElementById('sell-duration').value),
+                        listing_cost: document.getElementById('sell-duration').value === '7' ? 10 : 
+                                     document.getElementById('sell-duration').value === '14' ? 18 : 35
+                    };
                     
-                    // Clear form
-                    document.getElementById('sell-account-form').reset();
-                } catch (error) {
-                    alert('Xatolik: ' + error.message);
+                    if (!formData.title || !formData.description || !formData.price) {
+                        alert('Iltimos, barcha majburiy maydonlarni to\'ldiring');
+                        return;
+                    }
+                    
+                    try {
+                        await apiCall('/user-listings', 'POST', formData);
+                        alert('E\'lon muvaffaqiyatli yaratildi!');
+                        await loadUserData();
+                        navigateTo('profile-page');
+                        
+                        // Clear form
+                        document.getElementById('sell-account-form').reset();
+                    } catch (error) {
+                        alert('Xatolik: ' + error.message);
+                    }
                 }
             });
 
@@ -1978,12 +2071,12 @@
                 }
             }
 
-            // Modal functions
+            // FIXED Modal functions
             function createModal(content) {
                 const modalContainer = document.getElementById('modal-container');
                 modalContainer.innerHTML = `
-                    <div class="modal-overlay" onclick="closeModal()">
-                        <div class="modal-content" onclick="event.stopPropagation()">
+                    <div class="modal-overlay">
+                        <div class="modal-content">
                             ${content}
                         </div>
                     </div>
@@ -2073,7 +2166,7 @@
                 }
             }
 
-            // Render functions - UPDATED FOR NEW SYSTEM
+            // FIXED Render functions - NO DEBUG TEXT
             async function renderItems(category = null) {
                 try {
                     const items = await loadItems(category);
@@ -2149,12 +2242,11 @@
                 });
             });
             
+            // FIXED Item Modal - no bottom nav overlap
             window.openItemModal = function(adId) {
                 const ad = currentItems.find(item => item._id === adId);
                 if (!ad) return;
 
-                const modalContainer = document.getElementById('modal-container');
-                
                 let buttonsHtml = '';
                 
                 if (ad.status === 'sold') {
@@ -2172,34 +2264,40 @@
                     `;
                 }
                 
-                modalContainer.innerHTML = `
-                <div id="item-modal" class="fixed inset-0 bg-tg-bg z-40 flex flex-col transition-opacity duration-300 opacity-100">
-                    <div class="flex-grow overflow-y-auto">
+                const modalContent = `
+                    <div class="modal-header">
+                        <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <h2 class="text-xl font-bold">${ad.title}</h2>
+                    </div>
+                    <div class="modal-body">
                         <img src="${ad.images && ad.images[0] || 'https://via.placeholder.com/400/2ea6ff/ffffff?text=Game'}" class="w-full aspect-square object-cover">
                         <div class="p-4">
                             <div class="flex justify-between items-start mb-2">
-                                <h2 class="text-3xl font-bold">${ad.title}</h2>
+                                <div>
+                                    <h3 class="text-2xl font-bold">${ad.title}</h3>
+                                    <p class="text-lg text-tg-hint">#${ad._id.slice(-6)} • ${ad.is_admin_item ? '⚡ Admin Account' : '👤 User Account'}</p>
+                                    ${ad.account_type ? `<p class="text-sm text-blue-400">📱 ${ad.account_type}</p>` : ''}
+                                </div>
                                 ${ad.is_admin_item ? 
                                     `<div class="currency-badge stars px-3 py-1 rounded-lg text-lg font-bold">${ad.price} ⭐</div>` :
                                     `<div class="currency-badge usd px-3 py-1 rounded-lg text-lg font-bold">$${ad.price}</div>`
                                 }
                             </div>
-                            <p class="text-lg text-tg-hint mb-2">#${ad._id.slice(-6)} • ${ad.is_admin_item ? '⚡ Admin Account' : '👤 User Account'}</p>
-                            ${ad.account_type ? `<p class="text-sm text-blue-400 mb-2">📱 ${ad.account_type}</p>` : ''}
                             <p class="text-base leading-relaxed mb-4">${ad.description}</p>
                             ${!ad.is_admin_item && ad.seller_name ? `<p class="text-sm text-tg-hint">Sotuvchi: ${ad.seller_name}</p>` : ''}
                         </div>
                     </div>
-                    <footer class="item-modal-actions">
+                    <div class="modal-footer">
                         ${buttonsHtml}
-                    </footer>
-                </div>`;
+                    </div>
+                `;
                 
+                createModal(modalContent);
                 updateContent();
-                if (tg && tg.BackButton) {
-                    tg.BackButton.show();
-                    tg.onEvent('backButtonClicked', closeModal);
-                }
             }
 
             async function renderMyPurchases() {
@@ -2379,8 +2477,8 @@
                     const key = el.getAttribute('data-translate-key');
                     const translation = translations[currentLanguage]?.[key];
                     if (translation) {
-                         if (el.placeholder !== undefined) el.placeholder = translation;
-                         else el.textContent = translation;
+                        if (el.placeholder !== undefined) el.placeholder = translation;
+                        else el.textContent = translation;
                     }
                 });
                 
